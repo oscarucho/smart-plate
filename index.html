@@ -19,10 +19,14 @@
 }
 
 body {
+
     font-family: Arial, sans-serif;
+
     margin: 0;
     padding: 15px;
+
     text-align: center;
+
     background: #f2f4f7;
 }
 
@@ -31,7 +35,9 @@ h1 {
 }
 
 .subtitulo {
+
     color: #666;
+
     margin-bottom: 15px;
 }
 
@@ -40,7 +46,7 @@ h1 {
     position: relative;
 
     width: 100%;
-    max-width: 750px;
+    max-width: 800px;
 
     margin: auto;
 
@@ -62,8 +68,8 @@ video {
 
     position: absolute;
 
-    top: 0;
     left: 0;
+    top: 0;
 
     width: 100%;
     height: 100%;
@@ -71,24 +77,19 @@ video {
     pointer-events: none;
 }
 
-.botones {
-
-    margin-top: 15px;
-}
-
 button {
 
     padding: 15px 22px;
 
-    margin: 5px;
+    font-size: 17px;
 
     border: none;
 
     border-radius: 12px;
 
-    font-size: 17px;
-
     color: white;
+
+    margin: 5px;
 }
 
 #btnCamara {
@@ -100,13 +101,12 @@ button {
 }
 
 button:disabled {
-
     opacity: 0.5;
 }
 
 .estado {
 
-    max-width: 750px;
+    max-width: 800px;
 
     margin: 15px auto;
 
@@ -124,18 +124,18 @@ button:disabled {
     font-weight: bold;
 }
 
-.detalle {
+#detalle {
 
     margin-top: 7px;
 
-    font-size: 13px;
-
     color: #777;
+
+    font-size: 13px;
 }
 
 .resultado {
 
-    max-width: 750px;
+    max-width: 800px;
 
     margin: 15px auto;
 
@@ -146,26 +146,29 @@ button:disabled {
     border-radius: 15px;
 }
 
-.tituloResultado {
+#placas {
 
-    color: #555;
+    margin-top: 12px;
 
-    font-size: 14px;
-}
-
-.placa {
-
-    margin-top: 10px;
-
-    font-size: 38px;
+    font-size: 30px;
 
     font-weight: bold;
 
-    letter-spacing: 5px;
+    letter-spacing: 3px;
+}
+
+.placaItem {
+
+    padding: 8px;
+
+    margin: 5px;
+
+    background: #e8f5e9;
+
+    border-radius: 8px;
 }
 
 #procesamiento {
-
     display: none;
 }
 
@@ -177,10 +180,12 @@ button:disabled {
 <body>
 
 
-<h1>🚗 AARÓN CARHUAYÑA SECURITY</h1>
+<h1>🚗 AARÓN MATHÍAS SECURITY</h1>
 
 <div class="subtitulo">
-Detector inteligente de placas - Edificio Fisher 155
+
+    Detector inteligente de placas - Edificio Fisher 155
+
 </div>
 
 
@@ -189,8 +194,8 @@ Detector inteligente de placas - Edificio Fisher 155
     <video
         id="video"
         autoplay
-        playsinline
         muted
+        playsinline
     ></video>
 
     <canvas id="overlay"></canvas>
@@ -198,7 +203,7 @@ Detector inteligente de placas - Edificio Fisher 155
 </div>
 
 
-<div class="botones">
+<div>
 
     <button
         id="btnCamara"
@@ -231,12 +236,9 @@ Detector inteligente de placas - Edificio Fisher 155
 
     </div>
 
-    <div
-        class="detalle"
-        id="detalle"
-    >
+    <div id="detalle">
 
-        Detector preparado
+        Esperando...
 
     </div>
 
@@ -245,16 +247,14 @@ Detector inteligente de placas - Edificio Fisher 155
 
 <div class="resultado">
 
-    <div class="tituloResultado">
+    <div>
 
-        PLACA DETECTADA
+        PLACAS DETECTADAS
 
     </div>
 
-    <div
-        class="placa"
-        id="placa"
-    >
+
+    <div id="placas">
 
         ---
 
@@ -262,8 +262,6 @@ Detector inteligente de placas - Edificio Fisher 155
 
 </div>
 
-
-<!-- Canvas oculto -->
 
 <canvas id="procesamiento"></canvas>
 
@@ -273,31 +271,34 @@ Detector inteligente de placas - Edificio Fisher 155
 
 
 /* =====================================================
+
 VARIABLES
+
 ===================================================== */
 
 let streamCamara = null;
 
 let camaraActiva = false;
 
-let intervaloDetector = null;
+let workerOCR = null;
 
-let procesando = false;
+let ocrListo = false;
 
+let procesandoOCR = false;
 
-/* Guardaremos la última detección */
+let temporizadorOCR = null;
 
-let ultimaPlaca = null;
-
-let estabilidad = 0;
+let cargandoTesseract = false;
 
 
 
 /* =====================================================
+
 MENSAJES
+
 ===================================================== */
 
-function mostrarMensaje(texto, detalle = "") {
+function mensaje(texto, detalle = "") {
 
     document.getElementById(
         "mensaje"
@@ -312,26 +313,26 @@ function mostrarMensaje(texto, detalle = "") {
 
 
 /* =====================================================
+
 INICIAR CÁMARA
+
 ===================================================== */
 
 async function iniciarCamara() {
 
 
     const video =
-        document.getElementById(
-            "video"
-        );
+        document.getElementById("video");
 
 
     try {
 
 
-        mostrarMensaje(
+        mensaje(
 
             "📷 Iniciando cámara...",
 
-            "Permite acceso a la cámara si Android lo solicita."
+            "Permite acceso si Android lo solicita."
 
         );
 
@@ -367,19 +368,15 @@ async function iniciarCamara() {
             });
 
 
-
         video.srcObject =
             streamCamara;
-
 
 
         await video.play();
 
 
-
         camaraActiva =
             true;
-
 
 
         document.getElementById(
@@ -392,37 +389,25 @@ async function iniciarCamara() {
         ).disabled = false;
 
 
-
         prepararOverlay();
 
 
+        mensaje(
 
-        mostrarMensaje(
+            "✅ Cámara funcionando",
 
-            "🔎 Buscando placa...",
-
-            "Acerca el carrito y procura buena iluminación."
+            "Preparando reconocimiento de placas..."
 
         );
 
 
-
         /*
-        Detector liviano.
+        Primero cámara.
 
-        No usamos OpenCV.
+        Después cargamos OCR.
         */
 
-
-        intervaloDetector =
-
-            setInterval(
-
-                analizarImagen,
-
-                450
-
-            );
+        prepararTesseract();
 
 
     } catch (error) {
@@ -431,9 +416,9 @@ async function iniciarCamara() {
         console.error(error);
 
 
-        mostrarMensaje(
+        mensaje(
 
-            "❌ No se pudo iniciar la cámara",
+            "❌ Error de cámara",
 
             error.name + ": " + error.message
 
@@ -446,7 +431,9 @@ async function iniciarCamara() {
 
 
 /* =====================================================
+
 DETENER CÁMARA
+
 ===================================================== */
 
 function detenerCamara() {
@@ -456,14 +443,15 @@ function detenerCamara() {
         false;
 
 
-    if (intervaloDetector) {
+    if (temporizadorOCR) {
 
-        clearInterval(
-            intervaloDetector
+        clearTimeout(
+            temporizadorOCR
         );
 
-        intervaloDetector =
+        temporizadorOCR =
             null;
+
     }
 
 
@@ -486,15 +474,12 @@ function detenerCamara() {
     }
 
 
-
     document.getElementById(
         "video"
     ).srcObject = null;
 
 
-
     limpiarOverlay();
-
 
 
     document.getElementById(
@@ -507,12 +492,11 @@ function detenerCamara() {
     ).disabled = true;
 
 
-
-    mostrarMensaje(
+    mensaje(
 
         "⏹ Cámara detenida",
 
-        "Puedes volver a iniciarla."
+        "El detector OCR queda preparado."
 
     );
 
@@ -521,22 +505,20 @@ function detenerCamara() {
 
 
 /* =====================================================
-PREPARAR RECTÁNGULO
+
+OVERLAY
+
 ===================================================== */
 
 function prepararOverlay() {
 
 
     const video =
-        document.getElementById(
-            "video"
-        );
+        document.getElementById("video");
 
 
     const overlay =
-        document.getElementById(
-            "overlay"
-        );
+        document.getElementById("overlay");
 
 
     overlay.width =
@@ -554,9 +536,7 @@ function limpiarOverlay() {
 
 
     const overlay =
-        document.getElementById(
-            "overlay"
-        );
+        document.getElementById("overlay");
 
 
     const ctx =
@@ -580,18 +560,294 @@ function limpiarOverlay() {
 
 
 /* =====================================================
-ANALIZAR IMAGEN
 
-Este detector busca:
-
-- rectángulo horizontal
-- zona clara
-- caracteres oscuros
-- contraste con alrededor
+CARGAR TESSERACT
 
 ===================================================== */
 
-function analizarImagen() {
+function prepararTesseract() {
+
+
+    if (ocrListo) {
+
+        iniciarCicloOCR();
+
+        return;
+
+    }
+
+
+    if (cargandoTesseract) {
+
+        return;
+
+    }
+
+
+    cargandoTesseract =
+        true;
+
+
+    mensaje(
+
+        "⏳ Cargando inteligencia OCR...",
+
+        "La cámara seguirá funcionando."
+
+    );
+
+
+    const script =
+        document.createElement("script");
+
+
+    /*
+    Tesseract.js 7
+    */
+
+    script.src =
+
+        "https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.min.js";
+
+
+    script.onload =
+        iniciarWorkerOCR;
+
+
+    script.onerror =
+        function() {
+
+
+            cargandoTesseract =
+                false;
+
+
+            mensaje(
+
+                "❌ No se pudo cargar OCR",
+
+                "Comprueba tu conexión Wi-Fi."
+
+            );
+
+        };
+
+
+    document.body.appendChild(
+        script
+    );
+
+}
+
+
+
+/* =====================================================
+
+CREAR WORKER OCR
+
+===================================================== */
+
+async function iniciarWorkerOCR() {
+
+
+    try {
+
+
+        mensaje(
+
+            "🧠 Preparando lector de placas...",
+
+            "La primera vez puede tardar algunos segundos."
+
+        );
+
+
+        workerOCR =
+
+            await Tesseract.createWorker(
+
+                "eng",
+
+                1,
+
+                {
+
+                    logger: function(m) {
+
+
+                        if (
+
+                            m.status ===
+                            "recognizing text"
+
+                        ) {
+
+
+                            const porcentaje =
+
+                                Math.round(
+
+                                    m.progress * 100
+
+                                );
+
+
+                            document.getElementById(
+                                "detalle"
+                            ).innerText =
+
+                                "Analizando imagen: "
+                                +
+                                porcentaje
+                                +
+                                "%";
+
+                        }
+
+                    }
+
+                }
+
+            );
+
+
+        /*
+        Configuración especial
+        para placas.
+
+        Solo aceptamos:
+
+        A-Z
+        0-9
+        -
+        */
+
+
+        await workerOCR.setParameters({
+
+
+            tessedit_char_whitelist:
+
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-",
+
+
+            /*
+            11 = SPARSE TEXT
+
+            Busca textos dispersos
+            en diferentes lugares.
+            */
+
+            tessedit_pageseg_mode:
+
+                "11",
+
+
+            preserve_interword_spaces:
+
+                "1"
+
+        });
+
+
+        ocrListo =
+            true;
+
+
+        cargandoTesseract =
+            false;
+
+
+        mensaje(
+
+            "✅ Detector inteligente listo",
+
+            "Buscando placas..."
+
+        );
+
+
+        iniciarCicloOCR();
+
+
+    } catch (error) {
+
+
+        console.error(error);
+
+
+        cargandoTesseract =
+            false;
+
+
+        mensaje(
+
+            "❌ Error preparando OCR",
+
+            error.message
+
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+
+CICLO OCR
+
+===================================================== */
+
+function iniciarCicloOCR() {
+
+
+    if (!camaraActiva) {
+
+        return;
+
+    }
+
+
+    if (temporizadorOCR) {
+
+        clearTimeout(
+            temporizadorOCR
+        );
+
+    }
+
+
+    /*
+    Esperamos un poco entre lecturas.
+
+    No usamos setInterval porque nunca
+    queremos ejecutar dos OCR simultáneos.
+    */
+
+
+    temporizadorOCR =
+
+        setTimeout(
+
+            analizarConOCR,
+
+            500
+
+        );
+
+}
+
+
+
+/* =====================================================
+
+CAPTURAR Y ANALIZAR
+
+===================================================== */
+
+async function analizarConOCR() {
 
 
     if (
@@ -600,58 +856,56 @@ function analizarImagen() {
 
         ||
 
-        procesando
-
-    ) {
-
-        return;
-
-    }
-
-
-
-    const video =
-        document.getElementById(
-            "video"
-        );
-
-
-    if (
-
-        !video.videoWidth
+        !ocrListo
 
         ||
 
-        !video.videoHeight
+        procesandoOCR
 
     ) {
+
+        iniciarCicloOCR();
 
         return;
 
     }
 
 
-
-    procesando =
+    procesandoOCR =
         true;
+
+
+    const video =
+        document.getElementById("video");
+
+
+    const canvas =
+        document.getElementById(
+            "procesamiento"
+        );
 
 
     try {
 
 
         /*
-        Procesamos una imagen pequeña.
-
-        Esto es muchísimo más liviano
-        para la tablet.
+        900px nos da bastante detalle
+        sin procesar la resolución completa.
         */
 
 
-        const ancho =
-            320;
+        const anchoProceso =
+
+            Math.min(
+
+                900,
+
+                video.videoWidth
+
+            );
 
 
-        const alto =
+        const altoProceso =
 
             Math.round(
 
@@ -663,25 +917,17 @@ function analizarImagen() {
 
                 *
 
-                ancho
+                anchoProceso
 
-            );
-
-
-
-        const canvas =
-            document.getElementById(
-                "procesamiento"
             );
 
 
         canvas.width =
-            ancho;
+            anchoProceso;
 
 
         canvas.height =
-            alto;
-
+            altoProceso;
 
 
         const ctx =
@@ -697,6 +943,15 @@ function analizarImagen() {
             );
 
 
+        /*
+        Pequeña mejora de contraste.
+        */
+
+
+        ctx.filter =
+
+            "grayscale(1) contrast(1.25)";
+
 
         ctx.drawImage(
 
@@ -706,356 +961,67 @@ function analizarImagen() {
 
             0,
 
-            ancho,
+            anchoProceso,
 
-            alto
+            altoProceso
 
         );
 
 
-
-        const imagen =
-
-            ctx.getImageData(
-
-                0,
-
-                0,
-
-                ancho,
-
-                alto
-
-            );
+        ctx.filter =
+            "none";
 
 
+        mensaje(
 
-        const pixeles =
-            imagen.data;
+            "🔎 Leyendo placas...",
 
+            "Analizando letras y números."
+
+        );
 
 
         /*
-        Crear matriz de brillo
+        Pedimos explícitamente BLOCKS
+        para tener coordenadas.
         */
 
 
-        const gris =
+        const resultado =
 
-            new Uint8Array(
+            await workerOCR.recognize(
 
-                ancho * alto
+                canvas,
 
-            );
+                {},
 
+                {
 
+                    text: true,
 
-        for (
-
-            let i = 0;
-
-            i < gris.length;
-
-            i++
-
-        ) {
-
-
-            const p =
-                i * 4;
-
-
-            /*
-            Conversión aproximada
-            RGB -> luminancia
-            */
-
-
-            gris[i] =
-
-                Math.round(
-
-                    pixeles[p] * 0.299
-
-                    +
-
-                    pixeles[p + 1] * 0.587
-
-                    +
-
-                    pixeles[p + 2] * 0.114
-
-                );
-
-        }
-
-
-
-        /*
-        Buscaremos ventanas horizontales.
-
-        Probamos distintos tamaños.
-        */
-
-
-        const anchosPlaca = [
-
-            60,
-
-            75,
-
-            90,
-
-            110,
-
-            130
-
-        ];
-
-
-
-        let mejor =
-            null;
-
-
-        let mejorPuntaje =
-            0;
-
-
-
-        for (
-
-            const anchoPlaca
-            of
-            anchosPlaca
-
-        ) {
-
-
-            /*
-            Placas aproximadamente
-            2.4 a 4.5 veces más anchas
-            que altas.
-            */
-
-
-            const alturas = [
-
-                Math.round(
-                    anchoPlaca / 2.5
-                ),
-
-                Math.round(
-                    anchoPlaca / 3
-                ),
-
-                Math.round(
-                    anchoPlaca / 3.5
-                ),
-
-                Math.round(
-                    anchoPlaca / 4
-                )
-
-            ];
-
-
-
-            for (
-
-                const altoPlaca
-                of
-                alturas
-
-            ) {
-
-
-
-                for (
-
-                    let y = 5;
-
-                    y <
-                    alto - altoPlaca - 5;
-
-                    y += 5
-
-                ) {
-
-
-
-                    for (
-
-                        let x = 5;
-
-                        x <
-                        ancho - anchoPlaca - 5;
-
-                        x += 5
-
-                    ) {
-
-
-
-                        const datos =
-
-                            analizarZona(
-
-                                gris,
-
-                                ancho,
-
-                                alto,
-
-                                x,
-
-                                y,
-
-                                anchoPlaca,
-
-                                altoPlaca
-
-                            );
-
-
-
-                        if (!datos) {
-
-                            continue;
-
-                        }
-
-
-
-                        /*
-                        REGLAS
-
-                        Zona de placa:
-
-                        - bastante clara
-                        - tiene puntos oscuros
-                        - tiene contraste
-                        */
-
-
-                        if (
-
-                            datos.promedio > 135
-
-                            &&
-
-                            datos.oscuros > 0.06
-
-                            &&
-
-                            datos.oscuros < 0.50
-
-                            &&
-
-                            datos.contraste > 35
-
-                        ) {
-
-
-
-                            const proporcion =
-
-                                anchoPlaca
-                                /
-                                altoPlaca;
-
-
-
-                            /*
-                            Premio a proporción
-                            cercana a 3.2
-                            */
-
-
-                            const premioForma =
-
-                                30
-
-                                -
-
-                                Math.abs(
-
-                                    proporcion
-                                    -
-                                    3.2
-
-                                )
-                                *
-                                8;
-
-
-
-                            const puntaje =
-
-                                datos.promedio
-
-                                +
-
-                                datos.contraste * 1.5
-
-                                +
-
-                                datos.oscuros * 80
-
-                                +
-
-                                premioForma;
-
-
-
-                            if (
-
-                                puntaje
-                                >
-                                mejorPuntaje
-
-                            ) {
-
-
-                                mejorPuntaje =
-                                    puntaje;
-
-
-                                mejor = {
-
-                                    x: x,
-
-                                    y: y,
-
-                                    width:
-                                        anchoPlaca,
-
-                                    height:
-                                        altoPlaca
-
-                                };
-
-                            }
-
-                        }
-
-                    }
+                    blocks: true
 
                 }
 
-            }
-
-        }
+            );
 
 
+        const detecciones =
 
-        comprobarEstabilidad(
+            extraerPlacas(
 
-            mejor,
+                resultado.data.blocks
 
-            ancho,
+            );
 
-            alto
+
+        dibujarDetecciones(
+
+            detecciones,
+
+            anchoProceso,
+
+            altoProceso
 
         );
 
@@ -1064,13 +1030,14 @@ function analizarImagen() {
 
 
         console.error(
+            "OCR:",
             error
         );
 
 
-        mostrarMensaje(
+        mensaje(
 
-            "⚠️ Detector tuvo un problema",
+            "⚠️ Error leyendo imagen",
 
             error.message
 
@@ -1080,8 +1047,32 @@ function analizarImagen() {
     } finally {
 
 
-        procesando =
+        procesandoOCR =
             false;
+
+
+        /*
+        Nueva lectura.
+
+        Al esperar después de terminar
+        evitamos saturar la tablet.
+        */
+
+
+        if (camaraActiva) {
+
+
+            temporizadorOCR =
+
+                setTimeout(
+
+                    analizarConOCR,
+
+                    1200
+
+                );
+
+        }
 
     }
 
@@ -1090,139 +1081,209 @@ function analizarImagen() {
 
 
 /* =====================================================
-ANALIZAR UNA ZONA
+
+EXTRAER TODAS LAS PLACAS
 
 ===================================================== */
 
-function analizarZona(
-
-    gris,
-
-    anchoImagen,
-
-    altoImagen,
-
-    x,
-
-    y,
-
-    w,
-
-    h
-
-) {
+function extraerPlacas(blocks) {
 
 
-    let suma =
-        0;
+    const placas =
+        [];
 
 
-    let minimo =
-        255;
+    if (!blocks) {
+
+        return placas;
+
+    }
 
 
-    let maximo =
-        0;
+    for (const block of blocks) {
 
 
-    let oscuros =
-        0;
+        if (!block.paragraphs) {
 
+            continue;
 
-    let total =
-        0;
-
-
-
-    /*
-    No revisamos todos los pixeles.
-
-    Saltamos de 2 en 2 para ganar velocidad.
-    */
-
-
-    for (
-
-        let yy = y;
-
-        yy < y + h;
-
-        yy += 2
-
-    ) {
+        }
 
 
         for (
-
-            let xx = x;
-
-            xx < x + w;
-
-            xx += 2
-
+            const parrafo
+            of
+            block.paragraphs
         ) {
 
 
-            const valor =
+            if (!parrafo.lines) {
 
-                gris[
-
-                    yy * anchoImagen
-                    +
-                    xx
-
-                ];
-
-
-
-            suma +=
-                valor;
-
-
-            total++;
-
-
-
-            if (
-
-                valor <
-                minimo
-
-            ) {
-
-                minimo =
-                    valor;
+                continue;
 
             }
 
 
-
-            if (
-
-                valor >
-                maximo
-
+            for (
+                const linea
+                of
+                parrafo.lines
             ) {
 
-                maximo =
-                    valor;
 
-            }
-
-
-
-            /*
-            Letras negras.
-            */
+                /*
+                Intentamos convertir
+                el texto de la línea
+                en placa.
+                */
 
 
-            if (
+                const placa =
 
-                valor < 90
+                    normalizarPlaca(
 
-            ) {
+                        linea.text
 
-                oscuros++;
+                    );
+
+
+                if (!placa) {
+
+                    continue;
+
+                }
+
+
+                /*
+                Evitamos textos
+                de muy baja confianza.
+                */
+
+
+                if (
+
+                    typeof linea.confidence
+                        === "number"
+
+                    &&
+
+                    linea.confidence < 25
+
+                ) {
+
+                    continue;
+
+                }
+
+
+                const bbox =
+                    linea.bbox;
+
+
+                if (!bbox) {
+
+                    continue;
+
+                }
+
+
+                const width =
+
+                    bbox.x1
+                    -
+                    bbox.x0;
+
+
+                const height =
+
+                    bbox.y1
+                    -
+                    bbox.y0;
+
+
+                /*
+                Una placa debe ser
+                razonablemente horizontal.
+                Permitimos bastante margen
+                para ángulos.
+                */
+
+
+                if (
+
+                    width < 25
+
+                    ||
+
+                    height < 8
+
+                ) {
+
+                    continue;
+
+                }
+
+
+                const proporcion =
+
+                    width
+
+                    /
+
+                    Math.max(
+
+                        height,
+
+                        1
+
+                    );
+
+
+                if (
+
+                    proporcion < 1.3
+
+                    ||
+
+                    proporcion > 9
+
+                ) {
+
+                    continue;
+
+                }
+
+
+                placas.push({
+
+
+                    texto:
+                        placa,
+
+
+                    confianza:
+
+                        linea.confidence
+                        ||
+                        0,
+
+
+                    x:
+                        bbox.x0,
+
+
+                    y:
+                        bbox.y0,
+
+
+                    width:
+                        width,
+
+
+                    height:
+                        height
+
+                });
 
             }
 
@@ -1231,10 +1292,133 @@ function analizarZona(
     }
 
 
+    return eliminarDuplicados(
+        placas
+    );
+
+}
+
+
+
+/* =====================================================
+
+NORMALIZAR PLACA
+
+Formato esperado:
+
+ABC-123
+
+También acepta:
+
+ABC123
+
+===================================================== */
+
+function normalizarPlaca(texto) {
+
+
+    if (!texto) {
+
+        return null;
+
+    }
+
+
+    let t =
+
+        texto
+        .toUpperCase()
+        .replace(
+            /[–—_]/g,
+            "-"
+        )
+        .replace(
+            /[^A-Z0-9-]/g,
+            ""
+        );
+
+
+    /*
+    Quitamos guión temporalmente.
+    */
+
+
+    t =
+        t.replace(
+            /-/g,
+            ""
+        );
+
+
+    /*
+    Nuestro experimento usa:
+
+    3 letras + 3 números
+    */
+
+
+    if (t.length !== 6) {
+
+        return null;
+
+    }
+
+
+    let letras =
+
+        t.substring(
+            0,
+            3
+        );
+
+
+    let numeros =
+
+        t.substring(
+            3,
+            6
+        );
+
+
+
+    /*
+    Correcciones comunes de OCR
+    en zona de letras.
+    */
+
+
+    letras =
+
+        letras
+        .replace(/0/g, "O")
+        .replace(/1/g, "I")
+        .replace(/5/g, "S")
+        .replace(/8/g, "B");
+
+
+
+    /*
+    Correcciones comunes en números.
+    */
+
+
+    numeros =
+
+        numeros
+        .replace(/[OQD]/g, "0")
+        .replace(/[IL]/g, "1")
+        .replace(/Z/g, "2")
+        .replace(/S/g, "5")
+        .replace(/G/g, "6")
+        .replace(/B/g, "8");
+
+
 
     if (
 
-        total === 0
+        !/^[A-Z]{3}$/.test(
+            letras
+        )
 
     ) {
 
@@ -1243,170 +1427,136 @@ function analizarZona(
     }
 
 
+    if (
 
-    return {
+        !/^[0-9]{3}$/.test(
+            numeros
+        )
 
-        promedio:
+    ) {
 
-            suma / total,
+        return null;
 
-
-        oscuros:
-
-            oscuros / total,
+    }
 
 
-        contraste:
+    return (
 
-            maximo - minimo
+        letras
 
-    };
+        +
+
+        "-"
+
+        +
+
+        numeros
+
+    );
 
 }
 
 
 
 /* =====================================================
-ESTABILIDAD
 
-Evita que el rectángulo
-salte constantemente.
+ELIMINAR DUPLICADOS
 
 ===================================================== */
 
-function comprobarEstabilidad(
-
-    rect,
-
-    anchoProceso,
-
-    altoProceso
-
-) {
+function eliminarDuplicados(lista) {
 
 
-    if (!rect) {
+    const resultado =
+        [];
 
 
-        estabilidad =
-            0;
+    for (const placa of lista) {
 
 
-        ultimaPlaca =
-            null;
+        let repetida =
+            false;
 
 
-        limpiarOverlay();
+        for (
+            const existente
+            of
+            resultado
+        ) {
 
 
-        mostrarMensaje(
+            if (
 
-            "🔎 Buscando placa...",
+                existente.texto
+                ===
+                placa.texto
 
-            "Coloca la placa frente a la cámara."
-
-        );
-
-
-        return;
-
-    }
+            ) {
 
 
-
-    if (
-
-        ultimaPlaca
-
-        &&
-
-        Math.abs(
-
-            ultimaPlaca.x
-            -
-            rect.x
-
-        ) < 20
-
-        &&
-
-        Math.abs(
-
-            ultimaPlaca.y
-            -
-            rect.y
-
-        ) < 20
-
-    ) {
+                repetida =
+                    true;
 
 
-        estabilidad++;
+                /*
+                Nos quedamos con la
+                detección más confiable.
+                */
 
 
-    } else {
+                if (
+
+                    placa.confianza
+                    >
+                    existente.confianza
+
+                ) {
 
 
-        estabilidad =
-            1;
+                    Object.assign(
 
-    }
+                        existente,
 
+                        placa
 
+                    );
 
-    ultimaPlaca =
-        rect;
-
-
-
-    /*
-    Exigimos dos detecciones
-    parecidas consecutivas.
-    */
+                }
 
 
-    if (
+                break;
 
-        estabilidad >= 2
+            }
 
-    ) {
-
-
-        dibujarPlaca(
-
-            rect,
-
-            anchoProceso,
-
-            altoProceso
-
-        );
+        }
 
 
-    } else {
+        if (!repetida) {
 
+            resultado.push(
+                placa
+            );
 
-        mostrarMensaje(
-
-            "🔍 Analizando posible placa...",
-
-            "Mantén el carrito quieto."
-
-        );
+        }
 
     }
+
+
+    return resultado;
 
 }
 
 
 
 /* =====================================================
-DIBUJAR RECTÁNGULO VERDE
+
+DIBUJAR TODAS LAS PLACAS
+
 ===================================================== */
 
-function dibujarPlaca(
+function dibujarDetecciones(
 
-    rect,
+    placas,
 
     anchoProceso,
 
@@ -1416,15 +1566,11 @@ function dibujarPlaca(
 
 
     const video =
-        document.getElementById(
-            "video"
-        );
+        document.getElementById("video");
 
 
     const overlay =
-        document.getElementById(
-            "overlay"
-        );
+        document.getElementById("overlay");
 
 
     overlay.width =
@@ -1435,10 +1581,8 @@ function dibujarPlaca(
         video.videoHeight;
 
 
-
     const ctx =
         overlay.getContext("2d");
-
 
 
     ctx.clearRect(
@@ -1454,137 +1598,307 @@ function dibujarPlaca(
     );
 
 
+    if (
+
+        !placas
+
+        ||
+
+        placas.length === 0
+
+    ) {
+
+
+        document.getElementById(
+            "placas"
+        ).innerText = "---";
+
+
+        mensaje(
+
+            "🔎 Buscando placas...",
+
+            "Acerca los vehículos o mejora la iluminación."
+
+        );
+
+
+        return;
+
+    }
+
 
     const escalaX =
 
         video.videoWidth
+
         /
+
         anchoProceso;
 
 
     const escalaY =
 
         video.videoHeight
+
         /
+
         altoProceso;
 
 
 
-    const x =
-
-        rect.x
-        *
-        escalaX;
-
-
-    const y =
-
-        rect.y
-        *
-        escalaY;
-
-
-    const w =
-
-        rect.width
-        *
-        escalaX;
-
-
-    const h =
-
-        rect.height
-        *
-        escalaY;
-
-
-
     /*
-    RECTÁNGULO VERDE
+    DIBUJAMOS CADA PLACA
     */
 
 
-    ctx.strokeStyle =
-        "#00ff55";
+    placas.forEach(
+
+        (placa, indice) => {
 
 
-    ctx.lineWidth =
-        8;
+            const x =
+
+                placa.x
+                *
+                escalaX;
+
+
+            const y =
+
+                placa.y
+                *
+                escalaY;
+
+
+            const width =
+
+                placa.width
+                *
+                escalaX;
+
+
+            const height =
+
+                placa.height
+                *
+                escalaY;
 
 
 
-    ctx.strokeRect(
+            /*
+            Añadimos margen.
+            */
 
-        x,
 
-        y,
+            const margenX =
+                width * 0.12;
 
-        w,
 
-        h
+            const margenY =
+                height * 0.35;
+
+
+
+            ctx.strokeStyle =
+                "#00ff55";
+
+
+            ctx.lineWidth =
+                7;
+
+
+            ctx.strokeRect(
+
+                x - margenX,
+
+                y - margenY,
+
+                width
+                +
+                margenX * 2,
+
+                height
+                +
+                margenY * 2
+
+            );
+
+
+
+            /*
+            ETIQUETA
+            */
+
+
+            ctx.font =
+                "bold 28px Arial";
+
+
+            const texto =
+                placa.texto;
+
+
+            const medida =
+                ctx.measureText(
+                    texto
+                );
+
+
+            const etiquetaWidth =
+                medida.width + 20;
+
+
+            const etiquetaY =
+
+                Math.max(
+
+                    0,
+
+                    y
+                    -
+                    margenY
+                    -
+                    40
+
+                );
+
+
+            ctx.fillStyle =
+                "#00ff55";
+
+
+            ctx.fillRect(
+
+                x - margenX,
+
+                etiquetaY,
+
+                etiquetaWidth,
+
+                38
+
+            );
+
+
+            ctx.fillStyle =
+                "#000";
+
+
+            ctx.fillText(
+
+                texto,
+
+                x
+                -
+                margenX
+                +
+                10,
+
+                etiquetaY
+                +
+                28
+
+            );
+
+        }
 
     );
 
 
 
     /*
-    Fondo para texto
+    MOSTRAR LISTA ABAJO
     */
 
 
-    ctx.fillStyle =
-        "#00ff55";
+    const contenedor =
+
+        document.getElementById(
+            "placas"
+        );
 
 
-    ctx.fillRect(
+    contenedor.innerHTML =
+        "";
 
-        x,
 
-        Math.max(
-            0,
-            y - 40
+    placas.forEach(
+
+        placa => {
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "placaItem";
+
+
+            div.innerText =
+
+                "🚗 "
+                +
+                placa.texto;
+
+
+            contenedor.appendChild(
+                div
+            );
+
+        }
+
+    );
+
+
+    mensaje(
+
+        "✅ "
+        +
+        placas.length
+        +
+        (
+            placas.length === 1
+            ?
+            " placa detectada"
+            :
+            " placas detectadas"
         ),
 
-        160,
-
-        40
-
-    );
-
-
-
-    ctx.fillStyle =
-        "#000000";
-
-
-    ctx.font =
-        "bold 26px Arial";
-
-
-    ctx.fillText(
-
-        "PLACA",
-
-        x + 8,
-
-        Math.max(
-            29,
-            y - 10
-        )
-
-    );
-
-
-
-    mostrarMensaje(
-
-        "✅ Posible placa detectada",
-
-        "Rectángulo encontrado. Próximo paso: leer BDF-456."
+        "OCR completado correctamente."
 
     );
 
 }
+
+
+
+/* =====================================================
+
+AL SALIR
+
+===================================================== */
+
+window.addEventListener(
+
+    "beforeunload",
+
+    function() {
+
+
+        if (workerOCR) {
+
+            workerOCR.terminate();
+
+        }
+
+    }
+
+);
+
 
 </script>
 
