@@ -7,170 +7,337 @@
 <meta charset="UTF-8">
 
 <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
 >
 
-<title>Smart Plate</title>
+<title>Smart Plate V8</title>
+
 
 <style>
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
 
-  margin: 0;
-  padding: 15px;
+    margin: 0;
+    padding: 14px;
 
-  font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
 
-  background: #f2f4f7;
+    background: #f1f4f8;
 
-  text-align: center;
+    text-align: center;
 }
+
+
+/* =====================================================
+TÍTULO
+===================================================== */
 
 h1 {
 
-  margin-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 2px;
+
+    font-size: 30px;
 }
+
 
 .subtitulo {
 
-  color: #666;
+    margin-bottom: 15px;
 
-  margin-bottom: 15px;
+    color: #666;
+
+    font-size: 15px;
 }
 
-.camara {
 
-  position: relative;
+/* =====================================================
+CÁMARA
+===================================================== */
 
-  width: 100%;
+.contenedorCamara {
 
-  max-width: 800px;
+    position: relative;
 
-  margin: auto;
+    width: 100%;
 
-  overflow: hidden;
+    max-width: 850px;
 
-  border-radius: 15px;
+    margin: auto;
 
-  background: black;
+    overflow: hidden;
+
+    background: black;
+
+    border-radius: 18px;
 }
+
 
 video {
 
-  display: block;
+    display: block;
 
-  width: 100%;
+    width: 100%;
 }
+
+
+/*
+Canvas donde dibujamos:
+
+- zona amarilla
+- rectángulos verdes
+- placa reconocida
+*/
 
 #overlay {
 
-  position: absolute;
+    position: absolute;
 
-  top: 0;
+    left: 0;
+    top: 0;
 
-  left: 0;
+    width: 100%;
+    height: 100%;
 
-  width: 100%;
-
-  height: 100%;
-
-  pointer-events: none;
+    pointer-events: none;
 }
+
+
+/* =====================================================
+BOTONES
+===================================================== */
+
+.botones {
+
+    margin-top: 14px;
+}
+
 
 button {
 
-  margin: 8px 4px;
+    border: none;
 
-  padding: 14px 20px;
+    border-radius: 12px;
 
-  border: none;
+    padding: 14px 20px;
 
-  border-radius: 12px;
+    margin: 5px;
 
-  font-size: 17px;
+    color: white;
 
-  color: white;
+    font-size: 16px;
+
+    font-weight: bold;
 }
+
 
 #btnIniciar {
 
-  background: #1976d2;
+    background: #1976d2;
 }
+
 
 #btnDetener {
 
-  background: #d32f2f;
+    background: #d32f2f;
 }
+
 
 button:disabled {
 
-  opacity: 0.45;
+    opacity: 0.45;
 }
+
+
+/* =====================================================
+ESTADO
+===================================================== */
 
 .panel {
 
-  max-width: 800px;
+    width: 100%;
 
-  margin: 15px auto;
+    max-width: 850px;
 
-  padding: 15px;
+    margin: 14px auto;
 
-  border-radius: 15px;
+    padding: 16px;
 
-  background: white;
+    background: white;
+
+    border-radius: 16px;
 }
+
 
 #estado {
 
-  font-size: 19px;
+    font-size: 19px;
 
-  font-weight: bold;
+    font-weight: bold;
 }
+
 
 #detalle {
 
-  margin-top: 7px;
+    margin-top: 6px;
 
-  color: #777;
+    color: #777;
 
-  font-size: 13px;
+    font-size: 13px;
 }
 
-.placa {
 
-  display: inline-block;
+/* =====================================================
+PLACA GRANDE
+===================================================== */
 
-  margin: 5px;
+.ultima {
 
-  padding: 10px 15px;
+    margin-top: 10px;
 
-  border-radius: 10px;
+    font-size: 13px;
 
-  background: #e8f5e9;
-
-  font-size: 24px;
-
-  font-weight: bold;
-
-  letter-spacing: 2px;
+    color: #666;
 }
 
-.guardado {
 
-  font-size: 12px;
+#ultimaPlaca {
 
-  color: #388e3c;
+    margin-top: 8px;
+
+    font-size: 38px;
+
+    font-weight: bold;
+
+    letter-spacing: 4px;
 }
 
-canvas.oculto {
 
-  display: none;
+/* =====================================================
+CONTADORES
+===================================================== */
+
+.estadisticas {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 15px;
 }
+
+
+.tarjeta {
+
+    min-width: 130px;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    background: #f4f6f8;
+}
+
+
+.numero {
+
+    font-size: 26px;
+
+    font-weight: bold;
+}
+
+
+.etiqueta {
+
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    color: #777;
+}
+
+
+/* =====================================================
+LISTADO
+===================================================== */
+
+#listaPlacas {
+
+    margin-top: 12px;
+}
+
+
+.placaItem {
+
+    display: inline-block;
+
+    margin: 5px;
+
+    padding: 10px 14px;
+
+    border-radius: 10px;
+
+    background: #e8f5e9;
+
+    font-size: 21px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+.confianza {
+
+    margin-top: 3px;
+
+    font-size: 11px;
+
+    font-weight: normal;
+
+    letter-spacing: 0;
+
+    color: #555;
+}
+
+
+/* =====================================================
+CANVAS OCULTO
+===================================================== */
+
+#captura {
+
+    display: none;
+}
+
+
+/* =====================================================
+INDICADOR ONLINE
+===================================================== */
+
+.indicador {
+
+    display: inline-block;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #aaa;
+
+    margin-right: 5px;
+}
+
 
 </style>
 
@@ -181,2633 +348,419 @@ canvas.oculto {
 
 
 <h1>
-🚗 AARÓN AUTOS SECURITY
+🚗 SMART PLATE
 </h1>
 
 
 <div class="subtitulo">
 
-Detector inteligente de múltiples placas - Edificio Fisher 155
+Reconocimiento inteligente de placas
 
 </div>
 
 
-<div class="camara">
 
-  <video
-    id="video"
-    autoplay
-    muted
-    playsinline
-  ></video>
+<!-- =====================================================
 
-  <canvas
-    id="overlay"
-  ></canvas>
+CÁMARA
+
+===================================================== -->
+
+
+<div class="contenedorCamara">
+
+
+    <video
+        id="video"
+        autoplay
+        muted
+        playsinline
+    ></video>
+
+
+    <canvas
+        id="overlay"
+    ></canvas>
+
 
 </div>
 
 
-<div>
 
-  <button
-    id="btnIniciar"
-    onclick="iniciarCamara()"
-  >
+<!-- =====================================================
 
-    📷 INICIAR CÁMARA
+BOTONES
 
-  </button>
+===================================================== -->
 
 
-  <button
-    id="btnDetener"
-    onclick="detenerCamara()"
-    disabled
-  >
+<div class="botones">
 
-    ⏹ DETENER
 
-  </button>
+    <button
+        id="btnIniciar"
+        onclick="iniciarCamara()"
+    >
+
+        📷 INICIAR
+
+    </button>
+
+
+    <button
+        id="btnDetener"
+        onclick="detenerCamara()"
+        disabled
+    >
+
+        ⏹ DETENER
+
+    </button>
+
 
 </div>
+
+
+
+<!-- =====================================================
+
+ESTADO
+
+===================================================== -->
 
 
 <div class="panel">
 
-  <div id="estado">
 
-    Presiona INICIAR CÁMARA
+    <div id="estado">
 
-  </div>
+        Presiona INICIAR
+
+    </div>
 
 
-  <div id="detalle">
+    <div id="detalle">
 
-    Smart Plate
+        Smart Plate V8
 
-  </div>
+    </div>
+
 
 </div>
+
+
+
+<!-- =====================================================
+
+RESULTADO
+
+===================================================== -->
 
 
 <div class="panel">
 
-  <b>
-    PLACAS DETECTADAS
-  </b>
 
-  <div
-    id="listaPlacas"
-  >
+    <div class="ultima">
 
-    <br>
-    ---
+        ÚLTIMA PLACA DETECTADA
 
-  </div>
+    </div>
+
+
+    <div id="ultimaPlaca">
+
+        ---
+
+    </div>
+
+
+
+    <div class="estadisticas">
+
+
+        <div class="tarjeta">
+
+            <div
+                class="numero"
+                id="contador"
+            >
+
+                0
+
+            </div>
+
+            <div class="etiqueta">
+
+                VEHÍCULOS
+
+            </div>
+
+        </div>
+
+
+
+        <div class="tarjeta">
+
+            <div
+                class="numero"
+                id="tiempo"
+            >
+
+                ---
+
+            </div>
+
+            <div class="etiqueta">
+
+                RESPUESTA
+
+            </div>
+
+        </div>
+
+
+
+        <div class="tarjeta">
+
+            <div class="numero">
+
+                <span
+                    class="indicador"
+                    id="indicador"
+                ></span>
+
+                <span
+                    id="estadoApi"
+                >
+
+                    OFF
+
+                </span>
+
+            </div>
+
+            <div class="etiqueta">
+
+                SERVIDOR
+
+            </div>
+
+        </div>
+
+
+    </div>
+
 
 </div>
 
 
-<canvas
-  id="canvasAnalisis"
-  class="oculto"
-></canvas>
+
+<!-- =====================================================
+
+PLACAS EN LA ESCENA
+
+===================================================== -->
 
 
-<canvas
-  id="canvasOCR"
-  class="oculto"
-></canvas>
+<div class="panel">
+
+
+    <b>
+        PLACAS VISIBLES
+    </b>
+
+
+    <div id="listaPlacas">
+
+        ---
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+
+CANVAS OCULTO
+
+Aquí convertimos una parte de la cámara a JPEG.
+
+===================================================== -->
+
+
+<canvas id="captura"></canvas>
 
 
 
 <script>
 
 
-/* ==========================================================
+/* =========================================================
+
 CONFIGURACIÓN
-========================================================== */
+
+========================================================= */
 
 
 /*
-PEGA AQUÍ LA URL /exec
-QUE TE DIO GOOGLE APPS SCRIPT
+Tu Google Apps Script real.
 */
 
-const APPS_SCRIPT_URL =
+const API_URL =
 
-  "https://script.google.com/macros/s/AKfycbxbGFvAs1T4_-Aq_jYhF22G0LdS4Y9oA92lKZOzMtuB2EaObpVd1shjc6r85kw_mJaL/exec";
+"https://script.google.com/macros/s/AKfycbxbGFvAs1T4_-Aq_jYhF22G0LdS4Y9oA92lKZOzMtuB2EaObpVd1shjc6r85kw_mJaL/exec";
+
 
 
 /*
-Debe ser igual al token
-del Apps Script.
+Cada cuánto enviamos una imagen.
+
+Plate Recognizer Free Trial
+permite 1 lookup por segundo.
+
+Usamos 1300 ms para tener margen.
 */
 
-const TOKEN_REGISTRO =
+const INTERVALO_CAPTURA =
+    1300;
 
-  "SMARTPLATE-2026";
 
 
 /*
-No volveremos a guardar la misma placa
-durante 30 segundos.
+Calidad JPEG.
+
+0.75 = buena calidad
+sin generar imágenes demasiado grandes.
 */
 
-const TIEMPO_REPETIDO =
+const CALIDAD_JPEG =
+    0.75;
 
-  30000;
 
 
 /*
-Máximo de regiones que vamos
-a analizar simultáneamente.
+Ancho máximo de imagen enviada.
+
+No necesitamos enviar 1920 px completos.
 */
 
-const MAX_CANDIDATOS =
-
-  8;
-
+const ANCHO_ENVIO =
+    900;
 
 
-/* ==========================================================
+
+/*
+Tiempo durante el cual una placa
+no se vuelve a contar como vehículo nuevo.
+*/
+
+const TIEMPO_DUPLICADO =
+    15000;
+
+
+
+/* =========================================================
+
 VARIABLES
-========================================================== */
 
-let streamCamara = null;
+========================================================= */
 
-let camaraActiva = false;
+let streamCamara =
+    null;
 
-let workerOCR = null;
 
-let ocrListo = false;
+let camaraActiva =
+    false;
 
-let analizando = false;
 
-let timerOCR = null;
+let procesando =
+    false;
 
-let cargandoOCR = false;
+
+let temporizador =
+    null;
+
+
+let ultimaCaptura =
+    0;
+
+
+let totalVehiculos =
+    0;
 
 
 /*
-Historial temporal para confirmar
-una placa antes de guardarla.
+Placas recientemente vistas.
 */
 
-const memoriaPlacas =
-  new Map();
+const historial =
+    new Map();
 
 
 /*
-Una identificación para esta sesión.
+Última respuesta recibida.
+*/
+
+let ultimaRespuesta =
+    null;
+
+
+/*
+Sesión única del navegador.
 */
 
 const SESION =
 
-  sessionStorage.getItem(
-    "smartPlateSesion"
-  )
+    sessionStorage.getItem(
+        "smartPlateSesion"
+    )
 
-  ||
+    ||
 
-  crearSesion();
+    crearId();
+
 
 
 sessionStorage.setItem(
-  "smartPlateSesion",
-  SESION
+
+    "smartPlateSesion",
+
+    SESION
+
 );
 
 
 
-/* ==========================================================
-SESIÓN
-========================================================== */
+/* =========================================================
 
-function crearSesion() {
+GENERAR ID
 
-  if (
+========================================================= */
 
-    window.crypto
-
-    &&
-
-    crypto.randomUUID
-
-  ) {
-
-    return crypto.randomUUID();
-
-  }
-
-
-  return (
-
-    Date.now()
-
-    +
-
-    "-"
-
-    +
-
-    Math.random()
-      .toString(36)
-      .substring(2)
-
-  );
-
-}
-
-
-
-/* ==========================================================
-MENSAJES
-========================================================== */
-
-function mensaje(
-
-  texto,
-
-  detalle = ""
-
-) {
-
-  document.getElementById(
-    "estado"
-  ).innerText = texto;
-
-
-  document.getElementById(
-    "detalle"
-  ).innerText = detalle;
-
-}
-
-
-
-/* ==========================================================
-CÁMARA
-========================================================== */
-
-async function iniciarCamara() {
-
-
-  const video =
-    document.getElementById(
-      "video"
-    );
-
-
-  try {
-
-
-    mensaje(
-
-      "📷 Iniciando cámara...",
-
-      "Permite el acceso si Android lo solicita."
-
-    );
-
-
-    streamCamara =
-
-      await navigator
-        .mediaDevices
-        .getUserMedia({
-
-          video: {
-
-            facingMode: {
-
-              ideal:
-                "environment"
-
-            },
-
-            width: {
-
-              ideal: 1920
-
-            },
-
-            height: {
-
-              ideal: 1080
-
-            }
-
-          },
-
-          audio: false
-
-        });
-
-
-    video.srcObject =
-      streamCamara;
-
-
-    await video.play();
-
-
-    camaraActiva =
-      true;
-
-
-    document.getElementById(
-      "btnIniciar"
-    ).disabled = true;
-
-
-    document.getElementById(
-      "btnDetener"
-    ).disabled = false;
-
-
-    prepararOverlay();
-
-
-    mensaje(
-
-      "✅ Cámara lista",
-
-      "Preparando reconocimiento OCR..."
-
-    );
-
-
-    cargarTesseract();
-
-
-  } catch (error) {
-
-
-    console.error(error);
-
-
-    mensaje(
-
-      "❌ Error al iniciar cámara",
-
-      error.name
-      +
-      ": "
-      +
-      error.message
-
-    );
-
-  }
-
-}
-
-
-
-function detenerCamara() {
-
-
-  camaraActiva =
-    false;
-
-
-  if (timerOCR) {
-
-    clearTimeout(
-      timerOCR
-    );
-
-    timerOCR =
-      null;
-
-  }
-
-
-  if (streamCamara) {
-
-
-    streamCamara
-      .getTracks()
-      .forEach(
-
-        track =>
-          track.stop()
-
-      );
-
-
-    streamCamara =
-      null;
-
-  }
-
-
-  document.getElementById(
-    "video"
-  ).srcObject = null;
-
-
-  limpiarOverlay();
-
-
-  document.getElementById(
-    "btnIniciar"
-  ).disabled = false;
-
-
-  document.getElementById(
-    "btnDetener"
-  ).disabled = true;
-
-
-  mensaje(
-
-    "⏹ Cámara detenida",
-
-    "Puedes volver a iniciarla."
-
-  );
-
-}
-
-
-
-/* ==========================================================
-OVERLAY
-========================================================== */
-
-function prepararOverlay() {
-
-
-  const video =
-    document.getElementById(
-      "video"
-    );
-
-
-  const overlay =
-    document.getElementById(
-      "overlay"
-    );
-
-
-  overlay.width =
-    video.videoWidth;
-
-
-  overlay.height =
-    video.videoHeight;
-
-}
-
-
-
-function limpiarOverlay() {
-
-
-  const overlay =
-    document.getElementById(
-      "overlay"
-    );
-
-
-  const ctx =
-    overlay.getContext("2d");
-
-
-  ctx.clearRect(
-
-    0,
-
-    0,
-
-    overlay.width,
-
-    overlay.height
-
-  );
-
-}
-
-
-
-/* ==========================================================
-TESSERACT
-========================================================== */
-
-function cargarTesseract() {
-
-
-  if (ocrListo) {
-
-    programarAnalisis();
-
-    return;
-
-  }
-
-
-  if (cargandoOCR) {
-
-    return;
-
-  }
-
-
-  cargandoOCR =
-    true;
-
-
-  mensaje(
-
-    "⏳ Cargando OCR...",
-
-    "La primera carga puede tomar unos segundos."
-
-  );
-
-
-  if (window.Tesseract) {
-
-    crearWorkerOCR();
-
-    return;
-
-  }
-
-
-  const script =
-    document.createElement(
-      "script"
-    );
-
-
-  script.src =
-
-    "https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.min.js";
-
-
-  script.onload =
-    crearWorkerOCR;
-
-
-  script.onerror =
-    function () {
-
-
-      cargandoOCR =
-        false;
-
-
-      mensaje(
-
-        "❌ No se pudo cargar OCR",
-
-        "Comprueba la conexión Wi-Fi."
-
-      );
-
-    };
-
-
-  document.body.appendChild(
-    script
-  );
-
-}
-
-
-
-async function crearWorkerOCR() {
-
-
-  try {
-
-
-    mensaje(
-
-      "🧠 Preparando lector...",
-
-      "Configurando reconocimiento de placas."
-
-    );
-
-
-    workerOCR =
-
-      await Tesseract.createWorker(
-
-        "eng",
-
-        1,
-
-        {
-
-          logger: function(m) {
-
-
-            if (
-
-              m.status ===
-              "recognizing text"
-
-            ) {
-
-
-              const porcentaje =
-
-                Math.round(
-                  m.progress * 100
-                );
-
-
-              document.getElementById(
-                "detalle"
-              ).innerText =
-
-                "OCR: "
-                +
-                porcentaje
-                +
-                "%";
-
-            }
-
-          }
-
-        }
-
-      );
-
-
-    await workerOCR.setParameters({
-
-      tessedit_char_whitelist:
-
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-",
-
-
-      /*
-      11 = texto disperso.
-      */
-
-      tessedit_pageseg_mode:
-
-        "11",
-
-
-      preserve_interword_spaces:
-
-        "1",
-
-
-      user_defined_dpi:
-
-        "300"
-
-    });
-
-
-    ocrListo =
-      true;
-
-
-    cargandoOCR =
-      false;
-
-
-    mensaje(
-
-      "✅ Detector listo",
-
-      "Buscando varias placas..."
-
-    );
-
-
-    programarAnalisis();
-
-
-  } catch (error) {
-
-
-    console.error(error);
-
-
-    cargandoOCR =
-      false;
-
-
-    mensaje(
-
-      "❌ Error preparando OCR",
-
-      error.message
-
-    );
-
-  }
-
-}
-
-
-
-/* ==========================================================
-CICLO
-========================================================== */
-
-function programarAnalisis() {
-
-
-  if (!camaraActiva) {
-
-    return;
-
-  }
-
-
-  if (timerOCR) {
-
-    clearTimeout(
-      timerOCR
-    );
-
-  }
-
-
-  timerOCR =
-
-    setTimeout(
-
-      analizarEscena,
-
-      800
-
-    );
-
-}
-
-
-
-/* ==========================================================
-ANALIZAR ESCENA
-========================================================== */
-
-async function analizarEscena() {
-
-
-  if (
-
-    !camaraActiva
-
-    ||
-
-    !ocrListo
-
-    ||
-
-    analizando
-
-  ) {
-
-    programarAnalisis();
-
-    return;
-
-  }
-
-
-  analizando =
-    true;
-
-
-  try {
-
-
-    /*
-    PASO 1:
-    encontrar varias zonas
-    que parecen placas.
-    */
-
-
-    const resultadoBusqueda =
-
-      detectarCandidatos();
-
-
-    const candidatos =
-
-      resultadoBusqueda
-        .candidatos;
+function crearId() {
 
 
     if (
 
-      candidatos.length === 0
+        window.crypto
+
+        &&
+
+        crypto.randomUUID
 
     ) {
 
 
-      limpiarOverlay();
-
-
-      mostrarPlacas([]);
-
-
-      mensaje(
-
-        "🔎 Buscando placas...",
-
-        "Acerca los vehículos o mejora la iluminación."
-
-      );
-
-
-      return;
+        return crypto.randomUUID();
 
     }
 
 
-    mensaje(
+    return (
 
-      "🔍 Analizando "
-      +
-      candidatos.length
-      +
-      " zonas...",
-
-      "Ampliando placas antes del OCR."
-
-    );
-
-
-    /*
-    PASO 2:
-    crear una imagen grande
-    con todas las regiones.
-    */
-
-
-    const montaje =
-
-      crearMontajeOCR(
-
-        candidatos,
-
-        resultadoBusqueda
-          .ancho,
-
-        resultadoBusqueda
-          .alto
-
-      );
-
-
-    /*
-    PASO 3:
-    un único OCR sobre
-    todas las placas ampliadas.
-    */
-
-
-    const resultadoOCR =
-
-      await workerOCR.recognize(
-
-        montaje.canvas,
-
-        {},
-
-        {
-
-          text: true,
-
-          blocks: true
-
-        }
-
-      );
-
-
-    /*
-    PASO 4:
-    relacionar cada texto
-    con su carrito.
-    */
-
-
-    let detecciones =
-
-      interpretarOCR(
-
-        resultadoOCR.data.blocks,
-
-        montaje.filas,
-
-        montaje.rowHeight
-
-      );
-
-
-    /*
-    Eliminar duplicados.
-    */
-
-    detecciones =
-
-      eliminarDuplicadosTexto(
-        detecciones
-      );
-
-
-    dibujarDetecciones(
-      detecciones
-    );
-
-
-    mostrarPlacas(
-      detecciones
-    );
-
-
-    procesarRegistros(
-      detecciones
-    );
-
-
-    if (
-
-      detecciones.length > 0
-
-    ) {
-
-
-      mensaje(
-
-        "✅ "
-        +
-        detecciones.length
-        +
-        (
-          detecciones.length === 1
-            ?
-            " placa detectada"
-            :
-            " placas detectadas"
-        ),
-
-        "Confirmando y registrando resultados."
-
-      );
-
-
-    } else {
-
-
-      mensaje(
-
-        "🔎 Buscando placas...",
-
-        "Se encontraron zonas, pero el OCR todavía no confirmó texto."
-
-      );
-
-    }
-
-
-  } catch (error) {
-
-
-    console.error(error);
-
-
-    mensaje(
-
-      "⚠️ Error de análisis",
-
-      error.message
-
-    );
-
-
-  } finally {
-
-
-    analizando =
-      false;
-
-
-    if (camaraActiva) {
-
-
-      timerOCR =
-
-        setTimeout(
-
-          analizarEscena,
-
-          1200
-
-        );
-
-    }
-
-  }
-
-}
-
-
-
-/* ==========================================================
-DETECTOR DE CANDIDATOS
-
-Busca múltiples zonas claras
-con caracteres oscuros.
-========================================================== */
-
-function detectarCandidatos() {
-
-
-  const video =
-    document.getElementById(
-      "video"
-    );
-
-
-  const canvas =
-    document.getElementById(
-      "canvasAnalisis"
-    );
-
-
-  const ancho =
-    420;
-
-
-  const alto =
-
-    Math.round(
-
-      video.videoHeight
-
-      /
-
-      video.videoWidth
-
-      *
-
-      ancho
-
-    );
-
-
-  canvas.width =
-    ancho;
-
-
-  canvas.height =
-    alto;
-
-
-  const ctx =
-
-    canvas.getContext(
-
-      "2d",
-
-      {
-        willReadFrequently: true
-      }
-
-    );
-
-
-  ctx.drawImage(
-
-    video,
-
-    0,
-
-    0,
-
-    ancho,
-
-    alto
-
-  );
-
-
-  const imageData =
-
-    ctx.getImageData(
-
-      0,
-
-      0,
-
-      ancho,
-
-      alto
-
-    );
-
-
-  const datos =
-    imageData.data;
-
-
-  const gris =
-
-    new Uint8Array(
-      ancho * alto
-    );
-
-
-  for (
-
-    let i = 0;
-
-    i < gris.length;
-
-    i++
-
-  ) {
-
-
-    const p =
-      i * 4;
-
-
-    gris[i] =
-
-      Math.round(
-
-        datos[p] * 0.299
-
-        +
-
-        datos[p + 1] * 0.587
-
-        +
-
-        datos[p + 2] * 0.114
-
-      );
-
-  }
-
-
-  const integrales =
-
-    crearIntegrales(
-
-      gris,
-
-      ancho,
-
-      alto
-
-    );
-
-
-  const posibles =
-    [];
-
-
-  /*
-  Tamaños para placas
-  pequeñas y grandes.
-  */
-
-  const anchos = [
-
-    28,
-    36,
-    46,
-    58,
-    72,
-    90,
-    112,
-    138
-
-  ];
-
-
-  const proporciones = [
-
-    2.3,
-    2.8,
-    3.3,
-    3.8,
-    4.4
-
-  ];
-
-
-  for (
-
-    const w
-    of
-    anchos
-
-  ) {
-
-
-    for (
-
-      const ratio
-      of
-      proporciones
-
-    ) {
-
-
-      const h =
-
-        Math.max(
-
-          12,
-
-          Math.round(
-            w / ratio
-          )
-
-        );
-
-
-      if (
-
-        w >= ancho
-
-        ||
-
-        h >= alto
-
-      ) {
-
-        continue;
-
-      }
-
-
-      const paso =
-
-        Math.max(
-
-          4,
-
-          Math.round(
-            w / 13
-          )
-
-        );
-
-
-      for (
-
-        let y = 2;
-
-        y <= alto - h - 2;
-
-        y += paso
-
-      ) {
-
-
-        for (
-
-          let x = 2;
-
-          x <= ancho - w - 2;
-
-          x += paso
-
-        ) {
-
-
-          const area =
-            w * h;
-
-
-          const suma =
-
-            sumaRect(
-
-              integrales.suma,
-
-              x,
-              y,
-              w,
-              h,
-
-              integrales.stride
-
-            );
-
-
-          const cantidadOscuros =
-
-            sumaRect(
-
-              integrales.oscuros,
-
-              x,
-              y,
-              w,
-              h,
-
-              integrales.stride
-
-            );
-
-
-          const bordes =
-
-            sumaRect(
-
-              integrales.bordes,
-
-              x,
-              y,
-              w,
-              h,
-
-              integrales.stride
-
-            );
-
-
-          const promedio =
-
-            suma / area;
-
-
-          const oscuros =
-
-            cantidadOscuros
-            /
-            area;
-
-
-          const energiaBordes =
-
-            bordes
-            /
-            area;
-
-
-          /*
-          Zona clara + letras oscuras
-          + suficientes bordes.
-          */
-
-          if (
-
-            promedio < 105
-
-            ||
-
-            promedio > 250
-
-            ||
-
-            oscuros < 0.035
-
-            ||
-
-            oscuros > 0.45
-
-            ||
-
-            energiaBordes < 5
-
-          ) {
-
-            continue;
-
-          }
-
-
-          const premioOscuros =
-
-            Math.max(
-
-              0,
-
-              1
-
-              -
-
-              Math.abs(
-                oscuros - 0.18
-              )
-
-              /
-              0.18
-
-            );
-
-
-          const puntaje =
-
-            energiaBordes * 4
-
-            +
-
-            premioOscuros * 75
-
-            +
-
-            promedio * 0.12
-
-            -
-
-            Math.abs(
-              ratio - 3.3
-            ) * 5;
-
-
-          posibles.push({
-
-            x: x,
-
-            y: y,
-
-            width: w,
-
-            height: h,
-
-            score:
-              puntaje
-
-          });
-
-        }
-
-      }
-
-    }
-
-  }
-
-
-  posibles.sort(
-
-    (a, b) =>
-      b.score - a.score
-
-  );
-
-
-  return {
-
-    ancho: ancho,
-
-    alto: alto,
-
-    candidatos:
-
-      seleccionarCandidatos(
-        posibles
-      )
-
-  };
-
-}
-
-
-
-/* ==========================================================
-IMÁGENES INTEGRALES
-========================================================== */
-
-function crearIntegrales(
-
-  gris,
-
-  ancho,
-
-  alto
-
-) {
-
-
-  const stride =
-    ancho + 1;
-
-
-  const tamano =
-
-    (ancho + 1)
-
-    *
-
-    (alto + 1);
-
-
-  const suma =
-
-    new Float64Array(
-      tamano
-    );
-
-
-  const oscuros =
-
-    new Uint32Array(
-      tamano
-    );
-
-
-  const bordes =
-
-    new Float64Array(
-      tamano
-    );
-
-
-  for (
-
-    let y = 1;
-
-    y <= alto;
-
-    y++
-
-  ) {
-
-
-    let filaSuma =
-      0;
-
-
-    let filaOscuros =
-      0;
-
-
-    let filaBordes =
-      0;
-
-
-    for (
-
-      let x = 1;
-
-      x <= ancho;
-
-      x++
-
-    ) {
-
-
-      const indice =
-
-        (y - 1)
-        *
-        ancho
-
-        +
-
-        (x - 1);
-
-
-      const valor =
-        gris[indice];
-
-
-      filaSuma +=
-        valor;
-
-
-      filaOscuros +=
-
-        valor < 105
-          ?
-          1
-          :
-          0;
-
-
-      let borde =
-        0;
-
-
-      if (x > 1) {
-
-
-        borde =
-
-          Math.abs(
-
-            valor
-
-            -
-
-            gris[
-              indice - 1
-            ]
-
-          );
-
-      }
-
-
-      filaBordes +=
-        borde;
-
-
-      const pos =
-
-        y * stride
-        +
-        x;
-
-
-      suma[pos] =
-
-        suma[
-          pos - stride
-        ]
-
-        +
-
-        filaSuma;
-
-
-      oscuros[pos] =
-
-        oscuros[
-          pos - stride
-        ]
-
-        +
-
-        filaOscuros;
-
-
-      bordes[pos] =
-
-        bordes[
-          pos - stride
-        ]
-
-        +
-
-        filaBordes;
-
-    }
-
-  }
-
-
-  return {
-
-    suma,
-
-    oscuros,
-
-    bordes,
-
-    stride
-
-  };
-
-}
-
-
-
-function sumaRect(
-
-  integral,
-
-  x,
-
-  y,
-
-  w,
-
-  h,
-
-  stride
-
-) {
-
-
-  const x1 =
-    x;
-
-
-  const y1 =
-    y;
-
-
-  const x2 =
-    x + w;
-
-
-  const y2 =
-    y + h;
-
-
-  return (
-
-    integral[
-      y2 * stride + x2
-    ]
-
-    -
-
-    integral[
-      y1 * stride + x2
-    ]
-
-    -
-
-    integral[
-      y2 * stride + x1
-    ]
-
-    +
-
-    integral[
-      y1 * stride + x1
-    ]
-
-  );
-
-}
-
-
-
-/* ==========================================================
-QUITAR RECTÁNGULOS REPETIDOS
-========================================================== */
-
-function seleccionarCandidatos(
-
-  lista
-
-) {
-
-
-  const resultado =
-    [];
-
-
-  for (
-
-    const candidato
-    of
-    lista
-
-  ) {
-
-
-    let repetido =
-      false;
-
-
-    for (
-
-      const seleccionado
-      of
-      resultado
-
-    ) {
-
-
-      if (
-
-        calcularIoU(
-
-          candidato,
-
-          seleccionado
-
-        )
-
-        >
-        0.30
-
-      ) {
-
-
-        repetido =
-          true;
-
-        break;
-
-      }
-
-    }
-
-
-    if (!repetido) {
-
-
-      resultado.push(
-        candidato
-      );
-
-    }
-
-
-    if (
-
-      resultado.length
-      >=
-      MAX_CANDIDATOS
-
-    ) {
-
-      break;
-
-    }
-
-  }
-
-
-  return resultado;
-
-}
-
-
-
-function calcularIoU(
-
-  a,
-
-  b
-
-) {
-
-
-  const x1 =
-
-    Math.max(
-      a.x,
-      b.x
-    );
-
-
-  const y1 =
-
-    Math.max(
-      a.y,
-      b.y
-    );
-
-
-  const x2 =
-
-    Math.min(
-
-      a.x + a.width,
-
-      b.x + b.width
-
-    );
-
-
-  const y2 =
-
-    Math.min(
-
-      a.y + a.height,
-
-      b.y + b.height
-
-    );
-
-
-  const interW =
-
-    Math.max(
-      0,
-      x2 - x1
-    );
-
-
-  const interH =
-
-    Math.max(
-      0,
-      y2 - y1
-    );
-
-
-  const inter =
-
-    interW
-    *
-    interH;
-
-
-  if (inter <= 0) {
-
-    return 0;
-
-  }
-
-
-  const areaA =
-
-    a.width
-    *
-    a.height;
-
-
-  const areaB =
-
-    b.width
-    *
-    b.height;
-
-
-  return (
-
-    inter
-
-    /
-
-    (
-      areaA
-      +
-      areaB
-      -
-      inter
-    )
-
-  );
-
-}
-
-
-
-/* ==========================================================
-CREAR MONTAJE OCR
-
-Cada posible placa se amplía.
-========================================================== */
-
-function crearMontajeOCR(
-
-  candidatos,
-
-  anchoAnalisis,
-
-  altoAnalisis
-
-) {
-
-
-  const video =
-    document.getElementById(
-      "video"
-    );
-
-
-  const canvas =
-    document.getElementById(
-      "canvasOCR"
-    );
-
-
-  const width =
-    600;
-
-
-  const rowHeight =
-    175;
-
-
-  canvas.width =
-    width;
-
-
-  canvas.height =
-
-    candidatos.length
-    *
-    rowHeight;
-
-
-  const ctx =
-
-    canvas.getContext(
-      "2d"
-    );
-
-
-  ctx.fillStyle =
-    "white";
-
-
-  ctx.fillRect(
-
-    0,
-
-    0,
-
-    canvas.width,
-
-    canvas.height
-
-  );
-
-
-  const escalaX =
-
-    video.videoWidth
-
-    /
-
-    anchoAnalisis;
-
-
-  const escalaY =
-
-    video.videoHeight
-
-    /
-
-    altoAnalisis;
-
-
-  const filas =
-    [];
-
-
-  candidatos.forEach(
-
-    (candidato, indice) => {
-
-
-      let x =
-
-        candidato.x
-        *
-        escalaX;
-
-
-      let y =
-
-        candidato.y
-        *
-        escalaY;
-
-
-      let w =
-
-        candidato.width
-        *
-        escalaX;
-
-
-      let h =
-
-        candidato.height
-        *
-        escalaY;
-
-
-      /*
-      Añadir margen alrededor.
-      */
-
-      const margenX =
-
-        w * 0.15;
-
-
-      const margenY =
-
-        h * 0.45;
-
-
-      x =
-        Math.max(
-          0,
-          x - margenX
-        );
-
-
-      y =
-        Math.max(
-          0,
-          y - margenY
-        );
-
-
-      w =
-        Math.min(
-
-          video.videoWidth - x,
-
-          w + margenX * 2
-
-        );
-
-
-      h =
-        Math.min(
-
-          video.videoHeight - y,
-
-          h + margenY * 2
-
-        );
-
-
-      /*
-      AGRANDAR.
-      */
-
-      const factor =
-
-        Math.min(
-
-          560 / w,
-
-          130 / h
-
-        );
-
-
-      const destinoW =
-
-        w * factor;
-
-
-      const destinoH =
-
-        h * factor;
-
-
-      const destinoX =
-
-        (
-          width
-          -
-          destinoW
-        )
-        /
-        2;
-
-
-      const destinoY =
-
-        indice
-        *
-        rowHeight
-
-        +
-
-        (
-          rowHeight
-          -
-          destinoH
-        )
-        /
-        2;
-
-
-      ctx.filter =
-
-        "grayscale(1) contrast(2.0) brightness(1.1)";
-
-
-      ctx.drawImage(
-
-        video,
-
-        x,
-        y,
-        w,
-        h,
-
-        destinoX,
-        destinoY,
-        destinoW,
-        destinoH
-
-      );
-
-
-      ctx.filter =
-        "none";
-
-
-      /*
-      Línea para separar candidatos.
-      */
-
-      ctx.fillStyle =
-        "#dddddd";
-
-
-      ctx.fillRect(
-
-        0,
-
-        indice
-        *
-        rowHeight,
-
-        width,
-
-        2
-
-      );
-
-
-      filas.push({
-
-        indice:
-          indice,
-
-        x:
-          x,
-
-        y:
-          y,
-
-        width:
-          w,
-
-        height:
-          h
-
-      });
-
-    }
-
-  );
-
-
-  return {
-
-    canvas,
-
-    filas,
-
-    rowHeight
-
-  };
-
-}
-
-
-
-/* ==========================================================
-INTERPRETAR OCR
-========================================================== */
-
-function interpretarOCR(
-
-  blocks,
-
-  filas,
-
-  rowHeight
-
-) {
-
-
-  const resultado =
-    [];
-
-
-  if (!blocks) {
-
-    return resultado;
-
-  }
-
-
-  const mejores =
-    new Map();
-
-
-  for (
-
-    const block
-    of
-    blocks
-
-  ) {
-
-
-    if (!block.paragraphs) {
-
-      continue;
-
-    }
-
-
-    for (
-
-      const paragraph
-      of
-      block.paragraphs
-
-    ) {
-
-
-      if (!paragraph.lines) {
-
-        continue;
-
-      }
-
-
-      for (
-
-        const line
-        of
-        paragraph.lines
-
-      ) {
-
-
-        const placa =
-
-          normalizarPlaca(
-            line.text
-          );
-
-
-        if (!placa) {
-
-          continue;
-
-        }
-
-
-        if (!line.bbox) {
-
-          continue;
-
-        }
-
-
-        const confianza =
-
-          Number(
-            line.confidence || 0
-          );
-
-
-        /*
-        Permitimos una confianza baja
-        porque después exigimos repetición.
-        */
-
-        if (confianza < 15) {
-
-          continue;
-
-        }
-
-
-        const centroY =
-
-          (
-            line.bbox.y0
-            +
-            line.bbox.y1
-          )
-          /
-          2;
-
-
-        const fila =
-
-          Math.floor(
-
-            centroY
-            /
-            rowHeight
-
-          );
-
-
-        if (
-
-          fila < 0
-
-          ||
-
-          fila >= filas.length
-
-        ) {
-
-          continue;
-
-        }
-
-
-        const actual =
-
-          mejores.get(
-            fila
-          );
-
-
-        if (
-
-          !actual
-
-          ||
-
-          confianza
-          >
-          actual.confianza
-
-        ) {
-
-
-          mejores.set(
-
-            fila,
-
-            {
-
-              texto:
-                placa,
-
-              confianza:
-                confianza,
-
-              rect:
-                filas[fila]
-
-            }
-
-          );
-
-        }
-
-      }
-
-    }
-
-  }
-
-
-  for (
-
-    const dato
-    of
-    mejores.values()
-
-  ) {
-
-    resultado.push(
-      dato
-    );
-
-  }
-
-
-  return resultado;
-
-}
-
-
-
-/* ==========================================================
-NORMALIZAR PLACA
-========================================================== */
-
-function normalizarPlaca(
-
-  texto
-
-) {
-
-
-  if (!texto) {
-
-    return null;
-
-  }
-
-
-  let limpio =
-
-    String(texto)
-      .toUpperCase()
-      .replace(
-        /[^A-Z0-9]/g,
-        ""
-      );
-
-
-  if (
-
-    limpio.length < 6
-
-  ) {
-
-    return null;
-
-  }
-
-
-  /*
-  Probamos grupos de 6 caracteres.
-  */
-
-  for (
-
-    let inicio = 0;
-
-    inicio <= limpio.length - 6;
-
-    inicio++
-
-  ) {
-
-
-    const grupo =
-
-      limpio.substring(
-
-        inicio,
-
-        inicio + 6
-
-      );
-
-
-    let letras =
-
-      grupo.substring(
-        0,
-        3
-      );
-
-
-    let numeros =
-
-      grupo.substring(
-        3,
-        6
-      );
-
-
-    /*
-    Errores típicos
-    en la parte de letras.
-    */
-
-    letras =
-
-      letras
-        .replace(/0/g, "O")
-        .replace(/1/g, "I")
-        .replace(/5/g, "S")
-        .replace(/8/g, "B");
-
-
-    /*
-    Errores típicos
-    en la parte numérica.
-    */
-
-    numeros =
-
-      numeros
-        .replace(/[OQD]/g, "0")
-        .replace(/[IL]/g, "1")
-        .replace(/Z/g, "2")
-        .replace(/S/g, "5")
-        .replace(/G/g, "6")
-        .replace(/B/g, "8");
-
-
-    if (
-
-      /^[A-Z]{3}$/.test(
-        letras
-      )
-
-      &&
-
-      /^[0-9]{3}$/.test(
-        numeros
-      )
-
-    ) {
-
-
-      return (
-
-        letras
+        Date.now()
 
         +
 
@@ -2815,621 +768,2094 @@ function normalizarPlaca(
 
         +
 
-        numeros
+        Math.random()
+            .toString(36)
+            .substring(2)
 
-      );
-
-    }
-
-  }
-
-
-  return null;
+    );
 
 }
 
 
 
-/* ==========================================================
-ELIMINAR PLACAS REPETIDAS
-EN LA MISMA IMAGEN
-========================================================== */
+/* =========================================================
 
-function eliminarDuplicadosTexto(
+MENSAJES
 
-  detecciones
+========================================================= */
 
-) {
+function mensaje(
 
+    texto,
 
-  const mapa =
-    new Map();
-
-
-  detecciones.forEach(
-
-    deteccion => {
-
-
-      const anterior =
-
-        mapa.get(
-          deteccion.texto
-        );
-
-
-      if (
-
-        !anterior
-
-        ||
-
-        deteccion.confianza
-        >
-        anterior.confianza
-
-      ) {
-
-
-        mapa.set(
-
-          deteccion.texto,
-
-          deteccion
-
-        );
-
-      }
-
-    }
-
-  );
-
-
-  return Array.from(
-    mapa.values()
-  );
-
-}
-
-
-
-/* ==========================================================
-DIBUJAR RECTÁNGULOS
-========================================================== */
-
-function dibujarDetecciones(
-
-  detecciones
+    detalle = ""
 
 ) {
 
-
-  const video =
-    document.getElementById(
-      "video"
-    );
-
-
-  const overlay =
-    document.getElementById(
-      "overlay"
-    );
-
-
-  overlay.width =
-    video.videoWidth;
-
-
-  overlay.height =
-    video.videoHeight;
-
-
-  const ctx =
-    overlay.getContext(
-      "2d"
-    );
-
-
-  ctx.clearRect(
-
-    0,
-
-    0,
-
-    overlay.width,
-
-    overlay.height
-
-  );
-
-
-  detecciones.forEach(
-
-    deteccion => {
-
-
-      const r =
-        deteccion.rect;
-
-
-      ctx.strokeStyle =
-        "#00ff55";
-
-
-      ctx.lineWidth =
-        7;
-
-
-      ctx.strokeRect(
-
-        r.x,
-
-        r.y,
-
-        r.width,
-
-        r.height
-
-      );
-
-
-      ctx.font =
-
-        "bold 26px Arial";
-
-
-      const medida =
-
-        ctx.measureText(
-          deteccion.texto
-        );
-
-
-      const etiquetaW =
-
-        medida.width
-        +
-        18;
-
-
-      const etiquetaY =
-
-        Math.max(
-
-          0,
-
-          r.y - 38
-
-        );
-
-
-      ctx.fillStyle =
-        "#00ff55";
-
-
-      ctx.fillRect(
-
-        r.x,
-
-        etiquetaY,
-
-        etiquetaW,
-
-        36
-
-      );
-
-
-      ctx.fillStyle =
-        "#000";
-
-
-      ctx.fillText(
-
-        deteccion.texto,
-
-        r.x + 8,
-
-        etiquetaY + 27
-
-      );
-
-    }
-
-  );
-
-}
-
-
-
-/* ==========================================================
-MOSTRAR PLACAS
-========================================================== */
-
-function mostrarPlacas(
-
-  detecciones
-
-) {
-
-
-  const contenedor =
 
     document.getElementById(
-      "listaPlacas"
-    );
+        "estado"
+    ).innerText = texto;
 
 
-  if (
-
-    detecciones.length === 0
-
-  ) {
-
-
-    contenedor.innerHTML =
-      "<br>---";
-
-
-    return;
-
-  }
-
-
-  contenedor.innerHTML =
-    "";
-
-
-  detecciones.forEach(
-
-    dato => {
-
-
-      const item =
-
-        document.createElement(
-          "div"
-        );
-
-
-      item.className =
-        "placa";
-
-
-      const confianza =
-
-        Math.round(
-          dato.confianza
-        );
-
-
-      item.innerHTML =
-
-        "🚗 "
-        +
-        dato.texto
-
-        +
-
-        "<div class='guardado'>"
-
-        +
-
-        confianza
-
-        +
-
-        "% confianza"
-
-        +
-
-        "</div>";
-
-
-      contenedor.appendChild(
-        item
-      );
-
-    }
-
-  );
+    document.getElementById(
+        "detalle"
+    ).innerText = detalle;
 
 }
 
 
 
-/* ==========================================================
-CONFIRMAR Y GUARDAR
-========================================================== */
+/* =========================================================
 
-function procesarRegistros(
+INICIAR CÁMARA
 
-  detecciones
+========================================================= */
 
-) {
+async function iniciarCamara() {
 
 
-  const ahora =
-    Date.now();
+    const video =
 
-
-  detecciones.forEach(
-
-    deteccion => {
-
-
-      let memoria =
-
-        memoriaPlacas.get(
-          deteccion.texto
+        document.getElementById(
+            "video"
         );
 
 
-      if (!memoria) {
+    try {
 
 
-        memoria = {
+        mensaje(
 
-          veces: 0,
+            "📷 Iniciando cámara...",
 
-          ultimaVista: 0,
-
-          ultimoGuardado: 0
-
-        };
-
-      }
-
-
-      /*
-      Si apareció recientemente,
-      incrementamos confirmaciones.
-      */
-
-      if (
-
-        ahora
-        -
-        memoria.ultimaVista
-
-        <
-        8000
-
-      ) {
-
-
-        memoria.veces++;
-
-
-      } else {
-
-
-        memoria.veces =
-          1;
-
-      }
-
-
-      memoria.ultimaVista =
-        ahora;
-
-
-      /*
-      Debe ser vista al menos
-      dos veces para guardarla.
-      */
-
-      if (
-
-        memoria.veces >= 2
-
-        &&
-
-        ahora
-        -
-        memoria.ultimoGuardado
-
-        >
-        TIEMPO_REPETIDO
-
-      ) {
-
-
-        memoria.ultimoGuardado =
-          ahora;
-
-
-        guardarEnGoogleSheets(
-
-          deteccion.texto,
-
-          deteccion.confianza
+            "Permite acceso a la cámara."
 
         );
 
-      }
+
+        streamCamara =
+
+            await navigator
+                .mediaDevices
+                .getUserMedia({
 
 
-      memoriaPlacas.set(
+                    video: {
 
-        deteccion.texto,
 
-        memoria
+                        facingMode: {
 
-      );
+                            ideal:
+                                "environment"
+
+                        },
+
+
+                        width: {
+
+                            ideal:
+                                1920
+
+                        },
+
+
+                        height: {
+
+                            ideal:
+                                1080
+
+                        }
+
+
+                    },
+
+
+                    audio:
+                        false
+
+
+                });
+
+
+        video.srcObject =
+            streamCamara;
+
+
+        await video.play();
+
+
+        camaraActiva =
+            true;
+
+
+        document.getElementById(
+            "btnIniciar"
+        ).disabled = true;
+
+
+        document.getElementById(
+            "btnDetener"
+        ).disabled = false;
+
+
+        prepararOverlay();
+
+
+        dibujarZonaLectura();
+
+
+        mensaje(
+
+            "🎯 Sistema listo",
+
+            "Coloca la placa dentro de la zona de lectura."
+
+        );
+
+
+        cambiarServidor(
+            true
+        );
+
+
+        programarCaptura();
+
+
+    } catch (error) {
+
+
+        console.error(error);
+
+
+        mensaje(
+
+            "❌ No se pudo iniciar cámara",
+
+            error.name
+            +
+            ": "
+            +
+            error.message
+
+        );
 
     }
-
-  );
 
 }
 
 
 
-/* ==========================================================
-GOOGLE SHEETS
-========================================================== */
+/* =========================================================
 
-async function guardarEnGoogleSheets(
+DETENER
 
-  placa,
+========================================================= */
 
-  confianza
-
-) {
+function detenerCamara() {
 
 
-  /*
-  Mientras no configures
-  Apps Script no intentamos guardar.
-  */
-
-  if (
-
-    !APPS_SCRIPT_URL
-
-    ||
-
-    APPS_SCRIPT_URL.includes(
-      "PEGA_AQUI"
-    )
-
-  ) {
+    camaraActiva =
+        false;
 
 
-    console.log(
+    procesando =
+        false;
 
-      "Google Sheets todavía no configurado."
 
+    if (temporizador) {
+
+
+        clearTimeout(
+            temporizador
+        );
+
+
+        temporizador =
+            null;
+
+    }
+
+
+    if (streamCamara) {
+
+
+        streamCamara
+            .getTracks()
+            .forEach(
+
+                track =>
+                    track.stop()
+
+            );
+
+
+        streamCamara =
+            null;
+
+    }
+
+
+    document.getElementById(
+        "video"
+    ).srcObject =
+        null;
+
+
+    limpiarOverlay();
+
+
+    document.getElementById(
+        "btnIniciar"
+    ).disabled =
+        false;
+
+
+    document.getElementById(
+        "btnDetener"
+    ).disabled =
+        true;
+
+
+    cambiarServidor(
+        false
     );
 
 
-    return;
+    mensaje(
 
-  }
+        "⏹ Cámara detenida",
 
+        "Presiona INICIAR para continuar."
 
-  const datos = {
+    );
 
-    token:
-      TOKEN_REGISTRO,
-
-    placa:
-      placa,
-
-    confianza:
-
-      Math.round(
-        confianza
-      ),
-
-    sesion:
-      SESION,
-
-    origen:
-      "Smart Plate Web",
-
-    dispositivo:
-
-      navigator.userAgent
-        .substring(
-          0,
-          150
-        )
-
-  };
+}
 
 
-  try {
+
+/* =========================================================
+
+OVERLAY
+
+========================================================= */
+
+function prepararOverlay() {
+
+
+    const video =
+
+        document.getElementById(
+            "video"
+        );
+
+
+    const overlay =
+
+        document.getElementById(
+            "overlay"
+        );
+
+
+    overlay.width =
+        video.videoWidth;
+
+
+    overlay.height =
+        video.videoHeight;
+
+}
+
+
+
+/* =========================================================
+
+ZONA DE LECTURA
+
+========================================================= */
+
+function obtenerZonaLectura() {
+
+
+    const video =
+
+        document.getElementById(
+            "video"
+        );
 
 
     /*
-    no-cors permite enviar el registro
-    desde GitHub Pages al Apps Script.
+    Analizamos aproximadamente
+    86% del ancho
+    y 60% de la altura.
 
-    No necesitamos leer la respuesta.
+    Deja fuera principalmente
+    techo y piso.
     */
 
 
-    await fetch(
+    const width =
 
-      APPS_SCRIPT_URL,
-
-      {
-
-        method:
-          "POST",
-
-        mode:
-          "no-cors",
-
-        headers: {
-
-          "Content-Type":
-
-            "text/plain;charset=utf-8"
-
-        },
-
-        body:
-
-          JSON.stringify(
-            datos
-          ),
-
-        keepalive:
-          true
-
-      }
-
-    );
+        video.videoWidth
+        *
+        0.86;
 
 
-    console.log(
+    const height =
 
-      "Registro enviado:",
-
-      placa
-
-    );
+        video.videoHeight
+        *
+        0.60;
 
 
-  } catch (error) {
+    const x =
+
+        (
+            video.videoWidth
+            -
+            width
+        )
+        /
+        2;
 
 
-    console.error(
+    const y =
 
-      "Error guardando:",
+        (
+            video.videoHeight
+            -
+            height
+        )
+        /
+        2;
 
-      error
 
-    );
+    return {
 
-  }
+        x,
+
+        y,
+
+        width,
+
+        height
+
+    };
 
 }
 
 
 
-/* ==========================================================
-CERRAR OCR
-========================================================== */
+/* =========================================================
 
-window.addEventListener(
+DIBUJAR ZONA
 
-  "beforeunload",
+========================================================= */
 
-  function () {
+function dibujarZonaLectura() {
 
 
-    if (workerOCR) {
+    if (!camaraActiva) {
 
-      workerOCR.terminate();
+        return;
 
     }
 
-  }
+
+    const overlay =
+
+        document.getElementById(
+            "overlay"
+        );
+
+
+    const ctx =
+
+        overlay.getContext(
+            "2d"
+        );
+
+
+    const zona =
+        obtenerZonaLectura();
+
+
+    ctx.clearRect(
+
+        0,
+
+        0,
+
+        overlay.width,
+
+        overlay.height
+
+    );
+
+
+    /*
+    Zona amarilla inicial.
+    */
+
+    ctx.strokeStyle =
+        "#ffd600";
+
+
+    ctx.lineWidth =
+        5;
+
+
+    ctx.setLineDash([
+        20,
+        12
+    ]);
+
+
+    ctx.strokeRect(
+
+        zona.x,
+
+        zona.y,
+
+        zona.width,
+
+        zona.height
+
+    );
+
+
+    ctx.setLineDash([]);
+
+
+    /*
+    Etiqueta
+    */
+
+    ctx.fillStyle =
+        "#ffd600";
+
+
+    ctx.fillRect(
+
+        zona.x,
+
+        zona.y,
+
+        245,
+
+        40
+
+    );
+
+
+    ctx.fillStyle =
+        "#000";
+
+
+    ctx.font =
+        "bold 24px Arial";
+
+
+    ctx.fillText(
+
+        "ZONA DE LECTURA",
+
+        zona.x + 10,
+
+        zona.y + 28
+
+    );
+
+}
+
+
+
+/* =========================================================
+
+LIMPIAR
+
+========================================================= */
+
+function limpiarOverlay() {
+
+
+    const overlay =
+
+        document.getElementById(
+            "overlay"
+        );
+
+
+    const ctx =
+
+        overlay.getContext(
+            "2d"
+        );
+
+
+    ctx.clearRect(
+
+        0,
+
+        0,
+
+        overlay.width,
+
+        overlay.height
+
+    );
+
+}
+
+
+
+/* =========================================================
+
+PROGRAMAR SIGUIENTE CAPTURA
+
+========================================================= */
+
+function programarCaptura() {
+
+
+    if (!camaraActiva) {
+
+        return;
+
+    }
+
+
+    if (temporizador) {
+
+
+        clearTimeout(
+            temporizador
+        );
+
+    }
+
+
+    temporizador =
+
+        setTimeout(
+
+            capturarYEnviar,
+
+            INTERVALO_CAPTURA
+
+        );
+
+}
+
+
+
+/* =========================================================
+
+CAPTURAR IMAGEN
+
+========================================================= */
+
+async function capturarYEnviar() {
+
+
+    if (
+
+        !camaraActiva
+
+        ||
+
+        procesando
+
+    ) {
+
+
+        programarCaptura();
+
+        return;
+
+    }
+
+
+    procesando =
+        true;
+
+
+    const inicio =
+        performance.now();
+
+
+    try {
+
+
+        const video =
+
+            document.getElementById(
+                "video"
+            );
+
+
+        const canvas =
+
+            document.getElementById(
+                "captura"
+            );
+
+
+        const zona =
+            obtenerZonaLectura();
+
+
+        /*
+        Tamaño del JPEG
+        que enviaremos.
+        */
+
+        const anchoDestino =
+
+            Math.min(
+
+                ANCHO_ENVIO,
+
+                Math.round(
+                    zona.width
+                )
+
+            );
+
+
+        const altoDestino =
+
+            Math.round(
+
+                zona.height
+
+                /
+
+                zona.width
+
+                *
+
+                anchoDestino
+
+            );
+
+
+        canvas.width =
+            anchoDestino;
+
+
+        canvas.height =
+            altoDestino;
+
+
+        const ctx =
+
+            canvas.getContext(
+
+                "2d",
+
+                {
+                    willReadFrequently:
+                        false
+                }
+
+            );
+
+
+        /*
+        Dibujamos SOLAMENTE
+        la zona de interés.
+        */
+
+        ctx.drawImage(
+
+            video,
+
+
+            zona.x,
+
+            zona.y,
+
+            zona.width,
+
+            zona.height,
+
+
+            0,
+
+            0,
+
+            anchoDestino,
+
+            altoDestino
+
+        );
+
+
+        /*
+        Convertimos a JPEG.
+        */
+
+        const dataURL =
+
+            canvas.toDataURL(
+
+                "image/jpeg",
+
+                CALIDAD_JPEG
+
+            );
+
+
+        /*
+        Quitamos:
+
+        data:image/jpeg;base64,
+        */
+
+        const base64 =
+
+            dataURL.split(
+                ","
+            )[1];
+
+
+        mensaje(
+
+            "📡 Analizando vehículo...",
+
+            "Enviando imagen al detector ALPR."
+
+        );
+
+
+        /*
+        Enviar imagen al servidor.
+
+        no-cors es intencional.
+
+        Apps Script procesará la captura
+        de forma privada.
+        */
+
+        await fetch(
+
+            API_URL,
+
+            {
+
+                method:
+                    "POST",
+
+                mode:
+                    "no-cors",
+
+                headers: {
+
+                    "Content-Type":
+
+                        "text/plain;charset=utf-8"
+
+                },
+
+                body:
+
+                    JSON.stringify({
+
+                        accion:
+                            "analizar",
+
+
+                        sesion:
+                            SESION,
+
+
+                        imagen:
+                            base64,
+
+
+                        tipo:
+                            "image/jpeg",
+
+
+                        width:
+                            anchoDestino,
+
+
+                        height:
+                            altoDestino,
+
+
+                        timestamp:
+                            Date.now()
+
+                    })
+
+            }
+
+        );
+
+
+        /*
+        Pedimos el resultado unos
+        milisegundos después.
+        */
+
+        setTimeout(
+
+            solicitarResultado,
+
+            450
+
+        );
+
+
+        setTimeout(
+
+            solicitarResultado,
+
+            900
+
+        );
+
+
+        setTimeout(
+
+            solicitarResultado,
+
+            1500
+
+        );
+
+
+        const fin =
+            performance.now();
+
+
+        ultimaCaptura =
+
+            Math.round(
+                fin - inicio
+            );
+
+
+    } catch (error) {
+
+
+        console.error(
+            error
+        );
+
+
+        mensaje(
+
+            "⚠️ Error enviando imagen",
+
+            error.message
+
+        );
+
+
+    } finally {
+
+
+        procesando =
+            false;
+
+
+        if (camaraActiva) {
+
+
+            programarCaptura();
+
+        }
+
+    }
+
+}
+
+
+
+/* =========================================================
+
+CONSULTAR RESULTADO
+
+Usamos JSONP para poder leer
+la respuesta de Apps Script
+desde GitHub Pages.
+
+========================================================= */
+
+function solicitarResultado() {
+
+
+    if (!camaraActiva) {
+
+        return;
+
+    }
+
+
+    const callback =
+
+        "smartPlateCallback_"
+
+        +
+
+        Date.now()
+
+        +
+
+        "_"
+
+        +
+
+        Math.floor(
+            Math.random() * 10000
+        );
+
+
+    const script =
+
+        document.createElement(
+            "script"
+        );
+
+
+    let terminado =
+        false;
+
+
+
+    window[callback] =
+
+        function(datos) {
+
+
+            if (terminado) {
+
+                return;
+
+            }
+
+
+            terminado =
+                true;
+
+
+            try {
+
+
+                procesarResultado(
+                    datos
+                );
+
+
+            } finally {
+
+
+                limpiarJSONP();
+
+            }
+
+        };
+
+
+
+    function limpiarJSONP() {
+
+
+        try {
+
+            delete window[
+                callback
+            ];
+
+        } catch (_) {}
+
+
+        try {
+
+            script.remove();
+
+        } catch (_) {}
+
+    }
+
+
+
+    script.onerror =
+
+        function() {
+
+
+            if (!terminado) {
+
+
+                terminado =
+                    true;
+
+
+                limpiarJSONP();
+
+            }
+
+        };
+
+
+    script.src =
+
+        API_URL
+
+        +
+
+        "?accion=resultado"
+
+        +
+
+        "&sesion="
+
+        +
+
+        encodeURIComponent(
+            SESION
+        )
+
+        +
+
+        "&callback="
+
+        +
+
+        encodeURIComponent(
+            callback
+        )
+
+        +
+
+        "&t="
+
+        +
+
+        Date.now();
+
+
+    document.body.appendChild(
+        script
+    );
+
+
+    /*
+    Limpieza automática.
+    */
+
+    setTimeout(
+
+        function() {
+
+
+            if (!terminado) {
+
+
+                terminado =
+                    true;
+
+
+                limpiarJSONP();
+
+            }
+
+        },
+
+        5000
+
+    );
+
+}
+
+
+
+/* =========================================================
+
+PROCESAR RESPUESTA DEL SERVIDOR
+
+Esperamos algo así:
+
+{
+  ok: true,
+  results: [
+    {
+      plate: "ABC123",
+      score: 0.95,
+      box: {
+        xmin: 100,
+        ymin: 50,
+        xmax: 260,
+        ymax: 110
+      }
+    }
+  ],
+  width: 900,
+  height: 500,
+  processing_ms: 850
+}
+
+========================================================= */
+
+function procesarResultado(
+    datos
+) {
+
+
+    if (
+
+        !datos
+
+        ||
+
+        !datos.ok
+
+    ) {
+
+
+        if (
+
+            datos
+
+            &&
+
+            datos.procesando
+
+        ) {
+
+
+            mensaje(
+
+                "🧠 Reconociendo placa...",
+
+                "Esperando respuesta del servidor."
+
+            );
+
+
+        }
+
+
+        return;
+
+    }
+
+
+    ultimaRespuesta =
+        datos;
+
+
+    cambiarServidor(
+        true
+    );
+
+
+    /*
+    Tiempo total.
+    */
+
+    if (
+
+        datos.processing_ms
+        !== undefined
+
+    ) {
+
+
+        document.getElementById(
+            "tiempo"
+        ).innerText =
+
+            (
+                Number(
+                    datos.processing_ms
+                )
+
+                /
+                1000
+
+            ).toFixed(1)
+
+            +
+
+            "s";
+
+    }
+
+
+    const resultados =
+
+        Array.isArray(
+            datos.results
+        )
+
+        ?
+
+        datos.results
+
+        :
+
+        [];
+
+
+    dibujarResultados(
+
+        resultados,
+
+        Number(
+            datos.width || 900
+        ),
+
+        Number(
+            datos.height || 500
+        )
+
+    );
+
+
+    actualizarLista(
+        resultados
+    );
+
+
+    procesarVehiculos(
+        resultados
+    );
+
+
+
+    if (
+
+        resultados.length === 0
+
+    ) {
+
+
+        mensaje(
+
+            "🔎 Buscando placa...",
+
+            "Mantén el vehículo dentro de la zona amarilla."
+
+        );
+
+
+    } else {
+
+
+        mensaje(
+
+            "✅ "
+            +
+            resultados.length
+            +
+            (
+                resultados.length === 1
+                ?
+                " placa detectada"
+                :
+                " placas detectadas"
+            ),
+
+            "Resultado recibido correctamente."
+
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+
+FORMATO DE PLACA
+
+ABC123 -> ABC-123
+
+========================================================= */
+
+function formatearPlaca(
+    texto
+) {
+
+
+    if (!texto) {
+
+        return "";
+    }
+
+
+    let limpio =
+
+        String(texto)
+            .toUpperCase()
+            .replace(
+                /[^A-Z0-9]/g,
+                ""
+            );
+
+
+    /*
+    Para las placas ficticias
+    de nuestra maqueta.
+    */
+
+    if (
+
+        /^[A-Z]{3}[0-9]{3}$/
+            .test(limpio)
+
+    ) {
+
+
+        return (
+
+            limpio.substring(
+                0,
+                3
+            )
+
+            +
+
+            "-"
+
+            +
+
+            limpio.substring(
+                3,
+                6
+            )
+
+        );
+
+    }
+
+
+    /*
+    Si en el futuro probamos
+    otro formato, no lo destruimos.
+    */
+
+    return limpio;
+
+}
+
+
+
+/* =========================================================
+
+DIBUJAR RECTÁNGULOS
+
+========================================================= */
+
+function dibujarResultados(
+
+    resultados,
+
+    imageWidth,
+
+    imageHeight
+
+) {
+
+
+    if (!camaraActiva) {
+
+        return;
+
+    }
+
+
+    const video =
+
+        document.getElementById(
+            "video"
+        );
+
+
+    const overlay =
+
+        document.getElementById(
+            "overlay"
+        );
+
+
+    /*
+    Adaptar canvas.
+    */
+
+    overlay.width =
+        video.videoWidth;
+
+
+    overlay.height =
+        video.videoHeight;
+
+
+    const ctx =
+
+        overlay.getContext(
+            "2d"
+        );
+
+
+    ctx.clearRect(
+
+        0,
+
+        0,
+
+        overlay.width,
+
+        overlay.height
+
+    );
+
+
+    const zona =
+        obtenerZonaLectura();
+
+
+
+    /*
+    Mantener visible zona de captura.
+    */
+
+    ctx.strokeStyle =
+        "#ffd600";
+
+
+    ctx.lineWidth =
+        4;
+
+
+    ctx.setLineDash([
+        20,
+        12
+    ]);
+
+
+    ctx.strokeRect(
+
+        zona.x,
+
+        zona.y,
+
+        zona.width,
+
+        zona.height
+
+    );
+
+
+    ctx.setLineDash([]);
+
+
+
+    /*
+    Dibujar cada placa.
+    */
+
+    resultados.forEach(
+
+        resultado => {
+
+
+            if (!resultado.box) {
+
+                return;
+            }
+
+
+            const box =
+                resultado.box;
+
+
+            /*
+            Coordenadas API
+            corresponden al JPEG enviado.
+
+            Las convertimos a coordenadas
+            de la cámara.
+            */
+
+
+            const x =
+
+                zona.x
+
+                +
+
+                (
+                    Number(
+                        box.xmin
+                    )
+
+                    /
+                    imageWidth
+                )
+
+                *
+
+                zona.width;
+
+
+            const y =
+
+                zona.y
+
+                +
+
+                (
+                    Number(
+                        box.ymin
+                    )
+
+                    /
+                    imageHeight
+                )
+
+                *
+
+                zona.height;
+
+
+            const xmax =
+
+                zona.x
+
+                +
+
+                (
+                    Number(
+                        box.xmax
+                    )
+
+                    /
+                    imageWidth
+                )
+
+                *
+
+                zona.width;
+
+
+            const ymax =
+
+                zona.y
+
+                +
+
+                (
+                    Number(
+                        box.ymax
+                    )
+
+                    /
+                    imageHeight
+                )
+
+                *
+
+                zona.height;
+
+
+            const width =
+                xmax - x;
+
+
+            const height =
+                ymax - y;
+
+
+            /*
+            Margen alrededor
+            de la placa.
+            */
+
+            const margenX =
+
+                width
+                *
+                0.10;
+
+
+            const margenY =
+
+                height
+                *
+                0.25;
+
+
+            const rx =
+
+                Math.max(
+                    0,
+                    x - margenX
+                );
+
+
+            const ry =
+
+                Math.max(
+                    0,
+                    y - margenY
+                );
+
+
+            const rw =
+
+                width
+                +
+                margenX * 2;
+
+
+            const rh =
+
+                height
+                +
+                margenY * 2;
+
+
+
+            /*
+            Rectángulo verde.
+            */
+
+            ctx.strokeStyle =
+                "#00ff55";
+
+
+            ctx.lineWidth =
+                7;
+
+
+            ctx.strokeRect(
+
+                rx,
+
+                ry,
+
+                rw,
+
+                rh
+
+            );
+
+
+
+            /*
+            Placa reconocida.
+            */
+
+            const placa =
+
+                formatearPlaca(
+                    resultado.plate
+                );
+
+
+            ctx.font =
+                "bold 28px Arial";
+
+
+            const textoWidth =
+
+                ctx.measureText(
+                    placa
+                ).width;
+
+
+            const etiquetaWidth =
+
+                textoWidth
+                +
+                20;
+
+
+            const etiquetaHeight =
+                38;
+
+
+            const etiquetaY =
+
+                Math.max(
+
+                    0,
+
+                    ry
+                    -
+                    etiquetaHeight
+
+                );
+
+
+            ctx.fillStyle =
+                "#00ff55";
+
+
+            ctx.fillRect(
+
+                rx,
+
+                etiquetaY,
+
+                etiquetaWidth,
+
+                etiquetaHeight
+
+            );
+
+
+            ctx.fillStyle =
+                "#000";
+
+
+            ctx.fillText(
+
+                placa,
+
+                rx + 10,
+
+                etiquetaY + 28
+
+            );
+
+        }
+
+    );
+
+}
+
+
+
+/* =========================================================
+
+LISTA DE PLACAS
+
+========================================================= */
+
+function actualizarLista(
+    resultados
+) {
+
+
+    const lista =
+
+        document.getElementById(
+            "listaPlacas"
+        );
+
+
+    if (
+
+        resultados.length === 0
+
+    ) {
+
+
+        lista.innerHTML =
+            "---";
+
+
+        return;
+
+    }
+
+
+    lista.innerHTML =
+        "";
+
+
+    resultados.forEach(
+
+        resultado => {
+
+
+            const placa =
+
+                formatearPlaca(
+                    resultado.plate
+                );
+
+
+            const confianza =
+
+                Math.round(
+
+                    Number(
+                        resultado.score || 0
+                    )
+
+                    *
+                    100
+
+                );
+
+
+            const item =
+
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "placaItem";
+
+
+            item.innerHTML =
+
+                "🚗 "
+
+                +
+
+                placa
+
+                +
+
+                "<div class='confianza'>"
+
+                +
+
+                confianza
+
+                +
+
+                "% confianza"
+
+                +
+
+                "</div>";
+
+
+            lista.appendChild(
+                item
+            );
+
+        }
+
+    );
+
+}
+
+
+
+/* =========================================================
+
+CONTAR VEHÍCULOS
+
+========================================================= */
+
+function procesarVehiculos(
+    resultados
+) {
+
+
+    const ahora =
+        Date.now();
+
+
+    resultados.forEach(
+
+        resultado => {
+
+
+            const placa =
+
+                formatearPlaca(
+                    resultado.plate
+                );
+
+
+            if (!placa) {
+
+                return;
+            }
+
+
+            /*
+            Última placa grande.
+            */
+
+            document.getElementById(
+                "ultimaPlaca"
+            ).innerText =
+                placa;
+
+
+            const ultimaVez =
+
+                historial.get(
+                    placa
+                )
+
+                ||
+
+                0;
+
+
+            /*
+            Solamente contamos como
+            nuevo vehículo si no fue
+            visto recientemente.
+            */
+
+            if (
+
+                ahora
+                -
+                ultimaVez
+
+                >
+                TIEMPO_DUPLICADO
+
+            ) {
+
+
+                totalVehiculos++;
+
+
+                document.getElementById(
+                    "contador"
+                ).innerText =
+
+                    totalVehiculos;
+
+            }
+
+
+            historial.set(
+
+                placa,
+
+                ahora
+
+            );
+
+        }
+
+    );
+
+}
+
+
+
+/* =========================================================
+
+ESTADO SERVIDOR
+
+========================================================= */
+
+function cambiarServidor(
+    conectado
+) {
+
+
+    const indicador =
+
+        document.getElementById(
+            "indicador"
+        );
+
+
+    const texto =
+
+        document.getElementById(
+            "estadoApi"
+        );
+
+
+    if (conectado) {
+
+
+        indicador.style.background =
+            "#00c853";
+
+
+        texto.innerText =
+            "ON";
+
+
+    } else {
+
+
+        indicador.style.background =
+            "#aaa";
+
+
+        texto.innerText =
+            "OFF";
+
+    }
+
+}
+
+
+
+/* =========================================================
+
+AJUSTAR AL GIRAR TABLET
+
+========================================================= */
+
+window.addEventListener(
+
+    "resize",
+
+    function() {
+
+
+        if (camaraActiva) {
+
+
+            prepararOverlay();
+
+
+            dibujarZonaLectura();
+
+        }
+
+    }
+
+);
+
+
+
+/* =========================================================
+
+AL CERRAR
+
+========================================================= */
+
+window.addEventListener(
+
+    "beforeunload",
+
+    function() {
+
+
+        if (streamCamara) {
+
+
+            streamCamara
+                .getTracks()
+                .forEach(
+
+                    track =>
+                        track.stop()
+
+                );
+
+        }
+
+    }
 
 );
 
