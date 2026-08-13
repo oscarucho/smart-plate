@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
@@ -11,8 +10,7 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>Smart Plate V8</title>
-
+<title>Smart Plate V8.3</title>
 
 <style>
 
@@ -21,62 +19,43 @@
 }
 
 body {
-
     margin: 0;
     padding: 14px;
-
     font-family: Arial, sans-serif;
-
     background: #f1f4f8;
-
     text-align: center;
 }
 
-
-/* =====================================================
-TÍTULO
-===================================================== */
-
 h1 {
-
-    margin-top: 5px;
-    margin-bottom: 2px;
-
+    margin: 5px 0 2px 0;
     font-size: 30px;
 }
 
-
 .subtitulo {
-
     margin-bottom: 15px;
-
     color: #666;
-
-    font-size: 15px;
 }
 
 
-/* =====================================================
-CÁMARA
-===================================================== */
+/* =============================
+   CÁMARA
+============================= */
 
 .contenedorCamara {
 
     position: relative;
 
     width: 100%;
-
     max-width: 850px;
 
     margin: auto;
 
     overflow: hidden;
 
-    background: black;
-
     border-radius: 18px;
-}
 
+    background: #000;
+}
 
 video {
 
@@ -85,21 +64,12 @@ video {
     width: 100%;
 }
 
-
-/*
-Canvas donde dibujamos:
-
-- zona amarilla
-- rectángulos verdes
-- placa reconocida
-*/
-
 #overlay {
 
     position: absolute;
 
-    left: 0;
     top: 0;
+    left: 0;
 
     width: 100%;
     height: 100%;
@@ -108,15 +78,14 @@ Canvas donde dibujamos:
 }
 
 
-/* =====================================================
-BOTONES
-===================================================== */
+/* =============================
+   BOTONES
+============================= */
 
 .botones {
 
     margin-top: 14px;
 }
-
 
 button {
 
@@ -128,51 +97,47 @@ button {
 
     margin: 5px;
 
-    color: white;
-
     font-size: 16px;
 
     font-weight: bold;
+
+    color: white;
 }
 
-
 #btnIniciar {
-
     background: #1976d2;
 }
 
-
 #btnDetener {
-
     background: #d32f2f;
 }
 
+#btnPrueba {
+    background: #388e3c;
+}
 
 button:disabled {
-
     opacity: 0.45;
 }
 
 
-/* =====================================================
-ESTADO
-===================================================== */
+/* =============================
+   PANELES
+============================= */
 
 .panel {
 
     width: 100%;
-
     max-width: 850px;
 
     margin: 14px auto;
 
     padding: 16px;
 
-    background: white;
-
     border-radius: 16px;
-}
 
+    background: white;
+}
 
 #estado {
 
@@ -180,7 +145,6 @@ ESTADO
 
     font-weight: bold;
 }
-
 
 #detalle {
 
@@ -192,25 +156,22 @@ ESTADO
 }
 
 
-/* =====================================================
-PLACA GRANDE
-===================================================== */
+/* =============================
+   RESULTADO PRINCIPAL
+============================= */
 
-.ultima {
-
-    margin-top: 10px;
-
-    font-size: 13px;
+.tituloResultado {
 
     color: #666;
-}
 
+    font-size: 13px;
+}
 
 #ultimaPlaca {
 
     margin-top: 8px;
 
-    font-size: 38px;
+    font-size: 40px;
 
     font-weight: bold;
 
@@ -218,9 +179,9 @@ PLACA GRANDE
 }
 
 
-/* =====================================================
-CONTADORES
-===================================================== */
+/* =============================
+   ESTADÍSTICAS
+============================= */
 
 .estadisticas {
 
@@ -228,13 +189,12 @@ CONTADORES
 
     justify-content: center;
 
-    gap: 10px;
-
     flex-wrap: wrap;
+
+    gap: 10px;
 
     margin-top: 15px;
 }
-
 
 .tarjeta {
 
@@ -247,34 +207,31 @@ CONTADORES
     background: #f4f6f8;
 }
 
-
 .numero {
 
-    font-size: 26px;
+    font-size: 25px;
 
     font-weight: bold;
 }
-
 
 .etiqueta {
 
     margin-top: 4px;
 
-    font-size: 12px;
+    font-size: 11px;
 
     color: #777;
 }
 
 
-/* =====================================================
-LISTADO
-===================================================== */
+/* =============================
+   LISTA DE PLACAS
+============================= */
 
 #listaPlacas {
 
     margin-top: 12px;
 }
-
 
 .placaItem {
 
@@ -295,7 +252,6 @@ LISTADO
     letter-spacing: 2px;
 }
 
-
 .confianza {
 
     margin-top: 3px;
@@ -310,34 +266,49 @@ LISTADO
 }
 
 
-/* =====================================================
-CANVAS OCULTO
-===================================================== */
+/* =============================
+   SERVIDOR
+============================= */
+
+.punto {
+
+    display: inline-block;
+
+    width: 11px;
+    height: 11px;
+
+    margin-right: 6px;
+
+    border-radius: 50%;
+
+    background: #999;
+}
+
+
+/* =============================
+   DEPURACIÓN
+============================= */
+
+#debug {
+
+    margin-top: 8px;
+
+    color: #777;
+
+    font-size: 11px;
+
+    word-break: break-word;
+}
+
+
+/* =============================
+   CANVAS OCULTO
+============================= */
 
 #captura {
 
     display: none;
 }
-
-
-/* =====================================================
-INDICADOR ONLINE
-===================================================== */
-
-.indicador {
-
-    display: inline-block;
-
-    width: 10px;
-    height: 10px;
-
-    border-radius: 50%;
-
-    background: #aaa;
-
-    margin-right: 5px;
-}
-
 
 </style>
 
@@ -348,27 +319,23 @@ INDICADOR ONLINE
 
 
 <h1>
-🚗 SMART PLATE
+🚗 AARÓN CARHUAYÑA SECURITY
 </h1>
 
 
 <div class="subtitulo">
 
-Reconocimiento inteligente de placas
+Detector inteligente de placas - Edificio Fisher SURQUILLO
 
 </div>
 
 
 
-<!-- =====================================================
-
-CÁMARA
-
-===================================================== -->
-
+<!-- =========================
+     CÁMARA
+========================= -->
 
 <div class="contenedorCamara">
-
 
     <video
         id="video"
@@ -377,25 +344,19 @@ CÁMARA
         playsinline
     ></video>
 
-
     <canvas
         id="overlay"
     ></canvas>
-
 
 </div>
 
 
 
-<!-- =====================================================
-
-BOTONES
-
-===================================================== -->
-
+<!-- =========================
+     BOTONES
+========================= -->
 
 <div class="botones">
-
 
     <button
         id="btnIniciar"
@@ -417,50 +378,41 @@ BOTONES
 
     </button>
 
-
 </div>
 
 
 
-<!-- =====================================================
-
-ESTADO
-
-===================================================== -->
-
+<!-- =========================
+     ESTADO
+========================= -->
 
 <div class="panel">
-
 
     <div id="estado">
 
-        Presiona INICIAR
+        Comprobando servidor...
 
     </div>
-
 
     <div id="detalle">
 
-        Smart Plate V8
+        Smart Plate V8.3
 
     </div>
 
+    <div id="debug"></div>
 
 </div>
 
 
 
-<!-- =====================================================
-
-RESULTADO
-
-===================================================== -->
-
+<!-- =========================
+     ÚLTIMO RESULTADO
+========================= -->
 
 <div class="panel">
 
-
-    <div class="ultima">
+    <div class="tituloResultado">
 
         ÚLTIMA PLACA DETECTADA
 
@@ -472,7 +424,6 @@ RESULTADO
         ---
 
     </div>
-
 
 
     <div class="estadisticas">
@@ -498,7 +449,6 @@ RESULTADO
         </div>
 
 
-
         <div class="tarjeta">
 
             <div
@@ -519,21 +469,20 @@ RESULTADO
         </div>
 
 
-
         <div class="tarjeta">
 
             <div class="numero">
 
                 <span
-                    class="indicador"
-                    id="indicador"
+                    class="punto"
+                    id="puntoServidor"
                 ></span>
 
                 <span
-                    id="estadoApi"
+                    id="textoServidor"
                 >
 
-                    OFF
+                    ...
 
                 </span>
 
@@ -550,25 +499,19 @@ RESULTADO
 
     </div>
 
-
 </div>
 
 
 
-<!-- =====================================================
-
-PLACAS EN LA ESCENA
-
-===================================================== -->
-
+<!-- =========================
+     PLACAS VISIBLES
+========================= -->
 
 <div class="panel">
 
-
     <b>
-        PLACAS VISIBLES
+        PLACAS DETECTADAS
     </b>
-
 
     <div id="listaPlacas">
 
@@ -576,18 +519,8 @@ PLACAS EN LA ESCENA
 
     </div>
 
-
 </div>
 
-
-
-<!-- =====================================================
-
-CANVAS OCULTO
-
-Aquí convertimos una parte de la cámara a JPEG.
-
-===================================================== -->
 
 
 <canvas id="captura"></canvas>
@@ -597,63 +530,64 @@ Aquí convertimos una parte de la cámara a JPEG.
 <script>
 
 
-/* =========================================================
+/* ==========================================================
+   CONFIGURACIÓN
+========================================================== */
 
-CONFIGURACIÓN
-
-========================================================= */
-
-
-/*
-Tu Google Apps Script real.
-*/
 
 const API_URL =
 
 "https://script.google.com/macros/s/AKfycbxbGFvAs1T4_-Aq_jYhF22G0LdS4Y9oA92lKZOzMtuB2EaObpVd1shjc6r85kw_mJaL/exec";
 
 
-
 /*
-Cada cuánto enviamos una imagen.
+Esperamos al menos este tiempo
+después de TERMINAR una lectura
+antes de enviar la siguiente.
 
-Plate Recognizer Free Trial
-permite 1 lookup por segundo.
-
-Usamos 1300 ms para tener margen.
+Así evitamos saturar Snapshot.
 */
 
-const INTERVALO_CAPTURA =
-    1300;
-
-
-
-/*
-Calidad JPEG.
-
-0.75 = buena calidad
-sin generar imágenes demasiado grandes.
-*/
-
-const CALIDAD_JPEG =
-    0.75;
-
+const ESPERA_ENTRE_LECTURAS =
+    1200;
 
 
 /*
-Ancho máximo de imagen enviada.
+Resolución de la zona enviada.
 
-No necesitamos enviar 1920 px completos.
+Más alta que la versión anterior
+para leer mejor placas pequeñas.
 */
 
 const ANCHO_ENVIO =
-    900;
+    1100;
 
+
+const CALIDAD_JPEG =
+    0.82;
 
 
 /*
-Tiempo durante el cual una placa
-no se vuelve a contar como vehículo nuevo.
+Máximo tiempo esperando resultado
+de Apps Script.
+*/
+
+const MAX_ESPERA_RESULTADO =
+    10000;
+
+
+/*
+Cada cuánto preguntamos
+si el resultado está listo.
+*/
+
+const INTERVALO_CONSULTA =
+    450;
+
+
+/*
+Evitar contar la misma placa
+repetidamente.
 */
 
 const TIEMPO_DUPLICADO =
@@ -661,11 +595,10 @@ const TIEMPO_DUPLICADO =
 
 
 
-/* =========================================================
+/* ==========================================================
+   VARIABLES
+========================================================== */
 
-VARIABLES
-
-========================================================= */
 
 let streamCamara =
     null;
@@ -675,7 +608,17 @@ let camaraActiva =
     false;
 
 
-let procesando =
+/*
+IMPORTANTE:
+
+Mientras sea true NO se envía
+otra fotografía.
+
+Esta es una de las correcciones
+principales de esta versión.
+*/
+
+let cicloOcupado =
     false;
 
 
@@ -683,33 +626,13 @@ let temporizador =
     null;
 
 
-let ultimaCaptura =
-    0;
-
-
 let totalVehiculos =
     0;
 
 
-/*
-Placas recientemente vistas.
-*/
-
 const historial =
     new Map();
 
-
-/*
-Última respuesta recibida.
-*/
-
-let ultimaRespuesta =
-    null;
-
-
-/*
-Sesión única del navegador.
-*/
 
 const SESION =
 
@@ -722,7 +645,6 @@ const SESION =
     crearId();
 
 
-
 sessionStorage.setItem(
 
     "smartPlateSesion",
@@ -733,11 +655,10 @@ sessionStorage.setItem(
 
 
 
-/* =========================================================
+/* ==========================================================
+   ID DE SESIÓN
+========================================================== */
 
-GENERAR ID
-
-========================================================= */
 
 function crearId() {
 
@@ -751,7 +672,6 @@ function crearId() {
         crypto.randomUUID
 
     ) {
-
 
         return crypto.randomUUID();
 
@@ -778,11 +698,10 @@ function crearId() {
 
 
 
-/* =========================================================
+/* ==========================================================
+   MENSAJES
+========================================================== */
 
-MENSAJES
-
-========================================================= */
 
 function mensaje(
 
@@ -795,22 +714,205 @@ function mensaje(
 
     document.getElementById(
         "estado"
-    ).innerText = texto;
+    ).innerText =
+        texto;
 
 
     document.getElementById(
         "detalle"
-    ).innerText = detalle;
+    ).innerText =
+        detalle;
 
 }
 
 
 
-/* =========================================================
+function debug(
+    texto
+) {
 
-INICIAR CÁMARA
 
-========================================================= */
+    document.getElementById(
+        "debug"
+    ).innerText =
+        texto || "";
+
+}
+
+
+
+/* ==========================================================
+   ESTADO SERVIDOR
+========================================================== */
+
+
+function servidorEstado(
+    estado
+) {
+
+
+    const punto =
+
+        document.getElementById(
+            "puntoServidor"
+        );
+
+
+    const texto =
+
+        document.getElementById(
+            "textoServidor"
+        );
+
+
+    if (estado === "on") {
+
+
+        punto.style.background =
+            "#00c853";
+
+
+        texto.innerText =
+            "ON";
+
+
+    } else if (
+        estado === "error"
+    ) {
+
+
+        punto.style.background =
+            "#d50000";
+
+
+        texto.innerText =
+            "ERROR";
+
+
+    } else {
+
+
+        punto.style.background =
+            "#999";
+
+
+        texto.innerText =
+            "...";
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   COMPROBAR APPS SCRIPT
+========================================================== */
+
+
+async function comprobarServidor() {
+
+
+    servidorEstado(
+        "espera"
+    );
+
+
+    try {
+
+
+        const respuesta =
+
+            await obtenerJSONP(
+
+                API_URL
+
+                +
+
+                "?accion=estado"
+
+            );
+
+
+        if (
+
+            respuesta
+
+            &&
+
+            respuesta.ok
+
+            &&
+
+            respuesta.token_configurado
+
+        ) {
+
+
+            servidorEstado(
+                "on"
+            );
+
+
+            mensaje(
+
+                "✅ Servidor conectado",
+
+                "Presiona INICIAR para comenzar."
+
+            );
+
+
+            debug(
+                "Plate Recognizer configurado."
+            );
+
+
+        } else {
+
+
+            servidorEstado(
+                "error"
+            );
+
+
+            mensaje(
+
+                "❌ Servidor incompleto",
+
+                "El token de Plate Recognizer no está configurado."
+
+            );
+
+        }
+
+
+    } catch (error) {
+
+
+        servidorEstado(
+            "error"
+        );
+
+
+        mensaje(
+
+            "❌ No se pudo comprobar servidor",
+
+            error.message
+
+        );
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   INICIAR CÁMARA
+========================================================== */
+
 
 async function iniciarCamara() {
 
@@ -829,7 +931,7 @@ async function iniciarCamara() {
 
             "📷 Iniciando cámara...",
 
-            "Permite acceso a la cámara."
+            "Permite el acceso si Android lo solicita."
 
         );
 
@@ -840,9 +942,7 @@ async function iniciarCamara() {
                 .mediaDevices
                 .getUserMedia({
 
-
                     video: {
-
 
                         facingMode: {
 
@@ -851,14 +951,12 @@ async function iniciarCamara() {
 
                         },
 
-
                         width: {
 
                             ideal:
                                 1920
 
                         },
-
 
                         height: {
 
@@ -867,13 +965,10 @@ async function iniciarCamara() {
 
                         }
 
-
                     },
-
 
                     audio:
                         false
-
 
                 });
 
@@ -889,14 +984,20 @@ async function iniciarCamara() {
             true;
 
 
+        cicloOcupado =
+            false;
+
+
         document.getElementById(
             "btnIniciar"
-        ).disabled = true;
+        ).disabled =
+            true;
 
 
         document.getElementById(
             "btnDetener"
-        ).disabled = false;
+        ).disabled =
+            false;
 
 
         prepararOverlay();
@@ -907,19 +1008,26 @@ async function iniciarCamara() {
 
         mensaje(
 
-            "🎯 Sistema listo",
+            "🎯 Cámara lista",
 
-            "Coloca la placa dentro de la zona de lectura."
+            "Coloca la placa dentro de la zona amarilla."
 
         );
 
 
-        cambiarServidor(
-            true
-        );
+        /*
+        Primera lectura.
+        */
 
+        temporizador =
 
-        programarCaptura();
+            setTimeout(
+
+                iniciarCiclo,
+
+                600
+
+            );
 
 
     } catch (error) {
@@ -946,11 +1054,10 @@ async function iniciarCamara() {
 
 
 
-/* =========================================================
+/* ==========================================================
+   DETENER CÁMARA
+========================================================== */
 
-DETENER
-
-========================================================= */
 
 function detenerCamara() {
 
@@ -959,7 +1066,7 @@ function detenerCamara() {
         false;
 
 
-    procesando =
+    cicloOcupado =
         false;
 
 
@@ -1017,11 +1124,6 @@ function detenerCamara() {
         true;
 
 
-    cambiarServidor(
-        false
-    );
-
-
     mensaje(
 
         "⏹ Cámara detenida",
@@ -1034,11 +1136,10 @@ function detenerCamara() {
 
 
 
-/* =========================================================
+/* ==========================================================
+   OVERLAY
+========================================================== */
 
-OVERLAY
-
-========================================================= */
 
 function prepararOverlay() {
 
@@ -1068,11 +1169,10 @@ function prepararOverlay() {
 
 
 
-/* =========================================================
+/* ==========================================================
+   ZONA DE LECTURA
+========================================================== */
 
-ZONA DE LECTURA
-
-========================================================= */
 
 function obtenerZonaLectura() {
 
@@ -1085,12 +1185,11 @@ function obtenerZonaLectura() {
 
 
     /*
-    Analizamos aproximadamente
-    86% del ancho
-    y 60% de la altura.
+    Zona suficientemente grande
+    para admitir varios carritos.
 
-    Deja fuera principalmente
-    techo y piso.
+    90 % ancho
+    68 % alto.
     */
 
 
@@ -1098,14 +1197,14 @@ function obtenerZonaLectura() {
 
         video.videoWidth
         *
-        0.86;
+        0.90;
 
 
     const height =
 
         video.videoHeight
         *
-        0.60;
+        0.68;
 
 
     const x =
@@ -1115,8 +1214,15 @@ function obtenerZonaLectura() {
             -
             width
         )
+
         /
         2;
+
+
+    /*
+    La movemos ligeramente
+    hacia arriba.
+    */
 
 
     const y =
@@ -1126,8 +1232,9 @@ function obtenerZonaLectura() {
             -
             height
         )
-        /
-        2;
+
+        *
+        0.42;
 
 
     return {
@@ -1146,11 +1253,10 @@ function obtenerZonaLectura() {
 
 
 
-/* =========================================================
+/* ==========================================================
+   DIBUJAR ZONA AMARILLA
+========================================================== */
 
-DIBUJAR ZONA
-
-========================================================= */
 
 function dibujarZonaLectura() {
 
@@ -1193,10 +1299,6 @@ function dibujarZonaLectura() {
     );
 
 
-    /*
-    Zona amarilla inicial.
-    */
-
     ctx.strokeStyle =
         "#ffd600";
 
@@ -1226,10 +1328,6 @@ function dibujarZonaLectura() {
 
     ctx.setLineDash([]);
 
-
-    /*
-    Etiqueta
-    */
 
     ctx.fillStyle =
         "#ffd600";
@@ -1270,11 +1368,10 @@ function dibujarZonaLectura() {
 
 
 
-/* =========================================================
+/* ==========================================================
+   LIMPIAR OVERLAY
+========================================================== */
 
-LIMPIAR
-
-========================================================= */
 
 function limpiarOverlay() {
 
@@ -1309,53 +1406,15 @@ function limpiarOverlay() {
 
 
 
-/* =========================================================
+/* ==========================================================
+   CICLO COMPLETO
 
-PROGRAMAR SIGUIENTE CAPTURA
-
-========================================================= */
-
-function programarCaptura() {
-
-
-    if (!camaraActiva) {
-
-        return;
-
-    }
+   Una lectura debe TERMINAR antes
+   de comenzar la siguiente.
+========================================================== */
 
 
-    if (temporizador) {
-
-
-        clearTimeout(
-            temporizador
-        );
-
-    }
-
-
-    temporizador =
-
-        setTimeout(
-
-            capturarYEnviar,
-
-            INTERVALO_CAPTURA
-
-        );
-
-}
-
-
-
-/* =========================================================
-
-CAPTURAR IMAGEN
-
-========================================================= */
-
-async function capturarYEnviar() {
+async function iniciarCiclo() {
 
 
     if (
@@ -1364,309 +1423,91 @@ async function capturarYEnviar() {
 
         ||
 
-        procesando
+        cicloOcupado
 
     ) {
-
-
-        programarCaptura();
 
         return;
 
     }
 
 
-    procesando =
+    cicloOcupado =
         true;
-
-
-    const inicio =
-        performance.now();
 
 
     try {
 
 
-        const video =
+        /*
+        1. Capturar y enviar
+        */
 
-            document.getElementById(
-                "video"
-            );
-
-
-        const canvas =
-
-            document.getElementById(
-                "captura"
-            );
-
-
-        const zona =
-            obtenerZonaLectura();
+        await capturarYEnviar();
 
 
         /*
-        Tamaño del JPEG
-        que enviaremos.
+        2. Esperar resultado
         */
 
-        const anchoDestino =
+        const resultado =
 
-            Math.min(
-
-                ANCHO_ENVIO,
-
-                Math.round(
-                    zona.width
-                )
-
-            );
-
-
-        const altoDestino =
-
-            Math.round(
-
-                zona.height
-
-                /
-
-                zona.width
-
-                *
-
-                anchoDestino
-
-            );
-
-
-        canvas.width =
-            anchoDestino;
-
-
-        canvas.height =
-            altoDestino;
-
-
-        const ctx =
-
-            canvas.getContext(
-
-                "2d",
-
-                {
-                    willReadFrequently:
-                        false
-                }
-
-            );
+            await esperarResultado();
 
 
         /*
-        Dibujamos SOLAMENTE
-        la zona de interés.
+        3. Procesarlo
         */
 
-        ctx.drawImage(
-
-            video,
-
-
-            zona.x,
-
-            zona.y,
-
-            zona.width,
-
-            zona.height,
-
-
-            0,
-
-            0,
-
-            anchoDestino,
-
-            altoDestino
-
+        procesarResultado(
+            resultado
         );
-
-
-        /*
-        Convertimos a JPEG.
-        */
-
-        const dataURL =
-
-            canvas.toDataURL(
-
-                "image/jpeg",
-
-                CALIDAD_JPEG
-
-            );
-
-
-        /*
-        Quitamos:
-
-        data:image/jpeg;base64,
-        */
-
-        const base64 =
-
-            dataURL.split(
-                ","
-            )[1];
-
-
-        mensaje(
-
-            "📡 Analizando vehículo...",
-
-            "Enviando imagen al detector ALPR."
-
-        );
-
-
-        /*
-        Enviar imagen al servidor.
-
-        no-cors es intencional.
-
-        Apps Script procesará la captura
-        de forma privada.
-        */
-
-        await fetch(
-
-            API_URL,
-
-            {
-
-                method:
-                    "POST",
-
-                mode:
-                    "no-cors",
-
-                headers: {
-
-                    "Content-Type":
-
-                        "text/plain;charset=utf-8"
-
-                },
-
-                body:
-
-                    JSON.stringify({
-
-                        accion:
-                            "analizar",
-
-
-                        sesion:
-                            SESION,
-
-
-                        imagen:
-                            base64,
-
-
-                        tipo:
-                            "image/jpeg",
-
-
-                        width:
-                            anchoDestino,
-
-
-                        height:
-                            altoDestino,
-
-
-                        timestamp:
-                            Date.now()
-
-                    })
-
-            }
-
-        );
-
-
-        /*
-        Pedimos el resultado unos
-        milisegundos después.
-        */
-
-        setTimeout(
-
-            solicitarResultado,
-
-            450
-
-        );
-
-
-        setTimeout(
-
-            solicitarResultado,
-
-            900
-
-        );
-
-
-        setTimeout(
-
-            solicitarResultado,
-
-            1500
-
-        );
-
-
-        const fin =
-            performance.now();
-
-
-        ultimaCaptura =
-
-            Math.round(
-                fin - inicio
-            );
 
 
     } catch (error) {
 
 
-        console.error(
-            error
-        );
+        console.error(error);
 
 
         mensaje(
 
-            "⚠️ Error enviando imagen",
+            "❌ Error del sistema",
 
             error.message
 
         );
 
 
+        servidorEstado(
+            "error"
+        );
+
+
     } finally {
 
 
-        procesando =
+        cicloOcupado =
             false;
 
+
+        /*
+        SOLO AHORA comenzamos
+        a preparar otra fotografía.
+        */
 
         if (camaraActiva) {
 
 
-            programarCaptura();
+            temporizador =
+
+                setTimeout(
+
+                    iniciarCiclo,
+
+                    ESPERA_ENTRE_LECTURAS
+
+                );
 
         }
 
@@ -1676,198 +1517,236 @@ async function capturarYEnviar() {
 
 
 
-/* =========================================================
-
-CONSULTAR RESULTADO
-
-Usamos JSONP para poder leer
-la respuesta de Apps Script
-desde GitHub Pages.
-
-========================================================= */
-
-function solicitarResultado() {
+/* ==========================================================
+   CAPTURAR Y ENVIAR
+========================================================== */
 
 
-    if (!camaraActiva) {
-
-        return;
-
-    }
+async function capturarYEnviar() {
 
 
-    const callback =
+    const video =
 
-        "smartPlateCallback_"
-
-        +
-
-        Date.now()
-
-        +
-
-        "_"
-
-        +
-
-        Math.floor(
-            Math.random() * 10000
+        document.getElementById(
+            "video"
         );
 
 
-    const script =
+    const canvas =
 
-        document.createElement(
-            "script"
+        document.getElementById(
+            "captura"
         );
 
 
-    let terminado =
-        false;
+    const zona =
+        obtenerZonaLectura();
 
 
-
-    window[callback] =
-
-        function(datos) {
-
-
-            if (terminado) {
-
-                return;
-
-            }
+    /*
+    Mantener proporción.
+    */
 
 
-            terminado =
-                true;
+    const anchoDestino =
+
+        Math.min(
+
+            ANCHO_ENVIO,
+
+            Math.round(
+                zona.width
+            )
+
+        );
 
 
-            try {
+    const altoDestino =
+
+        Math.round(
+
+            zona.height
+
+            /
+
+            zona.width
+
+            *
+
+            anchoDestino
+
+        );
 
 
-                procesarResultado(
-                    datos
-                );
+    canvas.width =
+        anchoDestino;
 
 
-            } finally {
+    canvas.height =
+        altoDestino;
 
 
-                limpiarJSONP();
+    const ctx =
 
-            }
-
-        };
-
-
-
-    function limpiarJSONP() {
+        canvas.getContext(
+            "2d"
+        );
 
 
-        try {
+    /*
+    Imagen ligeramente mejorada
+    para matrícula impresa.
+    */
 
-            delete window[
-                callback
-            ];
+    ctx.filter =
 
-        } catch (_) {}
-
-
-        try {
-
-            script.remove();
-
-        } catch (_) {}
-
-    }
+        "contrast(1.08) brightness(1.03)";
 
 
+    ctx.drawImage(
 
-    script.onerror =
-
-        function() {
-
-
-            if (!terminado) {
+        video,
 
 
-                terminado =
-                    true;
+        zona.x,
+
+        zona.y,
+
+        zona.width,
+
+        zona.height,
 
 
-                limpiarJSONP();
+        0,
 
-            }
+        0,
 
-        };
+        anchoDestino,
+
+        altoDestino
+
+    );
 
 
-    script.src =
+    ctx.filter =
+        "none";
 
-        API_URL
 
+    const dataURL =
+
+        canvas.toDataURL(
+
+            "image/jpeg",
+
+            CALIDAD_JPEG
+
+        );
+
+
+    const base64 =
+
+        dataURL.split(
+            ","
+        )[1];
+
+
+    mensaje(
+
+        "📡 Enviando fotografía...",
+
+        "Consultando Plate Recognizer."
+
+    );
+
+
+    debug(
+
+        "JPEG "
         +
-
-        "?accion=resultado"
-
+        anchoDestino
         +
-
-        "&sesion="
-
+        " × "
         +
+        altoDestino
 
-        encodeURIComponent(
-            SESION
-        )
-
-        +
-
-        "&callback="
-
-        +
-
-        encodeURIComponent(
-            callback
-        )
-
-        +
-
-        "&t="
-
-        +
-
-        Date.now();
-
-
-    document.body.appendChild(
-        script
     );
 
 
     /*
-    Limpieza automática.
+    IMPORTANTE:
+
+    Usamos no-cors porque Apps Script
+    devuelve la respuesta mediante
+    redirección de ContentService.
+
+    No necesitamos leer este POST.
+
+    El resultado se recuperará con
+    doGet + JSONP.
     */
 
-    setTimeout(
+    await fetch(
 
-        function() {
+        API_URL,
+
+        {
+
+            method:
+                "POST",
+
+            mode:
+                "no-cors",
+
+            headers: {
+
+                "Content-Type":
+
+                    "text/plain;charset=utf-8"
+
+            },
+
+            body:
+
+                JSON.stringify({
+
+                    accion:
+                        "analizar",
+
+                    sesion:
+                        SESION,
+
+                    imagen:
+                        base64,
+
+                    tipo:
+                        "image/jpeg",
+
+                    width:
+                        anchoDestino,
+
+                    height:
+                        altoDestino,
+
+                    timestamp:
+                        Date.now()
+
+                })
+
+        }
+
+    );
 
 
-            if (!terminado) {
+    servidorEstado(
+        "on"
+    );
 
 
-                terminado =
-                    true;
+    mensaje(
 
+        "🧠 Reconociendo placa...",
 
-                limpiarJSONP();
-
-            }
-
-        },
-
-        5000
+        "Esperando resultado."
 
     );
 
@@ -1875,70 +1754,373 @@ function solicitarResultado() {
 
 
 
-/* =========================================================
+/* ==========================================================
+   ESPERAR RESULTADO DEL SERVIDOR
+========================================================== */
 
-PROCESAR RESPUESTA DEL SERVIDOR
 
-Esperamos algo así:
+async function esperarResultado() {
 
-{
-  ok: true,
-  results: [
-    {
-      plate: "ABC123",
-      score: 0.95,
-      box: {
-        xmin: 100,
-        ymin: 50,
-        xmax: 260,
-        ymax: 110
-      }
+
+    const inicio =
+        Date.now();
+
+
+    while (
+
+        camaraActiva
+
+        &&
+
+        Date.now() - inicio
+
+        <
+        MAX_ESPERA_RESULTADO
+
+    ) {
+
+
+        const url =
+
+            API_URL
+
+            +
+
+            "?accion=resultado"
+
+            +
+
+            "&sesion="
+
+            +
+
+            encodeURIComponent(
+                SESION
+            )
+
+            +
+
+            "&t="
+
+            +
+
+            Date.now();
+
+
+        try {
+
+
+            const datos =
+
+                await obtenerJSONP(
+                    url
+                );
+
+
+            /*
+            El servidor dice que aún
+            no hay resultado.
+            */
+
+
+            if (
+
+                datos
+
+                &&
+
+                datos.procesando
+
+            ) {
+
+
+                mensaje(
+
+                    "🧠 Reconociendo placa...",
+
+                    "Esperando Plate Recognizer..."
+
+                );
+
+
+                await esperar(
+                    INTERVALO_CONSULTA
+                );
+
+
+                continue;
+
+            }
+
+
+            /*
+            Tenemos resultado
+            o error real.
+            */
+
+
+            if (datos) {
+
+                return datos;
+
+            }
+
+
+        } catch (error) {
+
+
+            console.warn(
+
+                "Consulta temporal:",
+
+                error
+
+            );
+
+        }
+
+
+        await esperar(
+            INTERVALO_CONSULTA
+        );
+
     }
-  ],
-  width: 900,
-  height: 500,
-  processing_ms: 850
+
+
+    throw new Error(
+
+        "El servidor tardó demasiado en responder."
+
+    );
+
 }
 
-========================================================= */
+
+
+/* ==========================================================
+   JSONP
+
+   Apps Script puede servir JavaScript
+   desde ContentService.
+========================================================== */
+
+
+function obtenerJSONP(
+    url
+) {
+
+
+    return new Promise(
+
+        function(resolve, reject) {
+
+
+            const callback =
+
+                "sp_"
+
+                +
+
+                Date.now()
+
+                +
+
+                "_"
+
+                +
+
+                Math.floor(
+                    Math.random()
+                    *
+                    100000
+                );
+
+
+            const script =
+
+                document.createElement(
+                    "script"
+                );
+
+
+            let terminado =
+                false;
+
+
+            const limpiar =
+                function() {
+
+
+                    try {
+
+                        delete window[
+                            callback
+                        ];
+
+                    } catch (_) {}
+
+
+                    try {
+
+                        script.remove();
+
+                    } catch (_) {}
+
+                };
+
+
+            window[callback] =
+
+                function(datos) {
+
+
+                    if (terminado) {
+
+                        return;
+
+                    }
+
+
+                    terminado =
+                        true;
+
+
+                    limpiar();
+
+
+                    resolve(
+                        datos
+                    );
+
+                };
+
+
+            script.onerror =
+
+                function() {
+
+
+                    if (terminado) {
+
+                        return;
+
+                    }
+
+
+                    terminado =
+                        true;
+
+
+                    limpiar();
+
+
+                    reject(
+
+                        new Error(
+                            "No se pudo consultar Apps Script."
+                        )
+
+                    );
+
+                };
+
+
+            script.src =
+
+                url
+
+                +
+
+                (
+                    url.includes("?")
+                    ?
+                    "&"
+                    :
+                    "?"
+                )
+
+                +
+
+                "callback="
+
+                +
+
+                encodeURIComponent(
+                    callback
+                );
+
+
+            document.body
+                .appendChild(
+                    script
+                );
+
+
+            /*
+            Tiempo máximo de cada GET.
+            */
+
+            setTimeout(
+
+                function() {
+
+
+                    if (terminado) {
+
+                        return;
+
+                    }
+
+
+                    terminado =
+                        true;
+
+
+                    limpiar();
+
+
+                    reject(
+
+                        new Error(
+                            "Tiempo agotado consultando servidor."
+                        )
+
+                    );
+
+                },
+
+                5000
+
+            );
+
+        }
+
+    );
+
+}
+
+
+
+/* ==========================================================
+   PROCESAR RESULTADO
+========================================================== */
+
 
 function procesarResultado(
     datos
 ) {
 
 
-    if (
-
-        !datos
-
-        ||
-
-        !datos.ok
-
-    ) {
+    if (!datos) {
 
 
-        if (
+        mensaje(
 
-            datos
+            "❌ Sin respuesta",
 
-            &&
+            "Apps Script no devolvió información."
 
-            datos.procesando
-
-        ) {
-
-
-            mensaje(
-
-                "🧠 Reconociendo placa...",
-
-                "Esperando respuesta del servidor."
-
-            );
-
-
-        }
+        );
 
 
         return;
@@ -1946,18 +2128,57 @@ function procesarResultado(
     }
 
 
-    ultimaRespuesta =
-        datos;
+    /*
+    ERROR REAL
+    */
 
 
-    cambiarServidor(
-        true
+    if (!datos.ok) {
+
+
+        servidorEstado(
+            "error"
+        );
+
+
+        mensaje(
+
+            "❌ Error del detector",
+
+            datos.error
+            ||
+            "Error desconocido"
+
+        );
+
+
+        debug(
+
+            datos.http
+            ?
+            "HTTP: "
+            +
+            datos.http
+            :
+            ""
+
+        );
+
+
+        return;
+
+    }
+
+
+    servidorEstado(
+        "on"
     );
 
 
     /*
-    Tiempo total.
+    Tiempo total del servidor.
     */
+
 
     if (
 
@@ -1967,22 +2188,22 @@ function procesarResultado(
     ) {
 
 
+        const segundos =
+
+            Number(
+                datos.processing_ms
+            )
+
+            /
+            1000;
+
+
         document.getElementById(
             "tiempo"
         ).innerText =
 
-            (
-                Number(
-                    datos.processing_ms
-                )
-
-                /
-                1000
-
-            ).toFixed(1)
-
+            segundos.toFixed(1)
             +
-
             "s";
 
     }
@@ -2008,11 +2229,11 @@ function procesarResultado(
         resultados,
 
         Number(
-            datos.width || 900
+            datos.width || 1
         ),
 
         Number(
-            datos.height || 500
+            datos.height || 1
         )
 
     );
@@ -2028,7 +2249,6 @@ function procesarResultado(
     );
 
 
-
     if (
 
         resultados.length === 0
@@ -2038,10 +2258,15 @@ function procesarResultado(
 
         mensaje(
 
-            "🔎 Buscando placa...",
+            "🔎 No se encontró placa",
 
-            "Mantén el vehículo dentro de la zona amarilla."
+            "Mueve el automóvil, acércalo o mejora la iluminación."
 
+        );
+
+
+        debug(
+            "Plate Recognizer respondió correctamente: 0 resultados."
         );
 
 
@@ -2062,7 +2287,14 @@ function procesarResultado(
                 " placas detectadas"
             ),
 
-            "Resultado recibido correctamente."
+            "Registro enviado a Google Sheets."
+
+        );
+
+
+        debug(
+
+            "Lectura completada correctamente."
 
         );
 
@@ -2072,13 +2304,10 @@ function procesarResultado(
 
 
 
-/* =========================================================
+/* ==========================================================
+   FORMATO DE PLACA
+========================================================== */
 
-FORMATO DE PLACA
-
-ABC123 -> ABC-123
-
-========================================================= */
 
 function formatearPlaca(
     texto
@@ -2091,25 +2320,29 @@ function formatearPlaca(
     }
 
 
-    let limpio =
+    const limpio =
 
         String(texto)
             .toUpperCase()
             .replace(
+
                 /[^A-Z0-9]/g,
+
                 ""
+
             );
 
 
     /*
-    Para las placas ficticias
-    de nuestra maqueta.
+    Nuestra maqueta usa:
+    ABC-123
     */
+
 
     if (
 
         /^[A-Z]{3}[0-9]{3}$/
-            .test(limpio)
+        .test(limpio)
 
     ) {
 
@@ -2138,8 +2371,8 @@ function formatearPlaca(
 
 
     /*
-    Si en el futuro probamos
-    otro formato, no lo destruimos.
+    Dejamos otros formatos
+    sin destruirlos.
     */
 
     return limpio;
@@ -2148,11 +2381,10 @@ function formatearPlaca(
 
 
 
-/* =========================================================
+/* ==========================================================
+   DIBUJAR RESULTADOS
+========================================================== */
 
-DIBUJAR RECTÁNGULOS
-
-========================================================= */
 
 function dibujarResultados(
 
@@ -2186,10 +2418,6 @@ function dibujarResultados(
         );
 
 
-    /*
-    Adaptar canvas.
-    */
-
     overlay.width =
         video.videoWidth;
 
@@ -2222,10 +2450,10 @@ function dibujarResultados(
         obtenerZonaLectura();
 
 
-
     /*
-    Mantener visible zona de captura.
+    Zona amarilla.
     */
+
 
     ctx.strokeStyle =
         "#ffd600";
@@ -2257,33 +2485,26 @@ function dibujarResultados(
     ctx.setLineDash([]);
 
 
-
     /*
-    Dibujar cada placa.
+    Una caja verde por cada
+    matrícula devuelta.
     */
+
 
     resultados.forEach(
 
-        resultado => {
+        function(resultado) {
 
 
             if (!resultado.box) {
 
                 return;
+
             }
 
 
             const box =
                 resultado.box;
-
-
-            /*
-            Coordenadas API
-            corresponden al JPEG enviado.
-
-            Las convertimos a coordenadas
-            de la cámara.
-            */
 
 
             const x =
@@ -2302,7 +2523,6 @@ function dibujarResultados(
                 )
 
                 *
-
                 zona.width;
 
 
@@ -2322,7 +2542,6 @@ function dibujarResultados(
                 )
 
                 *
-
                 zona.height;
 
 
@@ -2342,7 +2561,6 @@ function dibujarResultados(
                 )
 
                 *
-
                 zona.width;
 
 
@@ -2362,35 +2580,28 @@ function dibujarResultados(
                 )
 
                 *
-
                 zona.height;
 
 
-            const width =
+            const w =
                 xmax - x;
 
 
-            const height =
+            const h =
                 ymax - y;
 
 
             /*
-            Margen alrededor
-            de la placa.
+            Agregamos margen.
             */
 
-            const margenX =
 
-                width
-                *
-                0.10;
+            const margenX =
+                w * 0.12;
 
 
             const margenY =
-
-                height
-                *
-                0.25;
+                h * 0.30;
 
 
             const rx =
@@ -2411,22 +2622,22 @@ function dibujarResultados(
 
             const rw =
 
-                width
+                w
                 +
                 margenX * 2;
 
 
             const rh =
 
-                height
+                h
                 +
                 margenY * 2;
 
 
-
             /*
-            Rectángulo verde.
+            CUADRO VERDE
             */
+
 
             ctx.strokeStyle =
                 "#00ff55";
@@ -2449,10 +2660,10 @@ function dibujarResultados(
             );
 
 
-
             /*
-            Placa reconocida.
+            ETIQUETA
             */
+
 
             const placa =
 
@@ -2465,22 +2676,22 @@ function dibujarResultados(
                 "bold 28px Arial";
 
 
-            const textoWidth =
+            const anchoTexto =
 
                 ctx.measureText(
                     placa
                 ).width;
 
 
-            const etiquetaWidth =
+            const etiquetaW =
 
-                textoWidth
+                anchoTexto
                 +
                 20;
 
 
-            const etiquetaHeight =
-                38;
+            const etiquetaH =
+                40;
 
 
             const etiquetaY =
@@ -2489,9 +2700,7 @@ function dibujarResultados(
 
                     0,
 
-                    ry
-                    -
-                    etiquetaHeight
+                    ry - etiquetaH
 
                 );
 
@@ -2506,9 +2715,9 @@ function dibujarResultados(
 
                 etiquetaY,
 
-                etiquetaWidth,
+                etiquetaW,
 
-                etiquetaHeight
+                etiquetaH
 
             );
 
@@ -2523,7 +2732,7 @@ function dibujarResultados(
 
                 rx + 10,
 
-                etiquetaY + 28
+                etiquetaY + 29
 
             );
 
@@ -2535,11 +2744,10 @@ function dibujarResultados(
 
 
 
-/* =========================================================
+/* ==========================================================
+   LISTA DE RESULTADOS
+========================================================== */
 
-LISTA DE PLACAS
-
-========================================================= */
 
 function actualizarLista(
     resultados
@@ -2575,7 +2783,7 @@ function actualizarLista(
 
     resultados.forEach(
 
-        resultado => {
+        function(resultado) {
 
 
             const placa =
@@ -2613,9 +2821,7 @@ function actualizarLista(
             item.innerHTML =
 
                 "🚗 "
-
                 +
-
                 placa
 
                 +
@@ -2647,11 +2853,10 @@ function actualizarLista(
 
 
 
-/* =========================================================
+/* ==========================================================
+   CONTAR VEHÍCULOS
+========================================================== */
 
-CONTAR VEHÍCULOS
-
-========================================================= */
 
 function procesarVehiculos(
     resultados
@@ -2664,7 +2869,7 @@ function procesarVehiculos(
 
     resultados.forEach(
 
-        resultado => {
+        function(resultado) {
 
 
             const placa =
@@ -2677,12 +2882,9 @@ function procesarVehiculos(
             if (!placa) {
 
                 return;
+
             }
 
-
-            /*
-            Última placa grande.
-            */
 
             document.getElementById(
                 "ultimaPlaca"
@@ -2700,12 +2902,6 @@ function procesarVehiculos(
 
                 0;
 
-
-            /*
-            Solamente contamos como
-            nuevo vehículo si no fue
-            visto recientemente.
-            */
 
             if (
 
@@ -2725,7 +2921,6 @@ function procesarVehiculos(
                 document.getElementById(
                     "contador"
                 ).innerText =
-
                     totalVehiculos;
 
             }
@@ -2747,63 +2942,35 @@ function procesarVehiculos(
 
 
 
-/* =========================================================
+/* ==========================================================
+   ESPERAR
+========================================================== */
 
-ESTADO SERVIDOR
 
-========================================================= */
-
-function cambiarServidor(
-    conectado
+function esperar(
+    ms
 ) {
 
 
-    const indicador =
+    return new Promise(
 
-        document.getElementById(
-            "indicador"
-        );
+        resolve =>
 
+            setTimeout(
+                resolve,
+                ms
+            )
 
-    const texto =
-
-        document.getElementById(
-            "estadoApi"
-        );
-
-
-    if (conectado) {
-
-
-        indicador.style.background =
-            "#00c853";
-
-
-        texto.innerText =
-            "ON";
-
-
-    } else {
-
-
-        indicador.style.background =
-            "#aaa";
-
-
-        texto.innerText =
-            "OFF";
-
-    }
+    );
 
 }
 
 
 
-/* =========================================================
+/* ==========================================================
+   ROTACIÓN / CAMBIO DE TAMAÑO
+========================================================== */
 
-AJUSTAR AL GIRAR TABLET
-
-========================================================= */
 
 window.addEventListener(
 
@@ -2828,11 +2995,10 @@ window.addEventListener(
 
 
 
-/* =========================================================
+/* ==========================================================
+   CERRAR PÁGINA
+========================================================== */
 
-AL CERRAR
-
-========================================================= */
 
 window.addEventListener(
 
@@ -2858,6 +3024,15 @@ window.addEventListener(
     }
 
 );
+
+
+
+/* ==========================================================
+   INICIO DE PÁGINA
+========================================================== */
+
+
+comprobarServidor();
 
 
 </script>
