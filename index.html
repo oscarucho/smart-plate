@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Plate</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitulo {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .camara {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        video {
+            width: 100%;
+            display: block;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background: #1976d2;
+            color: white;
+            cursor: pointer;
+        }
+
+        .resultado {
+            margin: 25px auto;
+            max-width: 600px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .placa {
+            font-size: 35px;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🚗 SMART PLATE</h1>
+
+    <div class="subtitulo">
+        Detector inteligente de placas
+    </div>
+
+    <div class="camara">
+        <video id="video" autoplay playsinline></video>
+    </div>
+
+    <button onclick="iniciarCamara()">
+        📷 INICIAR CÁMARA
+    </button>
+
+    <div class="resultado">
+
+        <h2>Placa detectada</h2>
+
+        <div class="placa" id="placa">
+            ---
+        </div>
+
+    </div>
+
+    <script>
+
+        async function iniciarCamara() {
+
+            try {
+
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: "environment"
+                    },
+                    audio: false
+                });
+
+                const video = document.getElementById("video");
+
+                video.srcObject = stream;
+
+            } catch (error) {
+
+                alert("No se pudo acceder a la cámara: " + error);
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
