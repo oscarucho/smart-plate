@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -6,8 +7,8 @@
 <meta charset="UTF-8">
 
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
 >
 
 <title>Smart Plate</title>
@@ -15,161 +16,160 @@
 <style>
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
 
-    font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 15px;
 
-    margin: 0;
-    padding: 15px;
+  font-family: Arial, sans-serif;
 
-    text-align: center;
+  background: #f2f4f7;
 
-    background: #f2f4f7;
+  text-align: center;
 }
 
 h1 {
-    margin-bottom: 5px;
+
+  margin-bottom: 5px;
 }
 
 .subtitulo {
 
-    color: #666;
+  color: #666;
 
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .camara {
 
-    position: relative;
+  position: relative;
 
-    width: 100%;
-    max-width: 800px;
+  width: 100%;
 
-    margin: auto;
+  max-width: 800px;
 
-    background: black;
+  margin: auto;
 
-    border-radius: 15px;
+  overflow: hidden;
 
-    overflow: hidden;
+  border-radius: 15px;
+
+  background: black;
 }
 
 video {
 
-    display: block;
+  display: block;
 
-    width: 100%;
+  width: 100%;
 }
 
 #overlay {
 
-    position: absolute;
+  position: absolute;
 
-    left: 0;
-    top: 0;
+  top: 0;
 
-    width: 100%;
-    height: 100%;
+  left: 0;
 
-    pointer-events: none;
+  width: 100%;
+
+  height: 100%;
+
+  pointer-events: none;
 }
 
 button {
 
-    padding: 15px 22px;
+  margin: 8px 4px;
 
-    font-size: 17px;
+  padding: 14px 20px;
 
-    border: none;
+  border: none;
 
-    border-radius: 12px;
+  border-radius: 12px;
 
-    color: white;
+  font-size: 17px;
 
-    margin: 5px;
+  color: white;
 }
 
-#btnCamara {
-    background: #1976d2;
+#btnIniciar {
+
+  background: #1976d2;
 }
 
 #btnDetener {
-    background: #d32f2f;
+
+  background: #d32f2f;
 }
 
 button:disabled {
-    opacity: 0.5;
+
+  opacity: 0.45;
 }
 
-.estado {
+.panel {
 
-    max-width: 800px;
+  max-width: 800px;
 
-    margin: 15px auto;
+  margin: 15px auto;
 
-    padding: 15px;
+  padding: 15px;
 
-    background: white;
+  border-radius: 15px;
 
-    border-radius: 15px;
+  background: white;
 }
 
-#mensaje {
+#estado {
 
-    font-size: 19px;
+  font-size: 19px;
 
-    font-weight: bold;
+  font-weight: bold;
 }
 
 #detalle {
 
-    margin-top: 7px;
+  margin-top: 7px;
 
-    color: #777;
+  color: #777;
 
-    font-size: 13px;
+  font-size: 13px;
 }
 
-.resultado {
+.placa {
 
-    max-width: 800px;
+  display: inline-block;
 
-    margin: 15px auto;
+  margin: 5px;
 
-    padding: 20px;
+  padding: 10px 15px;
 
-    background: white;
+  border-radius: 10px;
 
-    border-radius: 15px;
+  background: #e8f5e9;
+
+  font-size: 24px;
+
+  font-weight: bold;
+
+  letter-spacing: 2px;
 }
 
-#placas {
+.guardado {
 
-    margin-top: 12px;
+  font-size: 12px;
 
-    font-size: 30px;
-
-    font-weight: bold;
-
-    letter-spacing: 3px;
+  color: #388e3c;
 }
 
-.placaItem {
+canvas.oculto {
 
-    padding: 8px;
-
-    margin: 5px;
-
-    background: #e8f5e9;
-
-    border-radius: 8px;
-}
-
-#procesamiento {
-    display: none;
+  display: none;
 }
 
 </style>
@@ -180,101 +180,160 @@ button:disabled {
 <body>
 
 
-<h1>🚗 AARÓN MATHÍAS SECURITY</h1>
+<h1>
+🚗 AARÓN AUTOS SECURITY
+</h1>
+
 
 <div class="subtitulo">
 
-    Detector inteligente de placas - Edificio Fisher 155
+Detector inteligente de múltiples placas - Edificio Fisher 155
 
 </div>
 
 
 <div class="camara">
 
-    <video
-        id="video"
-        autoplay
-        muted
-        playsinline
-    ></video>
+  <video
+    id="video"
+    autoplay
+    muted
+    playsinline
+  ></video>
 
-    <canvas id="overlay"></canvas>
+  <canvas
+    id="overlay"
+  ></canvas>
 
 </div>
 
 
 <div>
 
-    <button
-        id="btnCamara"
-        onclick="iniciarCamara()"
-    >
+  <button
+    id="btnIniciar"
+    onclick="iniciarCamara()"
+  >
 
-        📷 INICIAR CÁMARA
+    📷 INICIAR CÁMARA
 
-    </button>
-
-
-    <button
-        id="btnDetener"
-        onclick="detenerCamara()"
-        disabled
-    >
-
-        ⏹ DETENER
-
-    </button>
-
-</div>
+  </button>
 
 
-<div class="estado">
+  <button
+    id="btnDetener"
+    onclick="detenerCamara()"
+    disabled
+  >
 
-    <div id="mensaje">
+    ⏹ DETENER
 
-        Presiona INICIAR CÁMARA
-
-    </div>
-
-    <div id="detalle">
-
-        Esperando...
-
-    </div>
+  </button>
 
 </div>
 
 
-<div class="resultado">
+<div class="panel">
 
-    <div>
+  <div id="estado">
 
-        PLACAS DETECTADAS
+    Presiona INICIAR CÁMARA
 
-    </div>
+  </div>
 
 
-    <div id="placas">
+  <div id="detalle">
 
-        ---
+    Smart Plate V7
 
-    </div>
+  </div>
 
 </div>
 
 
-<canvas id="procesamiento"></canvas>
+<div class="panel">
+
+  <b>
+    PLACAS DETECTADAS
+  </b>
+
+  <div
+    id="listaPlacas"
+  >
+
+    <br>
+    ---
+
+  </div>
+
+</div>
+
+
+<canvas
+  id="canvasAnalisis"
+  class="oculto"
+></canvas>
+
+
+<canvas
+  id="canvasOCR"
+  class="oculto"
+></canvas>
 
 
 
 <script>
 
 
-/* =====================================================
+/* ==========================================================
+CONFIGURACIÓN
+========================================================== */
 
+
+/*
+PEGA AQUÍ LA URL /exec
+QUE TE DIO GOOGLE APPS SCRIPT
+*/
+
+const APPS_SCRIPT_URL =
+
+  "https://script.google.com/macros/s/AKfycbw51pgYJouVuYEfbkPh5vNnM_Mi2MDzXLW-byI3NeyjGgZS0uqv0FR2WAeqCkGzfKB5/exec";
+
+
+/*
+Debe ser igual al token
+del Apps Script.
+*/
+
+const TOKEN_REGISTRO =
+
+  "SMARTPLATE-2026";
+
+
+/*
+No volveremos a guardar la misma placa
+durante 30 segundos.
+*/
+
+const TIEMPO_REPETIDO =
+
+  30000;
+
+
+/*
+Máximo de regiones que vamos
+a analizar simultáneamente.
+*/
+
+const MAX_CANDIDATOS =
+
+  8;
+
+
+
+/* ==========================================================
 VARIABLES
-
-===================================================== */
+========================================================== */
 
 let streamCamara = null;
 
@@ -284,249 +343,322 @@ let workerOCR = null;
 
 let ocrListo = false;
 
-let procesandoOCR = false;
+let analizando = false;
 
-let temporizadorOCR = null;
+let timerOCR = null;
 
-let cargandoTesseract = false;
+let cargandoOCR = false;
+
+
+/*
+Historial temporal para confirmar
+una placa antes de guardarla.
+*/
+
+const memoriaPlacas =
+  new Map();
+
+
+/*
+Una identificación para esta sesión.
+*/
+
+const SESION =
+
+  sessionStorage.getItem(
+    "smartPlateSesion"
+  )
+
+  ||
+
+  crearSesion();
+
+
+sessionStorage.setItem(
+  "smartPlateSesion",
+  SESION
+);
 
 
 
-/* =====================================================
+/* ==========================================================
+SESIÓN
+========================================================== */
 
-MENSAJES
+function crearSesion() {
 
-===================================================== */
+  if (
 
-function mensaje(texto, detalle = "") {
+    window.crypto
 
-    document.getElementById(
-        "mensaje"
-    ).innerText = texto;
+    &&
 
-    document.getElementById(
-        "detalle"
-    ).innerText = detalle;
+    crypto.randomUUID
+
+  ) {
+
+    return crypto.randomUUID();
+
+  }
+
+
+  return (
+
+    Date.now()
+
+    +
+
+    "-"
+
+    +
+
+    Math.random()
+      .toString(36)
+      .substring(2)
+
+  );
 
 }
 
 
 
-/* =====================================================
+/* ==========================================================
+MENSAJES
+========================================================== */
 
-INICIAR CÁMARA
+function mensaje(
 
-===================================================== */
+  texto,
+
+  detalle = ""
+
+) {
+
+  document.getElementById(
+    "estado"
+  ).innerText = texto;
+
+
+  document.getElementById(
+    "detalle"
+  ).innerText = detalle;
+
+}
+
+
+
+/* ==========================================================
+CÁMARA
+========================================================== */
 
 async function iniciarCamara() {
 
 
-    const video =
-        document.getElementById("video");
-
-
-    try {
-
-
-        mensaje(
-
-            "📷 Iniciando cámara...",
-
-            "Permite acceso si Android lo solicita."
-
-        );
-
-
-        streamCamara =
-
-            await navigator.mediaDevices.getUserMedia({
-
-                video: {
-
-                    facingMode: {
-
-                        ideal: "environment"
-
-                    },
-
-                    width: {
-
-                        ideal: 1280
-
-                    },
-
-                    height: {
-
-                        ideal: 720
-
-                    }
-
-                },
-
-                audio: false
-
-            });
-
-
-        video.srcObject =
-            streamCamara;
-
-
-        await video.play();
-
-
-        camaraActiva =
-            true;
-
-
-        document.getElementById(
-            "btnCamara"
-        ).disabled = true;
-
-
-        document.getElementById(
-            "btnDetener"
-        ).disabled = false;
-
-
-        prepararOverlay();
-
-
-        mensaje(
-
-            "✅ Cámara funcionando",
-
-            "Preparando reconocimiento de placas..."
-
-        );
-
-
-        /*
-        Primero cámara.
-
-        Después cargamos OCR.
-        */
-
-        prepararTesseract();
-
-
-    } catch (error) {
-
-
-        console.error(error);
-
-
-        mensaje(
-
-            "❌ Error de cámara",
-
-            error.name + ": " + error.message
-
-        );
-
-    }
-
-}
-
-
-
-/* =====================================================
-
-DETENER CÁMARA
-
-===================================================== */
-
-function detenerCamara() {
-
-
-    camaraActiva =
-        false;
-
-
-    if (temporizadorOCR) {
-
-        clearTimeout(
-            temporizadorOCR
-        );
-
-        temporizadorOCR =
-            null;
-
-    }
-
-
-    if (streamCamara) {
-
-
-        streamCamara
-            .getTracks()
-            .forEach(
-
-                track =>
-                    track.stop()
-
-            );
-
-
-        streamCamara =
-            null;
-
-    }
-
-
+  const video =
     document.getElementById(
-        "video"
-    ).srcObject = null;
+      "video"
+    );
 
 
-    limpiarOverlay();
-
-
-    document.getElementById(
-        "btnCamara"
-    ).disabled = false;
-
-
-    document.getElementById(
-        "btnDetener"
-    ).disabled = true;
+  try {
 
 
     mensaje(
 
-        "⏹ Cámara detenida",
+      "📷 Iniciando cámara...",
 
-        "El detector OCR queda preparado."
+      "Permite el acceso si Android lo solicita."
 
     );
+
+
+    streamCamara =
+
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+
+          video: {
+
+            facingMode: {
+
+              ideal:
+                "environment"
+
+            },
+
+            width: {
+
+              ideal: 1920
+
+            },
+
+            height: {
+
+              ideal: 1080
+
+            }
+
+          },
+
+          audio: false
+
+        });
+
+
+    video.srcObject =
+      streamCamara;
+
+
+    await video.play();
+
+
+    camaraActiva =
+      true;
+
+
+    document.getElementById(
+      "btnIniciar"
+    ).disabled = true;
+
+
+    document.getElementById(
+      "btnDetener"
+    ).disabled = false;
+
+
+    prepararOverlay();
+
+
+    mensaje(
+
+      "✅ Cámara lista",
+
+      "Preparando reconocimiento OCR..."
+
+    );
+
+
+    cargarTesseract();
+
+
+  } catch (error) {
+
+
+    console.error(error);
+
+
+    mensaje(
+
+      "❌ Error al iniciar cámara",
+
+      error.name
+      +
+      ": "
+      +
+      error.message
+
+    );
+
+  }
 
 }
 
 
 
-/* =====================================================
+function detenerCamara() {
 
+
+  camaraActiva =
+    false;
+
+
+  if (timerOCR) {
+
+    clearTimeout(
+      timerOCR
+    );
+
+    timerOCR =
+      null;
+
+  }
+
+
+  if (streamCamara) {
+
+
+    streamCamara
+      .getTracks()
+      .forEach(
+
+        track =>
+          track.stop()
+
+      );
+
+
+    streamCamara =
+      null;
+
+  }
+
+
+  document.getElementById(
+    "video"
+  ).srcObject = null;
+
+
+  limpiarOverlay();
+
+
+  document.getElementById(
+    "btnIniciar"
+  ).disabled = false;
+
+
+  document.getElementById(
+    "btnDetener"
+  ).disabled = true;
+
+
+  mensaje(
+
+    "⏹ Cámara detenida",
+
+    "Puedes volver a iniciarla."
+
+  );
+
+}
+
+
+
+/* ==========================================================
 OVERLAY
-
-===================================================== */
+========================================================== */
 
 function prepararOverlay() {
 
 
-    const video =
-        document.getElementById("video");
+  const video =
+    document.getElementById(
+      "video"
+    );
 
 
-    const overlay =
-        document.getElementById("overlay");
+  const overlay =
+    document.getElementById(
+      "overlay"
+    );
 
 
-    overlay.width =
-        video.videoWidth;
+  overlay.width =
+    video.videoWidth;
 
 
-    overlay.height =
-        video.videoHeight;
+  overlay.height =
+    video.videoHeight;
 
 }
 
@@ -535,876 +667,2121 @@ function prepararOverlay() {
 function limpiarOverlay() {
 
 
-    const overlay =
-        document.getElementById("overlay");
-
-
-    const ctx =
-        overlay.getContext("2d");
-
-
-    ctx.clearRect(
-
-        0,
-
-        0,
-
-        overlay.width,
-
-        overlay.height
-
+  const overlay =
+    document.getElementById(
+      "overlay"
     );
+
+
+  const ctx =
+    overlay.getContext("2d");
+
+
+  ctx.clearRect(
+
+    0,
+
+    0,
+
+    overlay.width,
+
+    overlay.height
+
+  );
 
 }
 
 
 
-/* =====================================================
+/* ==========================================================
+TESSERACT
+========================================================== */
 
-CARGAR TESSERACT
-
-===================================================== */
-
-function prepararTesseract() {
+function cargarTesseract() {
 
 
-    if (ocrListo) {
+  if (ocrListo) {
 
-        iniciarCicloOCR();
+    programarAnalisis();
 
-        return;
+    return;
 
-    }
-
-
-    if (cargandoTesseract) {
-
-        return;
-
-    }
+  }
 
 
-    cargandoTesseract =
-        true;
+  if (cargandoOCR) {
+
+    return;
+
+  }
+
+
+  cargandoOCR =
+    true;
+
+
+  mensaje(
+
+    "⏳ Cargando OCR...",
+
+    "La primera carga puede tomar unos segundos."
+
+  );
+
+
+  if (window.Tesseract) {
+
+    crearWorkerOCR();
+
+    return;
+
+  }
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.src =
+
+    "https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.min.js";
+
+
+  script.onload =
+    crearWorkerOCR;
+
+
+  script.onerror =
+    function () {
+
+
+      cargandoOCR =
+        false;
+
+
+      mensaje(
+
+        "❌ No se pudo cargar OCR",
+
+        "Comprueba la conexión Wi-Fi."
+
+      );
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+
+async function crearWorkerOCR() {
+
+
+  try {
 
 
     mensaje(
 
-        "⏳ Cargando inteligencia OCR...",
+      "🧠 Preparando lector...",
 
-        "La cámara seguirá funcionando."
+      "Configurando reconocimiento de placas."
 
     );
 
 
-    const script =
-        document.createElement("script");
+    workerOCR =
+
+      await Tesseract.createWorker(
+
+        "eng",
+
+        1,
+
+        {
+
+          logger: function(m) {
 
 
-    /*
-    Tesseract.js 7
-    */
+            if (
 
-    script.src =
+              m.status ===
+              "recognizing text"
 
-        "https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.min.js";
-
-
-    script.onload =
-        iniciarWorkerOCR;
+            ) {
 
 
-    script.onerror =
-        function() {
+              const porcentaje =
+
+                Math.round(
+                  m.progress * 100
+                );
 
 
-            cargandoTesseract =
-                false;
+              document.getElementById(
+                "detalle"
+              ).innerText =
+
+                "OCR: "
+                +
+                porcentaje
+                +
+                "%";
+
+            }
+
+          }
+
+        }
+
+      );
 
 
-            mensaje(
+    await workerOCR.setParameters({
 
-                "❌ No se pudo cargar OCR",
+      tessedit_char_whitelist:
 
-                "Comprueba tu conexión Wi-Fi."
-
-            );
-
-        };
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-",
 
 
-    document.body.appendChild(
-        script
+      /*
+      11 = texto disperso.
+      */
+
+      tessedit_pageseg_mode:
+
+        "11",
+
+
+      preserve_interword_spaces:
+
+        "1",
+
+
+      user_defined_dpi:
+
+        "300"
+
+    });
+
+
+    ocrListo =
+      true;
+
+
+    cargandoOCR =
+      false;
+
+
+    mensaje(
+
+      "✅ Detector listo",
+
+      "Buscando varias placas..."
+
+    );
+
+
+    programarAnalisis();
+
+
+  } catch (error) {
+
+
+    console.error(error);
+
+
+    cargandoOCR =
+      false;
+
+
+    mensaje(
+
+      "❌ Error preparando OCR",
+
+      error.message
+
+    );
+
+  }
+
+}
+
+
+
+/* ==========================================================
+CICLO
+========================================================== */
+
+function programarAnalisis() {
+
+
+  if (!camaraActiva) {
+
+    return;
+
+  }
+
+
+  if (timerOCR) {
+
+    clearTimeout(
+      timerOCR
+    );
+
+  }
+
+
+  timerOCR =
+
+    setTimeout(
+
+      analizarEscena,
+
+      800
+
     );
 
 }
 
 
 
-/* =====================================================
+/* ==========================================================
+ANALIZAR ESCENA
+========================================================== */
 
-CREAR WORKER OCR
+async function analizarEscena() {
 
-===================================================== */
 
-async function iniciarWorkerOCR() {
+  if (
 
+    !camaraActiva
 
-    try {
+    ||
 
+    !ocrListo
 
-        mensaje(
+    ||
 
-            "🧠 Preparando lector de placas...",
+    analizando
 
-            "La primera vez puede tardar algunos segundos."
+  ) {
 
-        );
+    programarAnalisis();
 
+    return;
 
-        workerOCR =
+  }
 
-            await Tesseract.createWorker(
 
-                "eng",
+  analizando =
+    true;
 
-                1,
 
-                {
-
-                    logger: function(m) {
-
-
-                        if (
-
-                            m.status ===
-                            "recognizing text"
-
-                        ) {
-
-
-                            const porcentaje =
-
-                                Math.round(
-
-                                    m.progress * 100
-
-                                );
-
-
-                            document.getElementById(
-                                "detalle"
-                            ).innerText =
-
-                                "Analizando imagen: "
-                                +
-                                porcentaje
-                                +
-                                "%";
-
-                        }
-
-                    }
-
-                }
-
-            );
-
-
-        /*
-        Configuración especial
-        para placas.
-
-        Solo aceptamos:
-
-        A-Z
-        0-9
-        -
-        */
-
-
-        await workerOCR.setParameters({
-
-
-            tessedit_char_whitelist:
-
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-",
-
-
-            /*
-            11 = SPARSE TEXT
-
-            Busca textos dispersos
-            en diferentes lugares.
-            */
-
-            tessedit_pageseg_mode:
-
-                "11",
-
-
-            preserve_interword_spaces:
-
-                "1"
-
-        });
-
-
-        ocrListo =
-            true;
-
-
-        cargandoTesseract =
-            false;
-
-
-        mensaje(
-
-            "✅ Detector inteligente listo",
-
-            "Buscando placas..."
-
-        );
-
-
-        iniciarCicloOCR();
-
-
-    } catch (error) {
-
-
-        console.error(error);
-
-
-        cargandoTesseract =
-            false;
-
-
-        mensaje(
-
-            "❌ Error preparando OCR",
-
-            error.message
-
-        );
-
-    }
-
-}
-
-
-
-/* =====================================================
-
-CICLO OCR
-
-===================================================== */
-
-function iniciarCicloOCR() {
-
-
-    if (!camaraActiva) {
-
-        return;
-
-    }
-
-
-    if (temporizadorOCR) {
-
-        clearTimeout(
-            temporizadorOCR
-        );
-
-    }
+  try {
 
 
     /*
-    Esperamos un poco entre lecturas.
-
-    No usamos setInterval porque nunca
-    queremos ejecutar dos OCR simultáneos.
+    PASO 1:
+    encontrar varias zonas
+    que parecen placas.
     */
 
 
-    temporizadorOCR =
+    const resultadoBusqueda =
 
-        setTimeout(
-
-            analizarConOCR,
-
-            500
-
-        );
-
-}
+      detectarCandidatos();
 
 
+    const candidatos =
 
-/* =====================================================
-
-CAPTURAR Y ANALIZAR
-
-===================================================== */
-
-async function analizarConOCR() {
+      resultadoBusqueda
+        .candidatos;
 
 
     if (
 
-        !camaraActiva
-
-        ||
-
-        !ocrListo
-
-        ||
-
-        procesandoOCR
+      candidatos.length === 0
 
     ) {
 
-        iniciarCicloOCR();
 
-        return;
+      limpiarOverlay();
+
+
+      mostrarPlacas([]);
+
+
+      mensaje(
+
+        "🔎 Buscando placas...",
+
+        "Acerca los vehículos o mejora la iluminación."
+
+      );
+
+
+      return;
 
     }
 
 
-    procesandoOCR =
-        true;
+    mensaje(
 
+      "🔍 Analizando "
+      +
+      candidatos.length
+      +
+      " zonas...",
 
-    const video =
-        document.getElementById("video");
+      "Ampliando placas antes del OCR."
 
+    );
 
-    const canvas =
-        document.getElementById(
-            "procesamiento"
-        );
 
+    /*
+    PASO 2:
+    crear una imagen grande
+    con todas las regiones.
+    */
 
-    try {
 
+    const montaje =
 
-        /*
-        900px nos da bastante detalle
-        sin procesar la resolución completa.
-        */
+      crearMontajeOCR(
 
+        candidatos,
 
-        const anchoProceso =
+        resultadoBusqueda
+          .ancho,
 
-            Math.min(
+        resultadoBusqueda
+          .alto
 
-                900,
+      );
 
-                video.videoWidth
 
-            );
+    /*
+    PASO 3:
+    un único OCR sobre
+    todas las placas ampliadas.
+    */
 
 
-        const altoProceso =
+    const resultadoOCR =
 
-            Math.round(
+      await workerOCR.recognize(
 
-                video.videoHeight
+        montaje.canvas,
 
-                /
+        {},
 
-                video.videoWidth
+        {
 
-                *
+          text: true,
 
-                anchoProceso
-
-            );
-
-
-        canvas.width =
-            anchoProceso;
-
-
-        canvas.height =
-            altoProceso;
-
-
-        const ctx =
-
-            canvas.getContext(
-
-                "2d",
-
-                {
-                    willReadFrequently: true
-                }
-
-            );
-
-
-        /*
-        Pequeña mejora de contraste.
-        */
-
-
-        ctx.filter =
-
-            "grayscale(1) contrast(1.25)";
-
-
-        ctx.drawImage(
-
-            video,
-
-            0,
-
-            0,
-
-            anchoProceso,
-
-            altoProceso
-
-        );
-
-
-        ctx.filter =
-            "none";
-
-
-        mensaje(
-
-            "🔎 Leyendo placas...",
-
-            "Analizando letras y números."
-
-        );
-
-
-        /*
-        Pedimos explícitamente BLOCKS
-        para tener coordenadas.
-        */
-
-
-        const resultado =
-
-            await workerOCR.recognize(
-
-                canvas,
-
-                {},
-
-                {
-
-                    text: true,
-
-                    blocks: true
-
-                }
-
-            );
-
-
-        const detecciones =
-
-            extraerPlacas(
-
-                resultado.data.blocks
-
-            );
-
-
-        dibujarDetecciones(
-
-            detecciones,
-
-            anchoProceso,
-
-            altoProceso
-
-        );
-
-
-    } catch (error) {
-
-
-        console.error(
-            "OCR:",
-            error
-        );
-
-
-        mensaje(
-
-            "⚠️ Error leyendo imagen",
-
-            error.message
-
-        );
-
-
-    } finally {
-
-
-        procesandoOCR =
-            false;
-
-
-        /*
-        Nueva lectura.
-
-        Al esperar después de terminar
-        evitamos saturar la tablet.
-        */
-
-
-        if (camaraActiva) {
-
-
-            temporizadorOCR =
-
-                setTimeout(
-
-                    analizarConOCR,
-
-                    1200
-
-                );
+          blocks: true
 
         }
 
+      );
+
+
+    /*
+    PASO 4:
+    relacionar cada texto
+    con su carrito.
+    */
+
+
+    let detecciones =
+
+      interpretarOCR(
+
+        resultadoOCR.data.blocks,
+
+        montaje.filas,
+
+        montaje.rowHeight
+
+      );
+
+
+    /*
+    Eliminar duplicados.
+    */
+
+    detecciones =
+
+      eliminarDuplicadosTexto(
+        detecciones
+      );
+
+
+    dibujarDetecciones(
+      detecciones
+    );
+
+
+    mostrarPlacas(
+      detecciones
+    );
+
+
+    procesarRegistros(
+      detecciones
+    );
+
+
+    if (
+
+      detecciones.length > 0
+
+    ) {
+
+
+      mensaje(
+
+        "✅ "
+        +
+        detecciones.length
+        +
+        (
+          detecciones.length === 1
+            ?
+            " placa detectada"
+            :
+            " placas detectadas"
+        ),
+
+        "Confirmando y registrando resultados."
+
+      );
+
+
+    } else {
+
+
+      mensaje(
+
+        "🔎 Buscando placas...",
+
+        "Se encontraron zonas, pero el OCR todavía no confirmó texto."
+
+      );
+
     }
+
+
+  } catch (error) {
+
+
+    console.error(error);
+
+
+    mensaje(
+
+      "⚠️ Error de análisis",
+
+      error.message
+
+    );
+
+
+  } finally {
+
+
+    analizando =
+      false;
+
+
+    if (camaraActiva) {
+
+
+      timerOCR =
+
+        setTimeout(
+
+          analizarEscena,
+
+          1200
+
+        );
+
+    }
+
+  }
 
 }
 
 
 
-/* =====================================================
+/* ==========================================================
+DETECTOR DE CANDIDATOS
 
-EXTRAER TODAS LAS PLACAS
+Busca múltiples zonas claras
+con caracteres oscuros.
+========================================================== */
 
-===================================================== */
-
-function extraerPlacas(blocks) {
-
-
-    const placas =
-        [];
+function detectarCandidatos() {
 
 
-    if (!blocks) {
-
-        return placas;
-
-    }
-
-
-    for (const block of blocks) {
+  const video =
+    document.getElementById(
+      "video"
+    );
 
 
-        if (!block.paragraphs) {
+  const canvas =
+    document.getElementById(
+      "canvasAnalisis"
+    );
 
-            continue;
 
-        }
+  const ancho =
+    420;
+
+
+  const alto =
+
+    Math.round(
+
+      video.videoHeight
+
+      /
+
+      video.videoWidth
+
+      *
+
+      ancho
+
+    );
+
+
+  canvas.width =
+    ancho;
+
+
+  canvas.height =
+    alto;
+
+
+  const ctx =
+
+    canvas.getContext(
+
+      "2d",
+
+      {
+        willReadFrequently: true
+      }
+
+    );
+
+
+  ctx.drawImage(
+
+    video,
+
+    0,
+
+    0,
+
+    ancho,
+
+    alto
+
+  );
+
+
+  const imageData =
+
+    ctx.getImageData(
+
+      0,
+
+      0,
+
+      ancho,
+
+      alto
+
+    );
+
+
+  const datos =
+    imageData.data;
+
+
+  const gris =
+
+    new Uint8Array(
+      ancho * alto
+    );
+
+
+  for (
+
+    let i = 0;
+
+    i < gris.length;
+
+    i++
+
+  ) {
+
+
+    const p =
+      i * 4;
+
+
+    gris[i] =
+
+      Math.round(
+
+        datos[p] * 0.299
+
+        +
+
+        datos[p + 1] * 0.587
+
+        +
+
+        datos[p + 2] * 0.114
+
+      );
+
+  }
+
+
+  const integrales =
+
+    crearIntegrales(
+
+      gris,
+
+      ancho,
+
+      alto
+
+    );
+
+
+  const posibles =
+    [];
+
+
+  /*
+  Tamaños para placas
+  pequeñas y grandes.
+  */
+
+  const anchos = [
+
+    28,
+    36,
+    46,
+    58,
+    72,
+    90,
+    112,
+    138
+
+  ];
+
+
+  const proporciones = [
+
+    2.3,
+    2.8,
+    3.3,
+    3.8,
+    4.4
+
+  ];
+
+
+  for (
+
+    const w
+    of
+    anchos
+
+  ) {
+
+
+    for (
+
+      const ratio
+      of
+      proporciones
+
+    ) {
+
+
+      const h =
+
+        Math.max(
+
+          12,
+
+          Math.round(
+            w / ratio
+          )
+
+        );
+
+
+      if (
+
+        w >= ancho
+
+        ||
+
+        h >= alto
+
+      ) {
+
+        continue;
+
+      }
+
+
+      const paso =
+
+        Math.max(
+
+          4,
+
+          Math.round(
+            w / 13
+          )
+
+        );
+
+
+      for (
+
+        let y = 2;
+
+        y <= alto - h - 2;
+
+        y += paso
+
+      ) {
 
 
         for (
-            const parrafo
-            of
-            block.paragraphs
+
+          let x = 2;
+
+          x <= ancho - w - 2;
+
+          x += paso
+
         ) {
 
 
-            if (!parrafo.lines) {
+          const area =
+            w * h;
 
-                continue;
 
-            }
+          const suma =
 
+            sumaRect(
 
-            for (
-                const linea
-                of
-                parrafo.lines
-            ) {
+              integrales.suma,
 
+              x,
+              y,
+              w,
+              h,
 
-                /*
-                Intentamos convertir
-                el texto de la línea
-                en placa.
-                */
+              integrales.stride
 
+            );
 
-                const placa =
 
-                    normalizarPlaca(
+          const cantidadOscuros =
 
-                        linea.text
+            sumaRect(
 
-                    );
+              integrales.oscuros,
 
+              x,
+              y,
+              w,
+              h,
 
-                if (!placa) {
+              integrales.stride
 
-                    continue;
+            );
 
-                }
 
+          const bordes =
 
-                /*
-                Evitamos textos
-                de muy baja confianza.
-                */
+            sumaRect(
 
+              integrales.bordes,
 
-                if (
+              x,
+              y,
+              w,
+              h,
 
-                    typeof linea.confidence
-                        === "number"
+              integrales.stride
 
-                    &&
+            );
 
-                    linea.confidence < 25
 
-                ) {
+          const promedio =
 
-                    continue;
+            suma / area;
 
-                }
 
+          const oscuros =
 
-                const bbox =
-                    linea.bbox;
+            cantidadOscuros
+            /
+            area;
 
 
-                if (!bbox) {
+          const energiaBordes =
 
-                    continue;
+            bordes
+            /
+            area;
 
-                }
 
+          /*
+          Zona clara + letras oscuras
+          + suficientes bordes.
+          */
 
-                const width =
+          if (
 
-                    bbox.x1
-                    -
-                    bbox.x0;
+            promedio < 105
 
+            ||
 
-                const height =
+            promedio > 250
 
-                    bbox.y1
-                    -
-                    bbox.y0;
+            ||
 
+            oscuros < 0.035
 
-                /*
-                Una placa debe ser
-                razonablemente horizontal.
-                Permitimos bastante margen
-                para ángulos.
-                */
+            ||
 
+            oscuros > 0.45
 
-                if (
+            ||
 
-                    width < 25
+            energiaBordes < 5
 
-                    ||
+          ) {
 
-                    height < 8
+            continue;
 
-                ) {
+          }
 
-                    continue;
 
-                }
+          const premioOscuros =
 
+            Math.max(
 
-                const proporcion =
+              0,
 
-                    width
+              1
 
-                    /
+              -
 
-                    Math.max(
+              Math.abs(
+                oscuros - 0.18
+              )
 
-                        height,
+              /
+              0.18
 
-                        1
+            );
 
-                    );
 
+          const puntaje =
 
-                if (
+            energiaBordes * 4
 
-                    proporcion < 1.3
+            +
 
-                    ||
+            premioOscuros * 75
 
-                    proporcion > 9
+            +
 
-                ) {
+            promedio * 0.12
 
-                    continue;
+            -
 
-                }
+            Math.abs(
+              ratio - 3.3
+            ) * 5;
 
 
-                placas.push({
+          posibles.push({
 
+            x: x,
 
-                    texto:
-                        placa,
+            y: y,
 
+            width: w,
 
-                    confianza:
+            height: h,
 
-                        linea.confidence
-                        ||
-                        0,
+            score:
+              puntaje
 
-
-                    x:
-                        bbox.x0,
-
-
-                    y:
-                        bbox.y0,
-
-
-                    width:
-                        width,
-
-
-                    height:
-                        height
-
-                });
-
-            }
+          });
 
         }
 
+      }
+
     }
 
+  }
 
-    return eliminarDuplicados(
-        placas
-    );
+
+  posibles.sort(
+
+    (a, b) =>
+      b.score - a.score
+
+  );
+
+
+  return {
+
+    ancho: ancho,
+
+    alto: alto,
+
+    candidatos:
+
+      seleccionarCandidatos(
+        posibles
+      )
+
+  };
 
 }
 
 
 
-/* =====================================================
+/* ==========================================================
+IMÁGENES INTEGRALES
+========================================================== */
 
-NORMALIZAR PLACA
+function crearIntegrales(
 
-Formato esperado:
+  gris,
 
-ABC-123
+  ancho,
 
-También acepta:
+  alto
 
-ABC123
-
-===================================================== */
-
-function normalizarPlaca(texto) {
+) {
 
 
-    if (!texto) {
+  const stride =
+    ancho + 1;
 
-        return null;
+
+  const tamano =
+
+    (ancho + 1)
+
+    *
+
+    (alto + 1);
+
+
+  const suma =
+
+    new Float64Array(
+      tamano
+    );
+
+
+  const oscuros =
+
+    new Uint32Array(
+      tamano
+    );
+
+
+  const bordes =
+
+    new Float64Array(
+      tamano
+    );
+
+
+  for (
+
+    let y = 1;
+
+    y <= alto;
+
+    y++
+
+  ) {
+
+
+    let filaSuma =
+      0;
+
+
+    let filaOscuros =
+      0;
+
+
+    let filaBordes =
+      0;
+
+
+    for (
+
+      let x = 1;
+
+      x <= ancho;
+
+      x++
+
+    ) {
+
+
+      const indice =
+
+        (y - 1)
+        *
+        ancho
+
+        +
+
+        (x - 1);
+
+
+      const valor =
+        gris[indice];
+
+
+      filaSuma +=
+        valor;
+
+
+      filaOscuros +=
+
+        valor < 105
+          ?
+          1
+          :
+          0;
+
+
+      let borde =
+        0;
+
+
+      if (x > 1) {
+
+
+        borde =
+
+          Math.abs(
+
+            valor
+
+            -
+
+            gris[
+              indice - 1
+            ]
+
+          );
+
+      }
+
+
+      filaBordes +=
+        borde;
+
+
+      const pos =
+
+        y * stride
+        +
+        x;
+
+
+      suma[pos] =
+
+        suma[
+          pos - stride
+        ]
+
+        +
+
+        filaSuma;
+
+
+      oscuros[pos] =
+
+        oscuros[
+          pos - stride
+        ]
+
+        +
+
+        filaOscuros;
+
+
+      bordes[pos] =
+
+        bordes[
+          pos - stride
+        ]
+
+        +
+
+        filaBordes;
 
     }
 
+  }
 
-    let t =
 
-        texto
-        .toUpperCase()
-        .replace(
-            /[–—_]/g,
-            "-"
+  return {
+
+    suma,
+
+    oscuros,
+
+    bordes,
+
+    stride
+
+  };
+
+}
+
+
+
+function sumaRect(
+
+  integral,
+
+  x,
+
+  y,
+
+  w,
+
+  h,
+
+  stride
+
+) {
+
+
+  const x1 =
+    x;
+
+
+  const y1 =
+    y;
+
+
+  const x2 =
+    x + w;
+
+
+  const y2 =
+    y + h;
+
+
+  return (
+
+    integral[
+      y2 * stride + x2
+    ]
+
+    -
+
+    integral[
+      y1 * stride + x2
+    ]
+
+    -
+
+    integral[
+      y2 * stride + x1
+    ]
+
+    +
+
+    integral[
+      y1 * stride + x1
+    ]
+
+  );
+
+}
+
+
+
+/* ==========================================================
+QUITAR RECTÁNGULOS REPETIDOS
+========================================================== */
+
+function seleccionarCandidatos(
+
+  lista
+
+) {
+
+
+  const resultado =
+    [];
+
+
+  for (
+
+    const candidato
+    of
+    lista
+
+  ) {
+
+
+    let repetido =
+      false;
+
+
+    for (
+
+      const seleccionado
+      of
+      resultado
+
+    ) {
+
+
+      if (
+
+        calcularIoU(
+
+          candidato,
+
+          seleccionado
+
         )
-        .replace(
-            /[^A-Z0-9-]/g,
-            ""
-        );
+
+        >
+        0.30
+
+      ) {
 
 
-    /*
-    Quitamos guión temporalmente.
-    */
+        repetido =
+          true;
 
+        break;
 
-    t =
-        t.replace(
-            /-/g,
-            ""
-        );
-
-
-    /*
-    Nuestro experimento usa:
-
-    3 letras + 3 números
-    */
-
-
-    if (t.length !== 6) {
-
-        return null;
+      }
 
     }
+
+
+    if (!repetido) {
+
+
+      resultado.push(
+        candidato
+      );
+
+    }
+
+
+    if (
+
+      resultado.length
+      >=
+      MAX_CANDIDATOS
+
+    ) {
+
+      break;
+
+    }
+
+  }
+
+
+  return resultado;
+
+}
+
+
+
+function calcularIoU(
+
+  a,
+
+  b
+
+) {
+
+
+  const x1 =
+
+    Math.max(
+      a.x,
+      b.x
+    );
+
+
+  const y1 =
+
+    Math.max(
+      a.y,
+      b.y
+    );
+
+
+  const x2 =
+
+    Math.min(
+
+      a.x + a.width,
+
+      b.x + b.width
+
+    );
+
+
+  const y2 =
+
+    Math.min(
+
+      a.y + a.height,
+
+      b.y + b.height
+
+    );
+
+
+  const interW =
+
+    Math.max(
+      0,
+      x2 - x1
+    );
+
+
+  const interH =
+
+    Math.max(
+      0,
+      y2 - y1
+    );
+
+
+  const inter =
+
+    interW
+    *
+    interH;
+
+
+  if (inter <= 0) {
+
+    return 0;
+
+  }
+
+
+  const areaA =
+
+    a.width
+    *
+    a.height;
+
+
+  const areaB =
+
+    b.width
+    *
+    b.height;
+
+
+  return (
+
+    inter
+
+    /
+
+    (
+      areaA
+      +
+      areaB
+      -
+      inter
+    )
+
+  );
+
+}
+
+
+
+/* ==========================================================
+CREAR MONTAJE OCR
+
+Cada posible placa se amplía.
+========================================================== */
+
+function crearMontajeOCR(
+
+  candidatos,
+
+  anchoAnalisis,
+
+  altoAnalisis
+
+) {
+
+
+  const video =
+    document.getElementById(
+      "video"
+    );
+
+
+  const canvas =
+    document.getElementById(
+      "canvasOCR"
+    );
+
+
+  const width =
+    600;
+
+
+  const rowHeight =
+    175;
+
+
+  canvas.width =
+    width;
+
+
+  canvas.height =
+
+    candidatos.length
+    *
+    rowHeight;
+
+
+  const ctx =
+
+    canvas.getContext(
+      "2d"
+    );
+
+
+  ctx.fillStyle =
+    "white";
+
+
+  ctx.fillRect(
+
+    0,
+
+    0,
+
+    canvas.width,
+
+    canvas.height
+
+  );
+
+
+  const escalaX =
+
+    video.videoWidth
+
+    /
+
+    anchoAnalisis;
+
+
+  const escalaY =
+
+    video.videoHeight
+
+    /
+
+    altoAnalisis;
+
+
+  const filas =
+    [];
+
+
+  candidatos.forEach(
+
+    (candidato, indice) => {
+
+
+      let x =
+
+        candidato.x
+        *
+        escalaX;
+
+
+      let y =
+
+        candidato.y
+        *
+        escalaY;
+
+
+      let w =
+
+        candidato.width
+        *
+        escalaX;
+
+
+      let h =
+
+        candidato.height
+        *
+        escalaY;
+
+
+      /*
+      Añadir margen alrededor.
+      */
+
+      const margenX =
+
+        w * 0.15;
+
+
+      const margenY =
+
+        h * 0.45;
+
+
+      x =
+        Math.max(
+          0,
+          x - margenX
+        );
+
+
+      y =
+        Math.max(
+          0,
+          y - margenY
+        );
+
+
+      w =
+        Math.min(
+
+          video.videoWidth - x,
+
+          w + margenX * 2
+
+        );
+
+
+      h =
+        Math.min(
+
+          video.videoHeight - y,
+
+          h + margenY * 2
+
+        );
+
+
+      /*
+      AGRANDAR.
+      */
+
+      const factor =
+
+        Math.min(
+
+          560 / w,
+
+          130 / h
+
+        );
+
+
+      const destinoW =
+
+        w * factor;
+
+
+      const destinoH =
+
+        h * factor;
+
+
+      const destinoX =
+
+        (
+          width
+          -
+          destinoW
+        )
+        /
+        2;
+
+
+      const destinoY =
+
+        indice
+        *
+        rowHeight
+
+        +
+
+        (
+          rowHeight
+          -
+          destinoH
+        )
+        /
+        2;
+
+
+      ctx.filter =
+
+        "grayscale(1) contrast(2.0) brightness(1.1)";
+
+
+      ctx.drawImage(
+
+        video,
+
+        x,
+        y,
+        w,
+        h,
+
+        destinoX,
+        destinoY,
+        destinoW,
+        destinoH
+
+      );
+
+
+      ctx.filter =
+        "none";
+
+
+      /*
+      Línea para separar candidatos.
+      */
+
+      ctx.fillStyle =
+        "#dddddd";
+
+
+      ctx.fillRect(
+
+        0,
+
+        indice
+        *
+        rowHeight,
+
+        width,
+
+        2
+
+      );
+
+
+      filas.push({
+
+        indice:
+          indice,
+
+        x:
+          x,
+
+        y:
+          y,
+
+        width:
+          w,
+
+        height:
+          h
+
+      });
+
+    }
+
+  );
+
+
+  return {
+
+    canvas,
+
+    filas,
+
+    rowHeight
+
+  };
+
+}
+
+
+
+/* ==========================================================
+INTERPRETAR OCR
+========================================================== */
+
+function interpretarOCR(
+
+  blocks,
+
+  filas,
+
+  rowHeight
+
+) {
+
+
+  const resultado =
+    [];
+
+
+  if (!blocks) {
+
+    return resultado;
+
+  }
+
+
+  const mejores =
+    new Map();
+
+
+  for (
+
+    const block
+    of
+    blocks
+
+  ) {
+
+
+    if (!block.paragraphs) {
+
+      continue;
+
+    }
+
+
+    for (
+
+      const paragraph
+      of
+      block.paragraphs
+
+    ) {
+
+
+      if (!paragraph.lines) {
+
+        continue;
+
+      }
+
+
+      for (
+
+        const line
+        of
+        paragraph.lines
+
+      ) {
+
+
+        const placa =
+
+          normalizarPlaca(
+            line.text
+          );
+
+
+        if (!placa) {
+
+          continue;
+
+        }
+
+
+        if (!line.bbox) {
+
+          continue;
+
+        }
+
+
+        const confianza =
+
+          Number(
+            line.confidence || 0
+          );
+
+
+        /*
+        Permitimos una confianza baja
+        porque después exigimos repetición.
+        */
+
+        if (confianza < 15) {
+
+          continue;
+
+        }
+
+
+        const centroY =
+
+          (
+            line.bbox.y0
+            +
+            line.bbox.y1
+          )
+          /
+          2;
+
+
+        const fila =
+
+          Math.floor(
+
+            centroY
+            /
+            rowHeight
+
+          );
+
+
+        if (
+
+          fila < 0
+
+          ||
+
+          fila >= filas.length
+
+        ) {
+
+          continue;
+
+        }
+
+
+        const actual =
+
+          mejores.get(
+            fila
+          );
+
+
+        if (
+
+          !actual
+
+          ||
+
+          confianza
+          >
+          actual.confianza
+
+        ) {
+
+
+          mejores.set(
+
+            fila,
+
+            {
+
+              texto:
+                placa,
+
+              confianza:
+                confianza,
+
+              rect:
+                filas[fila]
+
+            }
+
+          );
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  for (
+
+    const dato
+    of
+    mejores.values()
+
+  ) {
+
+    resultado.push(
+      dato
+    );
+
+  }
+
+
+  return resultado;
+
+}
+
+
+
+/* ==========================================================
+NORMALIZAR PLACA
+========================================================== */
+
+function normalizarPlaca(
+
+  texto
+
+) {
+
+
+  if (!texto) {
+
+    return null;
+
+  }
+
+
+  let limpio =
+
+    String(texto)
+      .toUpperCase()
+      .replace(
+        /[^A-Z0-9]/g,
+        ""
+      );
+
+
+  if (
+
+    limpio.length < 6
+
+  ) {
+
+    return null;
+
+  }
+
+
+  /*
+  Probamos grupos de 6 caracteres.
+  */
+
+  for (
+
+    let inicio = 0;
+
+    inicio <= limpio.length - 6;
+
+    inicio++
+
+  ) {
+
+
+    const grupo =
+
+      limpio.substring(
+
+        inicio,
+
+        inicio + 6
+
+      );
 
 
     let letras =
 
-        t.substring(
-            0,
-            3
-        );
+      grupo.substring(
+        0,
+        3
+      );
 
 
     let numeros =
 
-        t.substring(
-            3,
-            6
-        );
-
+      grupo.substring(
+        3,
+        6
+      );
 
 
     /*
-    Correcciones comunes de OCR
-    en zona de letras.
+    Errores típicos
+    en la parte de letras.
     */
-
 
     letras =
 
-        letras
+      letras
         .replace(/0/g, "O")
         .replace(/1/g, "I")
         .replace(/5/g, "S")
         .replace(/8/g, "B");
 
 
-
     /*
-    Correcciones comunes en números.
+    Errores típicos
+    en la parte numérica.
     */
-
 
     numeros =
 
-        numeros
+      numeros
         .replace(/[OQD]/g, "0")
         .replace(/[IL]/g, "1")
         .replace(/Z/g, "2")
@@ -1413,34 +2790,22 @@ function normalizarPlaca(texto) {
         .replace(/B/g, "8");
 
 
-
     if (
 
-        !/^[A-Z]{3}$/.test(
-            letras
-        )
+      /^[A-Z]{3}$/.test(
+        letras
+      )
+
+      &&
+
+      /^[0-9]{3}$/.test(
+        numeros
+      )
 
     ) {
 
-        return null;
 
-    }
-
-
-    if (
-
-        !/^[0-9]{3}$/.test(
-            numeros
-        )
-
-    ) {
-
-        return null;
-
-    }
-
-
-    return (
+      return (
 
         letras
 
@@ -1452,450 +2817,619 @@ function normalizarPlaca(texto) {
 
         numeros
 
-    );
-
-}
-
-
-
-/* =====================================================
-
-ELIMINAR DUPLICADOS
-
-===================================================== */
-
-function eliminarDuplicados(lista) {
-
-
-    const resultado =
-        [];
-
-
-    for (const placa of lista) {
-
-
-        let repetida =
-            false;
-
-
-        for (
-            const existente
-            of
-            resultado
-        ) {
-
-
-            if (
-
-                existente.texto
-                ===
-                placa.texto
-
-            ) {
-
-
-                repetida =
-                    true;
-
-
-                /*
-                Nos quedamos con la
-                detección más confiable.
-                */
-
-
-                if (
-
-                    placa.confianza
-                    >
-                    existente.confianza
-
-                ) {
-
-
-                    Object.assign(
-
-                        existente,
-
-                        placa
-
-                    );
-
-                }
-
-
-                break;
-
-            }
-
-        }
-
-
-        if (!repetida) {
-
-            resultado.push(
-                placa
-            );
-
-        }
+      );
 
     }
 
+  }
 
-    return resultado;
+
+  return null;
 
 }
 
 
 
-/* =====================================================
+/* ==========================================================
+ELIMINAR PLACAS REPETIDAS
+EN LA MISMA IMAGEN
+========================================================== */
 
-DIBUJAR TODAS LAS PLACAS
+function eliminarDuplicadosTexto(
 
-===================================================== */
-
-function dibujarDetecciones(
-
-    placas,
-
-    anchoProceso,
-
-    altoProceso
+  detecciones
 
 ) {
 
 
-    const video =
-        document.getElementById("video");
+  const mapa =
+    new Map();
 
 
-    const overlay =
-        document.getElementById("overlay");
+  detecciones.forEach(
+
+    deteccion => {
 
 
-    overlay.width =
-        video.videoWidth;
+      const anterior =
+
+        mapa.get(
+          deteccion.texto
+        );
 
 
-    overlay.height =
-        video.videoHeight;
+      if (
 
-
-    const ctx =
-        overlay.getContext("2d");
-
-
-    ctx.clearRect(
-
-        0,
-
-        0,
-
-        overlay.width,
-
-        overlay.height
-
-    );
-
-
-    if (
-
-        !placas
+        !anterior
 
         ||
 
-        placas.length === 0
+        deteccion.confianza
+        >
+        anterior.confianza
 
-    ) {
-
-
-        document.getElementById(
-            "placas"
-        ).innerText = "---";
+      ) {
 
 
-        mensaje(
+        mapa.set(
 
-            "🔎 Buscando placas...",
+          deteccion.texto,
 
-            "Acerca los vehículos o mejora la iluminación."
+          deteccion
 
         );
 
-
-        return;
+      }
 
     }
 
+  );
 
-    const escalaX =
 
-        video.videoWidth
-
-        /
-
-        anchoProceso;
-
-
-    const escalaY =
-
-        video.videoHeight
-
-        /
-
-        altoProceso;
-
-
-
-    /*
-    DIBUJAMOS CADA PLACA
-    */
-
-
-    placas.forEach(
-
-        (placa, indice) => {
-
-
-            const x =
-
-                placa.x
-                *
-                escalaX;
-
-
-            const y =
-
-                placa.y
-                *
-                escalaY;
-
-
-            const width =
-
-                placa.width
-                *
-                escalaX;
-
-
-            const height =
-
-                placa.height
-                *
-                escalaY;
-
-
-
-            /*
-            Añadimos margen.
-            */
-
-
-            const margenX =
-                width * 0.12;
-
-
-            const margenY =
-                height * 0.35;
-
-
-
-            ctx.strokeStyle =
-                "#00ff55";
-
-
-            ctx.lineWidth =
-                7;
-
-
-            ctx.strokeRect(
-
-                x - margenX,
-
-                y - margenY,
-
-                width
-                +
-                margenX * 2,
-
-                height
-                +
-                margenY * 2
-
-            );
-
-
-
-            /*
-            ETIQUETA
-            */
-
-
-            ctx.font =
-                "bold 28px Arial";
-
-
-            const texto =
-                placa.texto;
-
-
-            const medida =
-                ctx.measureText(
-                    texto
-                );
-
-
-            const etiquetaWidth =
-                medida.width + 20;
-
-
-            const etiquetaY =
-
-                Math.max(
-
-                    0,
-
-                    y
-                    -
-                    margenY
-                    -
-                    40
-
-                );
-
-
-            ctx.fillStyle =
-                "#00ff55";
-
-
-            ctx.fillRect(
-
-                x - margenX,
-
-                etiquetaY,
-
-                etiquetaWidth,
-
-                38
-
-            );
-
-
-            ctx.fillStyle =
-                "#000";
-
-
-            ctx.fillText(
-
-                texto,
-
-                x
-                -
-                margenX
-                +
-                10,
-
-                etiquetaY
-                +
-                28
-
-            );
-
-        }
-
-    );
-
-
-
-    /*
-    MOSTRAR LISTA ABAJO
-    */
-
-
-    const contenedor =
-
-        document.getElementById(
-            "placas"
-        );
-
-
-    contenedor.innerHTML =
-        "";
-
-
-    placas.forEach(
-
-        placa => {
-
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "placaItem";
-
-
-            div.innerText =
-
-                "🚗 "
-                +
-                placa.texto;
-
-
-            contenedor.appendChild(
-                div
-            );
-
-        }
-
-    );
-
-
-    mensaje(
-
-        "✅ "
-        +
-        placas.length
-        +
-        (
-            placas.length === 1
-            ?
-            " placa detectada"
-            :
-            " placas detectadas"
-        ),
-
-        "OCR completado correctamente."
-
-    );
+  return Array.from(
+    mapa.values()
+  );
 
 }
 
 
 
-/* =====================================================
+/* ==========================================================
+DIBUJAR RECTÁNGULOS
+========================================================== */
 
-AL SALIR
+function dibujarDetecciones(
 
-===================================================== */
+  detecciones
+
+) {
+
+
+  const video =
+    document.getElementById(
+      "video"
+    );
+
+
+  const overlay =
+    document.getElementById(
+      "overlay"
+    );
+
+
+  overlay.width =
+    video.videoWidth;
+
+
+  overlay.height =
+    video.videoHeight;
+
+
+  const ctx =
+    overlay.getContext(
+      "2d"
+    );
+
+
+  ctx.clearRect(
+
+    0,
+
+    0,
+
+    overlay.width,
+
+    overlay.height
+
+  );
+
+
+  detecciones.forEach(
+
+    deteccion => {
+
+
+      const r =
+        deteccion.rect;
+
+
+      ctx.strokeStyle =
+        "#00ff55";
+
+
+      ctx.lineWidth =
+        7;
+
+
+      ctx.strokeRect(
+
+        r.x,
+
+        r.y,
+
+        r.width,
+
+        r.height
+
+      );
+
+
+      ctx.font =
+
+        "bold 26px Arial";
+
+
+      const medida =
+
+        ctx.measureText(
+          deteccion.texto
+        );
+
+
+      const etiquetaW =
+
+        medida.width
+        +
+        18;
+
+
+      const etiquetaY =
+
+        Math.max(
+
+          0,
+
+          r.y - 38
+
+        );
+
+
+      ctx.fillStyle =
+        "#00ff55";
+
+
+      ctx.fillRect(
+
+        r.x,
+
+        etiquetaY,
+
+        etiquetaW,
+
+        36
+
+      );
+
+
+      ctx.fillStyle =
+        "#000";
+
+
+      ctx.fillText(
+
+        deteccion.texto,
+
+        r.x + 8,
+
+        etiquetaY + 27
+
+      );
+
+    }
+
+  );
+
+}
+
+
+
+/* ==========================================================
+MOSTRAR PLACAS
+========================================================== */
+
+function mostrarPlacas(
+
+  detecciones
+
+) {
+
+
+  const contenedor =
+
+    document.getElementById(
+      "listaPlacas"
+    );
+
+
+  if (
+
+    detecciones.length === 0
+
+  ) {
+
+
+    contenedor.innerHTML =
+      "<br>---";
+
+
+    return;
+
+  }
+
+
+  contenedor.innerHTML =
+    "";
+
+
+  detecciones.forEach(
+
+    dato => {
+
+
+      const item =
+
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "placa";
+
+
+      const confianza =
+
+        Math.round(
+          dato.confianza
+        );
+
+
+      item.innerHTML =
+
+        "🚗 "
+        +
+        dato.texto
+
+        +
+
+        "<div class='guardado'>"
+
+        +
+
+        confianza
+
+        +
+
+        "% confianza"
+
+        +
+
+        "</div>";
+
+
+      contenedor.appendChild(
+        item
+      );
+
+    }
+
+  );
+
+}
+
+
+
+/* ==========================================================
+CONFIRMAR Y GUARDAR
+========================================================== */
+
+function procesarRegistros(
+
+  detecciones
+
+) {
+
+
+  const ahora =
+    Date.now();
+
+
+  detecciones.forEach(
+
+    deteccion => {
+
+
+      let memoria =
+
+        memoriaPlacas.get(
+          deteccion.texto
+        );
+
+
+      if (!memoria) {
+
+
+        memoria = {
+
+          veces: 0,
+
+          ultimaVista: 0,
+
+          ultimoGuardado: 0
+
+        };
+
+      }
+
+
+      /*
+      Si apareció recientemente,
+      incrementamos confirmaciones.
+      */
+
+      if (
+
+        ahora
+        -
+        memoria.ultimaVista
+
+        <
+        8000
+
+      ) {
+
+
+        memoria.veces++;
+
+
+      } else {
+
+
+        memoria.veces =
+          1;
+
+      }
+
+
+      memoria.ultimaVista =
+        ahora;
+
+
+      /*
+      Debe ser vista al menos
+      dos veces para guardarla.
+      */
+
+      if (
+
+        memoria.veces >= 2
+
+        &&
+
+        ahora
+        -
+        memoria.ultimoGuardado
+
+        >
+        TIEMPO_REPETIDO
+
+      ) {
+
+
+        memoria.ultimoGuardado =
+          ahora;
+
+
+        guardarEnGoogleSheets(
+
+          deteccion.texto,
+
+          deteccion.confianza
+
+        );
+
+      }
+
+
+      memoriaPlacas.set(
+
+        deteccion.texto,
+
+        memoria
+
+      );
+
+    }
+
+  );
+
+}
+
+
+
+/* ==========================================================
+GOOGLE SHEETS
+========================================================== */
+
+async function guardarEnGoogleSheets(
+
+  placa,
+
+  confianza
+
+) {
+
+
+  /*
+  Mientras no configures
+  Apps Script no intentamos guardar.
+  */
+
+  if (
+
+    !APPS_SCRIPT_URL
+
+    ||
+
+    APPS_SCRIPT_URL.includes(
+      "PEGA_AQUI"
+    )
+
+  ) {
+
+
+    console.log(
+
+      "Google Sheets todavía no configurado."
+
+    );
+
+
+    return;
+
+  }
+
+
+  const datos = {
+
+    token:
+      TOKEN_REGISTRO,
+
+    placa:
+      placa,
+
+    confianza:
+
+      Math.round(
+        confianza
+      ),
+
+    sesion:
+      SESION,
+
+    origen:
+      "Smart Plate Web",
+
+    dispositivo:
+
+      navigator.userAgent
+        .substring(
+          0,
+          150
+        )
+
+  };
+
+
+  try {
+
+
+    /*
+    no-cors permite enviar el registro
+    desde GitHub Pages al Apps Script.
+
+    No necesitamos leer la respuesta.
+    */
+
+
+    await fetch(
+
+      APPS_SCRIPT_URL,
+
+      {
+
+        method:
+          "POST",
+
+        mode:
+          "no-cors",
+
+        headers: {
+
+          "Content-Type":
+
+            "text/plain;charset=utf-8"
+
+        },
+
+        body:
+
+          JSON.stringify(
+            datos
+          ),
+
+        keepalive:
+          true
+
+      }
+
+    );
+
+
+    console.log(
+
+      "Registro enviado:",
+
+      placa
+
+    );
+
+
+  } catch (error) {
+
+
+    console.error(
+
+      "Error guardando:",
+
+      error
+
+    );
+
+  }
+
+}
+
+
+
+/* ==========================================================
+CERRAR OCR
+========================================================== */
 
 window.addEventListener(
 
-    "beforeunload",
+  "beforeunload",
 
-    function() {
+  function () {
 
 
-        if (workerOCR) {
+    if (workerOCR) {
 
-            workerOCR.terminate();
-
-        }
+      workerOCR.terminate();
 
     }
+
+  }
 
 );
 
