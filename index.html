@@ -2,17 +2,22 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Aaron Security</title>
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0">
+
+    <title>Smart Plate</title>
 
     <style>
+
         body {
             font-family: Arial, sans-serif;
-            background: #f2f4f7;
-            text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
+            text-align: center;
+            background: #f2f4f7;
         }
 
         h1 {
@@ -21,14 +26,15 @@
 
         .subtitulo {
             color: #666;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .camara {
+            position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             margin: auto;
-            background: #000;
+            background: black;
             border-radius: 15px;
             overflow: hidden;
         }
@@ -38,86 +44,965 @@
             display: block;
         }
 
+        #overlay {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            pointer-events: none;
+        }
+
         button {
             margin-top: 20px;
             padding: 15px 25px;
             font-size: 18px;
+
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
+
             background: #1976d2;
             color: white;
-            cursor: pointer;
+        }
+
+        .estado {
+            max-width: 700px;
+            margin: 15px auto;
+            padding: 15px;
+
+            background: white;
+            border-radius: 15px;
+        }
+
+        #mensaje {
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .resultado {
-            margin: 25px auto;
-            max-width: 600px;
-            background: white;
-            border-radius: 15px;
+            max-width: 700px;
+            margin: 15px auto;
+
             padding: 20px;
-            box-sizing: border-box;
+            background: white;
+
+            border-radius: 15px;
         }
 
         .placa {
-            font-size: 35px;
+            font-size: 38px;
             font-weight: bold;
             letter-spacing: 5px;
         }
+
+        #procesamiento {
+            display: none;
+        }
+
     </style>
 </head>
 
+
 <body>
 
-    <h1>🚗 AARON SECURITY</h1>
 
-    <div class="subtitulo">
-        Detector inteligente de placas
+<h1>🚗 AARON SECURITY</h1>
+
+<div class="subtitulo">
+    Detector inteligente de placas
+</div>
+
+
+<div class="camara">
+
+    <video
+        id="video"
+        autoplay
+        playsinline>
+    </video>
+
+    <canvas id="overlay"></canvas>
+
+</div>
+
+
+<button onclick="iniciarCamara()">
+
+    📷 INICIAR CÁMARA
+
+</button>
+
+
+<div class="estado">
+
+    <div id="mensaje">
+        Esperando cámara...
     </div>
 
-    <div class="camara">
-        <video id="video" autoplay playsinline></video>
+</div>
+
+
+<div class="resultado">
+
+    <div>
+        PLACA DETECTADA
     </div>
 
-    <button onclick="iniciarCamara()">
-        📷 INICIAR CÁMARA
-    </button>
+    <div class="placa"
+         id="placa">
 
-    <div class="resultado">
-
-        <h2>Placa detectada</h2>
-
-        <div class="placa" id="placa">
-            ---
-        </div>
+        ---
 
     </div>
 
-    <script>
+</div>
 
-        async function iniciarCamara() {
 
-            try {
+<!-- Canvas invisible usado por OpenCV -->
 
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: "environment"
-                    },
-                    audio: false
-                });
+<canvas id="procesamiento"></canvas>
 
-                const video = document.getElementById("video");
 
-                video.srcObject = stream;
+<script>
 
-            } catch (error) {
+    let CV = null;
 
-                alert("No se pudo acceder a la cámara: " + error);
+    let camaraActiva = false;
+
+    let procesando = false;
+
+    let intervaloDeteccion = null;
+
+
+    /*
+    ============================================
+    OPENCV LISTO
+    ============================================
+    */
+
+    async function openCvListo() {
+
+        try {
+
+            if (typeof cv === "undefined") {
+
+                document.getElementById("mensaje").innerText =
+                    "⏳ Cargando detector...";
+
+                return;
+            }
+
+
+            /*
+            Algunas versiones de OpenCV.js
+            entregan cv como una Promesa.
+            */
+
+            if (typeof cv.then === "function") {
+
+                CV = await cv;
+
+            } else {
+
+                CV = cv;
 
             }
 
+
+            document.getElementById("mensaje").innerText =
+                "✅ Detector listo. Inicia la cámara.";
+
+
+        } catch (error) {
+
+            document.getElementById("mensaje").innerText =
+                "❌ Error cargando OpenCV";
+
+            console.error(error);
+
         }
 
-    </script>
+    }
+
+
+
+    /*
+    ============================================
+    INICIAR CÁMARA
+    ============================================
+    */
+
+    async function iniciarCamara() {
+
+        try {
+
+            const stream =
+                await navigator.mediaDevices.getUserMedia({
+
+                    video: {
+
+                        facingMode: {
+                            ideal: "environment"
+                        },
+
+                        width: {
+                            ideal: 1280
+                        },
+
+                        height: {
+                            ideal: 720
+                        }
+
+                    },
+
+                    audio: false
+
+                });
+
+
+            const video =
+                document.getElementById("video");
+
+
+            video.srcObject = stream;
+
+
+            await video.play();
+
+
+            camaraActiva = true;
+
+
+            prepararOverlay();
+
+
+            document.getElementById("mensaje").innerText =
+                "🔎 Buscando placa...";
+
+
+            /*
+            Analizamos aproximadamente
+            3 veces por segundo.
+            */
+
+            if (intervaloDeteccion) {
+
+                clearInterval(intervaloDeteccion);
+
+            }
+
+
+            intervaloDeteccion =
+                setInterval(detectarPlaca, 350);
+
+
+        } catch (error) {
+
+
+            alert(
+                "No se pudo iniciar la cámara: "
+                + error.message
+            );
+
+
+        }
+
+    }
+
+
+
+    /*
+    ============================================
+    PREPARAR CANVAS SUPERIOR
+    ============================================
+    */
+
+    function prepararOverlay() {
+
+        const video =
+            document.getElementById("video");
+
+        const overlay =
+            document.getElementById("overlay");
+
+
+        overlay.width =
+            video.videoWidth;
+
+        overlay.height =
+            video.videoHeight;
+
+    }
+
+
+
+    /*
+    ============================================
+    DETECTAR RECTÁNGULO DE PLACA
+    ============================================
+    */
+
+    function detectarPlaca() {
+
+
+        if (!camaraActiva ||
+            procesando ||
+            !CV) {
+
+            return;
+
+        }
+
+
+        const video =
+            document.getElementById("video");
+
+
+        if (!video.videoWidth ||
+            !video.videoHeight) {
+
+            return;
+
+        }
+
+
+        procesando = true;
+
+
+        let src = null;
+        let gris = null;
+        let borroso = null;
+        let bordes = null;
+        let contornos = null;
+        let jerarquia = null;
+        let kernel = null;
+
+
+        try {
+
+
+            /*
+            ------------------------------------
+            Reducimos tamaño para que la tablet
+            trabaje más rápido
+            ------------------------------------
+            */
+
+
+            const canvas =
+                document.getElementById(
+                    "procesamiento"
+                );
+
+
+            const ctx =
+                canvas.getContext(
+                    "2d",
+                    {
+                        willReadFrequently: true
+                    }
+                );
+
+
+            const anchoProceso = 640;
+
+
+            const altoProceso =
+                Math.round(
+
+                    video.videoHeight
+                    /
+                    video.videoWidth
+                    *
+                    anchoProceso
+
+                );
+
+
+            canvas.width =
+                anchoProceso;
+
+            canvas.height =
+                altoProceso;
+
+
+            ctx.drawImage(
+
+                video,
+
+                0,
+                0,
+
+                anchoProceso,
+                altoProceso
+
+            );
+
+
+            /*
+            ------------------------------------
+            CONVERTIR IMAGEN A OPENCV
+            ------------------------------------
+            */
+
+
+            src =
+                CV.imread(canvas);
+
+
+            gris =
+                new CV.Mat();
+
+
+            borroso =
+                new CV.Mat();
+
+
+            bordes =
+                new CV.Mat();
+
+
+            /*
+            Imagen en escala de grises
+            */
+
+
+            CV.cvtColor(
+
+                src,
+
+                gris,
+
+                CV.COLOR_RGBA2GRAY
+
+            );
+
+
+            /*
+            Reducimos ruido
+            */
+
+
+            CV.GaussianBlur(
+
+                gris,
+
+                borroso,
+
+                new CV.Size(5, 5),
+
+                0
+
+            );
+
+
+            /*
+            Buscamos bordes
+            */
+
+
+            CV.Canny(
+
+                borroso,
+
+                bordes,
+
+                75,
+
+                200
+
+            );
+
+
+            /*
+            Unimos pequeñas líneas
+            */
+
+
+            kernel =
+                CV.Mat.ones(
+
+                    3,
+                    3,
+                    CV.CV_8U
+
+                );
+
+
+            CV.morphologyEx(
+
+                bordes,
+
+                bordes,
+
+                CV.MORPH_CLOSE,
+
+                kernel
+
+            );
+
+
+            /*
+            ------------------------------------
+            BUSCAR CONTORNOS
+            ------------------------------------
+            */
+
+
+            contornos =
+                new CV.MatVector();
+
+
+            jerarquia =
+                new CV.Mat();
+
+
+            CV.findContours(
+
+                bordes,
+
+                contornos,
+
+                jerarquia,
+
+                CV.RETR_EXTERNAL,
+
+                CV.CHAIN_APPROX_SIMPLE
+
+            );
+
+
+
+            let mejorPlaca = null;
+
+            let mejorPuntaje = 0;
+
+
+
+            /*
+            ------------------------------------
+            ANALIZAR FORMAS
+            ------------------------------------
+            */
+
+
+            for (
+
+                let i = 0;
+
+                i < contornos.size();
+
+                i++
+
+            ) {
+
+
+                const contorno =
+                    contornos.get(i);
+
+
+                const perimetro =
+                    CV.arcLength(
+
+                        contorno,
+
+                        true
+
+                    );
+
+
+                const aproximado =
+                    new CV.Mat();
+
+
+                CV.approxPolyDP(
+
+                    contorno,
+
+                    aproximado,
+
+                    0.02 * perimetro,
+
+                    true
+
+                );
+
+
+                const rect =
+                    CV.boundingRect(
+                        aproximado
+                    );
+
+
+                const area =
+                    rect.width
+                    *
+                    rect.height;
+
+
+                const areaImagen =
+                    anchoProceso
+                    *
+                    altoProceso;
+
+
+                const proporcion =
+                    rect.width
+                    /
+                    Math.max(
+                        rect.height,
+                        1
+                    );
+
+
+                /*
+                Una placa normalmente parece
+                un rectángulo horizontal.
+
+                Para nuestra maqueta buscamos:
+
+                - Forma aproximadamente rectangular
+                - Más ancha que alta
+                - Tamaño suficiente
+                */
+
+
+                const cuatroLados =
+                    aproximado.rows >= 4
+                    &&
+                    aproximado.rows <= 6;
+
+
+                const proporcionCorrecta =
+                    proporcion > 2.0
+                    &&
+                    proporcion < 6.5;
+
+
+                const tamanoCorrecto =
+                    area > areaImagen * 0.003
+                    &&
+                    area < areaImagen * 0.30;
+
+
+                const anchoCorrecto =
+                    rect.width > 70;
+
+
+                if (
+
+                    cuatroLados
+                    &&
+                    proporcionCorrecta
+                    &&
+                    tamanoCorrecto
+                    &&
+                    anchoCorrecto
+
+                ) {
+
+
+                    /*
+                    Favorecemos formas grandes
+                    y cercanas a proporción 4:1
+                    */
+
+
+                    const diferencia =
+                        Math.abs(
+                            proporcion - 4
+                        );
+
+
+                    const puntaje =
+                        area
+                        /
+                        (1 + diferencia);
+
+
+                    if (
+
+                        puntaje
+                        >
+                        mejorPuntaje
+
+                    ) {
+
+
+                        mejorPuntaje =
+                            puntaje;
+
+
+                        mejorPlaca = {
+
+                            x: rect.x,
+
+                            y: rect.y,
+
+                            width:
+                                rect.width,
+
+                            height:
+                                rect.height
+
+                        };
+
+                    }
+
+                }
+
+
+                aproximado.delete();
+
+                contorno.delete();
+
+            }
+
+
+
+            /*
+            ------------------------------------
+            DIBUJAR RESULTADO
+            ------------------------------------
+            */
+
+
+            dibujarResultado(
+
+                mejorPlaca,
+
+                anchoProceso,
+
+                altoProceso
+
+            );
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Error detectando:",
+                error
+            );
+
+
+        } finally {
+
+
+            if (src) src.delete();
+
+            if (gris) gris.delete();
+
+            if (borroso)
+                borroso.delete();
+
+            if (bordes)
+                bordes.delete();
+
+            if (contornos)
+                contornos.delete();
+
+            if (jerarquia)
+                jerarquia.delete();
+
+            if (kernel)
+                kernel.delete();
+
+
+            procesando = false;
+
+        }
+
+    }
+
+
+
+    /*
+    ============================================
+    DIBUJAR RECTÁNGULO VERDE
+    ============================================
+    */
+
+    function dibujarResultado(
+
+        rect,
+
+        anchoProceso,
+
+        altoProceso
+
+    ) {
+
+
+        const video =
+            document.getElementById(
+                "video"
+            );
+
+
+        const overlay =
+            document.getElementById(
+                "overlay"
+            );
+
+
+        const ctx =
+            overlay.getContext("2d");
+
+
+        overlay.width =
+            video.videoWidth;
+
+        overlay.height =
+            video.videoHeight;
+
+
+        ctx.clearRect(
+
+            0,
+            0,
+
+            overlay.width,
+            overlay.height
+
+        );
+
+
+        if (!rect) {
+
+
+            document.getElementById(
+                "mensaje"
+            ).innerText =
+
+                "🔎 Buscando placa...";
+
+
+            return;
+
+        }
+
+
+
+        /*
+        Convertimos coordenadas pequeñas
+        a coordenadas reales de cámara
+        */
+
+
+        const escalaX =
+            video.videoWidth
+            /
+            anchoProceso;
+
+
+        const escalaY =
+            video.videoHeight
+            /
+            altoProceso;
+
+
+
+        const x =
+            rect.x
+            *
+            escalaX;
+
+
+        const y =
+            rect.y
+            *
+            escalaY;
+
+
+        const ancho =
+            rect.width
+            *
+            escalaX;
+
+
+        const alto =
+            rect.height
+            *
+            escalaY;
+
+
+
+        /*
+        Rectángulo verde
+        */
+
+
+        ctx.strokeStyle =
+            "#00ff55";
+
+
+        ctx.lineWidth = 8;
+
+
+        ctx.strokeRect(
+
+            x,
+            y,
+            ancho,
+            alto
+
+        );
+
+
+        /*
+        Etiqueta
+        */
+
+
+        ctx.fillStyle =
+            "#00ff55";
+
+
+        ctx.font =
+            "bold 30px Arial";
+
+
+        ctx.fillText(
+
+            "PLACA",
+
+            x,
+
+            Math.max(
+                35,
+                y - 10
+            )
+
+        );
+
+
+        document.getElementById(
+            "mensaje"
+        ).innerText =
+
+            "✅ Posible placa detectada";
+
+    }
+
+
+</script>
+
+
+<!--
+OpenCV.js
+-->
+
+<script
+    async
+    src="https://docs.opencv.org/4.x/opencv.js"
+    onload="openCvListo()"
+    type="text/javascript">
+</script>
+
 
 </body>
 </html>
