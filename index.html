@@ -10,52 +10,9 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>Smart Plate V8.3</title>
+<title>Smart Plate</title>
 
 <style>
-
-.botones {
-    margin-top: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-button {
-    border: none;
-    border-radius: 12px;
-    padding: 14px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-}
-
-#btnIniciar {
-    background: #1976d2;
-}
-
-#btnDetener {
-    background: #d32f2f;
-}
-
-#btnRegistros {
-    background: #0f9d58;
-    color: white;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    padding: 14px 20px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-button:disabled {
-    opacity: 0.45;
-}
 
 * {
     box-sizing: border-box;
@@ -64,10 +21,18 @@ button:disabled {
 body {
     margin: 0;
     padding: 14px;
+
     font-family: Arial, sans-serif;
+
     background: #f1f4f8;
+
     text-align: center;
 }
+
+
+/* =========================================
+   TITULO
+========================================= */
 
 h1 {
     margin: 5px 0 2px 0;
@@ -80,9 +45,9 @@ h1 {
 }
 
 
-/* =============================
-   CÁMARA
-============================= */
+/* =========================================
+   CAMARA
+========================================= */
 
 .contenedorCamara {
 
@@ -98,6 +63,8 @@ h1 {
     border-radius: 18px;
 
     background: #000;
+
+    min-height: 220px;
 }
 
 video {
@@ -105,6 +72,8 @@ video {
     display: block;
 
     width: 100%;
+
+    background: #000;
 }
 
 #overlay {
@@ -121,14 +90,25 @@ video {
 }
 
 
-/* =============================
+/* =========================================
    BOTONES
-============================= */
+========================================= */
 
 .botones {
 
     margin-top: 14px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
 }
+
 
 button {
 
@@ -138,39 +118,63 @@ button {
 
     padding: 14px 20px;
 
-    margin: 5px;
-
     font-size: 16px;
 
     font-weight: bold;
 
     color: white;
+
+    cursor: pointer;
 }
+
 
 #btnIniciar {
     background: #1976d2;
 }
 
+
 #btnDetener {
     background: #d32f2f;
 }
 
-#btnPrueba {
-    background: #388e3c;
+
+#btnRegistros {
+
+    background: #0f9d58;
+
+    color: white;
+
+    text-decoration: none;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    padding: 14px 20px;
+
+    font-size: 16px;
+
+    font-weight: bold;
 }
+
 
 button:disabled {
     opacity: 0.45;
 }
 
 
-/* =============================
-   PANELES
-============================= */
+/* =========================================
+   PANEL
+========================================= */
 
 .panel {
 
     width: 100%;
+
     max-width: 850px;
 
     margin: 14px auto;
@@ -182,12 +186,14 @@ button:disabled {
     background: white;
 }
 
+
 #estado {
 
     font-size: 19px;
 
     font-weight: bold;
 }
+
 
 #detalle {
 
@@ -199,9 +205,21 @@ button:disabled {
 }
 
 
-/* =============================
-   RESULTADO PRINCIPAL
-============================= */
+#debug {
+
+    margin-top: 8px;
+
+    color: #888;
+
+    font-size: 11px;
+
+    word-break: break-word;
+}
+
+
+/* =========================================
+   ULTIMA PLACA
+========================================= */
 
 .tituloResultado {
 
@@ -209,6 +227,7 @@ button:disabled {
 
     font-size: 13px;
 }
+
 
 #ultimaPlaca {
 
@@ -222,9 +241,9 @@ button:disabled {
 }
 
 
-/* =============================
-   ESTADÍSTICAS
-============================= */
+/* =========================================
+   ESTADISTICAS
+========================================= */
 
 .estadisticas {
 
@@ -239,6 +258,7 @@ button:disabled {
     margin-top: 15px;
 }
 
+
 .tarjeta {
 
     min-width: 130px;
@@ -250,12 +270,14 @@ button:disabled {
     background: #f4f6f8;
 }
 
+
 .numero {
 
     font-size: 25px;
 
     font-weight: bold;
 }
+
 
 .etiqueta {
 
@@ -267,14 +289,15 @@ button:disabled {
 }
 
 
-/* =============================
-   LISTA DE PLACAS
-============================= */
+/* =========================================
+   PLACAS
+========================================= */
 
 #listaPlacas {
 
     margin-top: 12px;
 }
+
 
 .placaItem {
 
@@ -295,6 +318,7 @@ button:disabled {
     letter-spacing: 2px;
 }
 
+
 .confianza {
 
     margin-top: 3px;
@@ -309,9 +333,9 @@ button:disabled {
 }
 
 
-/* =============================
+/* =========================================
    SERVIDOR
-============================= */
+========================================= */
 
 .punto {
 
@@ -328,29 +352,34 @@ button:disabled {
 }
 
 
-/* =============================
-   DEPURACIÓN
-============================= */
+/* =========================================
+   CANVAS OCULTO
+========================================= */
 
-#debug {
-
-    margin-top: 8px;
-
-    color: #777;
-
-    font-size: 11px;
-
-    word-break: break-word;
+#captura {
+    display: none;
 }
 
 
-/* =============================
-   CANVAS OCULTO
-============================= */
+/* =========================================
+   CELULAR
+========================================= */
 
-#captura {
+@media (max-width: 600px) {
 
-    display: none;
+    button,
+    #btnRegistros {
+
+        padding: 12px 13px;
+
+        font-size: 14px;
+    }
+
+    #ultimaPlaca {
+
+        font-size: 31px;
+    }
+
 }
 
 </style>
@@ -368,15 +397,15 @@ button:disabled {
 
 <div class="subtitulo">
 
-Detector inteligente de placas - Edificio Fisher SURQUILLO
+Sistema inteligente de control vehicular - Edificio Fisher 155
 
 </div>
 
 
 
-<!-- =========================
-     CÁMARA
-========================= -->
+<!-- =========================================
+     CAMARA
+========================================= -->
 
 <div class="contenedorCamara">
 
@@ -395,19 +424,23 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
 
 
 
-<!-- =========================
+<!-- =========================================
      BOTONES
-========================= -->
+========================================= -->
 
 <div class="botones">
+
 
     <button
         type="button"
         id="btnIniciar"
         onclick="iniciarCamara()"
     >
+
         📷 INICIAR
+
     </button>
+
 
     <button
         type="button"
@@ -415,27 +448,37 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
         onclick="detenerCamara()"
         disabled
     >
+
         ⏹ DETENER
+
     </button>
+
 
     <a
         id="btnRegistros"
+
         href="https://docs.google.com/spreadsheets/d/1Bmh552IRATHVYEwxswPt64Z04mLV-ObGJHiSKKxiBPs/edit"
+
         target="_blank"
+
         rel="noopener noreferrer"
     >
+
         📊 VER REGISTROS
+
     </a>
+
 
 </div>
 
 
 
-<!-- =========================
+<!-- =========================================
      ESTADO
-========================= -->
+========================================= -->
 
 <div class="panel">
+
 
     <div id="estado">
 
@@ -443,23 +486,27 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
 
     </div>
 
+
     <div id="detalle">
 
-        Smart Plate V8.3
+        Smart Plate
 
     </div>
 
+
     <div id="debug"></div>
+
 
 </div>
 
 
 
-<!-- =========================
-     ÚLTIMO RESULTADO
-========================= -->
+<!-- =========================================
+     RESULTADO
+========================================= -->
 
 <div class="panel">
+
 
     <div class="tituloResultado">
 
@@ -473,6 +520,7 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
         ---
 
     </div>
+
 
 
     <div class="estadisticas">
@@ -489,6 +537,7 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
 
             </div>
 
+
             <div class="etiqueta">
 
                 VEHÍCULOS
@@ -498,7 +547,9 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
         </div>
 
 
+
         <div class="tarjeta">
+
 
             <div
                 class="numero"
@@ -509,6 +560,7 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
 
             </div>
 
+
             <div class="etiqueta">
 
                 RESPUESTA
@@ -518,14 +570,18 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
         </div>
 
 
+
         <div class="tarjeta">
 
+
             <div class="numero">
+
 
                 <span
                     class="punto"
                     id="puntoServidor"
                 ></span>
+
 
                 <span
                     id="textoServidor"
@@ -535,7 +591,9 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
 
                 </span>
 
+
             </div>
+
 
             <div class="etiqueta">
 
@@ -543,24 +601,28 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
 
             </div>
 
+
         </div>
 
 
     </div>
 
+
 </div>
 
 
 
-<!-- =========================
-     PLACAS VISIBLES
-========================= -->
+<!-- =========================================
+     PLACAS DETECTADAS
+========================================= -->
 
 <div class="panel">
+
 
     <b>
         PLACAS DETECTADAS
     </b>
+
 
     <div id="listaPlacas">
 
@@ -568,9 +630,14 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
 
     </div>
 
+
 </div>
 
 
+
+<!-- =========================================
+     CANVAS OCULTO
+========================================= -->
 
 <canvas id="captura"></canvas>
 
@@ -579,9 +646,9 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
 <script>
 
 
-/* ==========================================================
-   CONFIGURACIÓN
-========================================================== */
+/* =========================================================
+   CONFIGURACION
+========================================================= */
 
 
 const API_URL =
@@ -589,54 +656,57 @@ const API_URL =
 "https://script.google.com/macros/s/AKfycbxbGFvAs1T4_-Aq_jYhF22G0LdS4Y9oA92lKZOzMtuB2EaObpVd1shjc6r85kw_mJaL/exec";
 
 
-/*
-Esperamos al menos este tiempo
-después de TERMINAR una lectura
-antes de enviar la siguiente.
 
-Así evitamos saturar Snapshot.
+/*
+Tiempo después de terminar una lectura
+para comenzar otra.
 */
 
 const ESPERA_ENTRE_LECTURAS =
     1200;
 
 
-/*
-Resolución de la zona enviada.
 
-Más alta que la versión anterior
-para leer mejor placas pequeñas.
+/*
+Resolución enviada.
 */
 
 const ANCHO_ENVIO =
     1100;
 
 
+
+/*
+Calidad JPEG.
+*/
+
 const CALIDAD_JPEG =
     0.82;
 
 
+
 /*
-Máximo tiempo esperando resultado
-de Apps Script.
+Máximo tiempo esperando
+resultado del servidor.
 */
 
 const MAX_ESPERA_RESULTADO =
-    10000;
+    12000;
+
 
 
 /*
-Cada cuánto preguntamos
-si el resultado está listo.
+Cada cuánto consultar resultado.
 */
 
 const INTERVALO_CONSULTA =
     450;
 
 
+
 /*
-Evitar contar la misma placa
-repetidamente.
+Evita contar varias veces
+el mismo vehículo.
 */
 
 const TIEMPO_DUPLICADO =
@@ -644,9 +714,9 @@ const TIEMPO_DUPLICADO =
 
 
 
-/* ==========================================================
+/* =========================================================
    VARIABLES
-========================================================== */
+========================================================= */
 
 
 let streamCamara =
@@ -656,16 +726,6 @@ let streamCamara =
 let camaraActiva =
     false;
 
-
-/*
-IMPORTANTE:
-
-Mientras sea true NO se envía
-otra fotografía.
-
-Esta es una de las correcciones
-principales de esta versión.
-*/
 
 let cicloOcupado =
     false;
@@ -683,6 +743,11 @@ const historial =
     new Map();
 
 
+
+/*
+ID de sesión.
+*/
+
 const SESION =
 
     sessionStorage.getItem(
@@ -692,6 +757,7 @@ const SESION =
     ||
 
     crearId();
+
 
 
 sessionStorage.setItem(
@@ -704,9 +770,9 @@ sessionStorage.setItem(
 
 
 
-/* ==========================================================
-   ID DE SESIÓN
-========================================================== */
+/* =========================================================
+   CREAR ID
+========================================================= */
 
 
 function crearId() {
@@ -721,6 +787,7 @@ function crearId() {
         crypto.randomUUID
 
     ) {
+
 
         return crypto.randomUUID();
 
@@ -747,9 +814,9 @@ function crearId() {
 
 
 
-/* ==========================================================
+/* =========================================================
    MENSAJES
-========================================================== */
+========================================================= */
 
 
 function mensaje(
@@ -790,9 +857,9 @@ function debug(
 
 
 
-/* ==========================================================
+/* =========================================================
    ESTADO SERVIDOR
-========================================================== */
+========================================================= */
 
 
 function servidorEstado(
@@ -854,9 +921,9 @@ function servidorEstado(
 
 
 
-/* ==========================================================
-   COMPROBAR APPS SCRIPT
-========================================================== */
+/* =========================================================
+   COMPROBAR SERVIDOR
+========================================================= */
 
 
 async function comprobarServidor() {
@@ -913,7 +980,9 @@ async function comprobarServidor() {
 
 
             debug(
-                "Plate Recognizer configurado."
+
+                "Plate Recognizer y Google Sheets disponibles."
+
             );
 
 
@@ -929,7 +998,7 @@ async function comprobarServidor() {
 
                 "❌ Servidor incompleto",
 
-                "El token de Plate Recognizer no está configurado."
+                "Verifica la configuración de Apps Script."
 
             );
 
@@ -946,7 +1015,7 @@ async function comprobarServidor() {
 
         mensaje(
 
-            "❌ No se pudo comprobar servidor",
+            "❌ No se pudo comprobar el servidor",
 
             error.message
 
@@ -958,9 +1027,9 @@ async function comprobarServidor() {
 
 
 
-/* ==========================================================
-   INICIAR CÁMARA
-========================================================== */
+/* =========================================================
+   INICIAR CAMARA
+========================================================= */
 
 
 async function iniciarCamara() {
@@ -976,14 +1045,57 @@ async function iniciarCamara() {
     try {
 
 
+        /*
+        Evita iniciar dos cámaras.
+        */
+
+        if (camaraActiva) {
+
+            return;
+
+        }
+
+
         mensaje(
 
-            "📷 Iniciando cámara...",
+            "📷 Solicitando cámara...",
 
-            "Permite el acceso si Android lo solicita."
+            "Permite el acceso a la cámara."
 
         );
 
+
+        debug("");
+
+
+        /*
+        Comprobar compatibilidad.
+        */
+
+        if (
+
+            !navigator.mediaDevices
+
+            ||
+
+            !navigator.mediaDevices.getUserMedia
+
+        ) {
+
+
+            throw new Error(
+
+                "Este navegador no permite utilizar la cámara."
+
+            );
+
+        }
+
+
+
+        /*
+        Solicitar cámara trasera.
+        */
 
         streamCamara =
 
@@ -1022,11 +1134,50 @@ async function iniciarCamara() {
                 });
 
 
+
         video.srcObject =
             streamCamara;
 
 
+
+        /*
+        Esperar metadata.
+        */
+
+        if (
+
+            video.readyState < 1
+
+            ||
+
+            !video.videoWidth
+
+        ) {
+
+
+            await new Promise(
+
+                function(resolve) {
+
+
+                    video.onloadedmetadata =
+
+                        function() {
+
+                            resolve();
+
+                        };
+
+                }
+
+            );
+
+        }
+
+
+
         await video.play();
+
 
 
         camaraActiva =
@@ -1037,10 +1188,12 @@ async function iniciarCamara() {
             false;
 
 
+
         document.getElementById(
             "btnIniciar"
         ).disabled =
             true;
+
 
 
         document.getElementById(
@@ -1049,10 +1202,13 @@ async function iniciarCamara() {
             false;
 
 
+
         prepararOverlay();
 
 
+
         dibujarZonaLectura();
+
 
 
         mensaje(
@@ -1064,8 +1220,23 @@ async function iniciarCamara() {
         );
 
 
+
+        debug(
+
+            "Cámara: "
+            +
+            video.videoWidth
+            +
+            " × "
+            +
+            video.videoHeight
+
+        );
+
+
+
         /*
-        Primera lectura.
+        Primera captura.
         */
 
         temporizador =
@@ -1074,7 +1245,7 @@ async function iniciarCamara() {
 
                 iniciarCiclo,
 
-                600
+                800
 
             );
 
@@ -1082,18 +1253,35 @@ async function iniciarCamara() {
     } catch (error) {
 
 
-        console.error(error);
+        console.error(
+            error
+        );
+
+
+        camaraActiva =
+            false;
 
 
         mensaje(
 
-            "❌ No se pudo iniciar cámara",
+            "❌ No se pudo iniciar la cámara",
 
+            error.name
+            ?
             error.name
             +
             ": "
             +
             error.message
+            :
+            error.message
+
+        );
+
+
+        debug(
+
+            "Si Android pregunta por permisos, selecciona PERMITIR."
 
         );
 
@@ -1103,9 +1291,9 @@ async function iniciarCamara() {
 
 
 
-/* ==========================================================
-   DETENER CÁMARA
-========================================================== */
+/* =========================================================
+   DETENER CAMARA
+========================================================= */
 
 
 function detenerCamara() {
@@ -1117,6 +1305,7 @@ function detenerCamara() {
 
     cicloOcupado =
         false;
+
 
 
     if (temporizador) {
@@ -1133,6 +1322,7 @@ function detenerCamara() {
     }
 
 
+
     if (streamCamara) {
 
 
@@ -1140,8 +1330,11 @@ function detenerCamara() {
             .getTracks()
             .forEach(
 
-                track =>
-                    track.stop()
+                function(track) {
+
+                    track.stop();
+
+                }
 
             );
 
@@ -1152,13 +1345,21 @@ function detenerCamara() {
     }
 
 
-    document.getElementById(
-        "video"
-    ).srcObject =
+
+    const video =
+
+        document.getElementById(
+            "video"
+        );
+
+
+    video.srcObject =
         null;
 
 
+
     limpiarOverlay();
+
 
 
     document.getElementById(
@@ -1167,10 +1368,12 @@ function detenerCamara() {
         false;
 
 
+
     document.getElementById(
         "btnDetener"
     ).disabled =
         true;
+
 
 
     mensaje(
@@ -1181,13 +1384,16 @@ function detenerCamara() {
 
     );
 
+
+    debug("");
+
 }
 
 
 
-/* ==========================================================
+/* =========================================================
    OVERLAY
-========================================================== */
+========================================================= */
 
 
 function prepararOverlay() {
@@ -1218,9 +1424,9 @@ function prepararOverlay() {
 
 
 
-/* ==========================================================
+/* =========================================================
    ZONA DE LECTURA
-========================================================== */
+========================================================= */
 
 
 function obtenerZonaLectura() {
@@ -1231,15 +1437,6 @@ function obtenerZonaLectura() {
         document.getElementById(
             "video"
         );
-
-
-    /*
-    Zona suficientemente grande
-    para admitir varios carritos.
-
-    90 % ancho
-    68 % alto.
-    */
 
 
     const width =
@@ -1268,12 +1465,6 @@ function obtenerZonaLectura() {
         2;
 
 
-    /*
-    La movemos ligeramente
-    hacia arriba.
-    */
-
-
     const y =
 
         (
@@ -1288,13 +1479,17 @@ function obtenerZonaLectura() {
 
     return {
 
-        x,
+        x:
+            x,
 
-        y,
+        y:
+            y,
 
-        width,
+        width:
+            width,
 
-        height
+        height:
+            height
 
     };
 
@@ -1302,9 +1497,9 @@ function obtenerZonaLectura() {
 
 
 
-/* ==========================================================
+/* =========================================================
    DIBUJAR ZONA AMARILLA
-========================================================== */
+========================================================= */
 
 
 function dibujarZonaLectura() {
@@ -1335,6 +1530,7 @@ function dibujarZonaLectura() {
         obtenerZonaLectura();
 
 
+
     ctx.clearRect(
 
         0,
@@ -1346,6 +1542,7 @@ function dibujarZonaLectura() {
         overlay.height
 
     );
+
 
 
     ctx.strokeStyle =
@@ -1376,6 +1573,7 @@ function dibujarZonaLectura() {
 
 
     ctx.setLineDash([]);
+
 
 
     ctx.fillStyle =
@@ -1417,9 +1615,9 @@ function dibujarZonaLectura() {
 
 
 
-/* ==========================================================
+/* =========================================================
    LIMPIAR OVERLAY
-========================================================== */
+========================================================= */
 
 
 function limpiarOverlay() {
@@ -1455,12 +1653,9 @@ function limpiarOverlay() {
 
 
 
-/* ==========================================================
-   CICLO COMPLETO
-
-   Una lectura debe TERMINAR antes
-   de comenzar la siguiente.
-========================================================== */
+/* =========================================================
+   CICLO
+========================================================= */
 
 
 async function iniciarCiclo() {
@@ -1476,6 +1671,7 @@ async function iniciarCiclo() {
 
     ) {
 
+
         return;
 
     }
@@ -1489,14 +1685,15 @@ async function iniciarCiclo() {
 
 
         /*
-        1. Capturar y enviar
+        Captura.
         */
 
         await capturarYEnviar();
 
 
+
         /*
-        2. Esperar resultado
+        Esperar respuesta.
         */
 
         const resultado =
@@ -1504,8 +1701,9 @@ async function iniciarCiclo() {
             await esperarResultado();
 
 
+
         /*
-        3. Procesarlo
+        Procesar.
         */
 
         procesarResultado(
@@ -1516,20 +1714,17 @@ async function iniciarCiclo() {
     } catch (error) {
 
 
-        console.error(error);
+        console.error(
+            error
+        );
 
 
         mensaje(
 
-            "❌ Error del sistema",
+            "⚠️ Problema temporal",
 
             error.message
 
-        );
-
-
-        servidorEstado(
-            "error"
         );
 
 
@@ -1541,8 +1736,8 @@ async function iniciarCiclo() {
 
 
         /*
-        SOLO AHORA comenzamos
-        a preparar otra fotografía.
+        Nueva lectura solo después
+        de terminar la anterior.
         */
 
         if (camaraActiva) {
@@ -1566,9 +1761,9 @@ async function iniciarCiclo() {
 
 
 
-/* ==========================================================
+/* =========================================================
    CAPTURAR Y ENVIAR
-========================================================== */
+========================================================= */
 
 
 async function capturarYEnviar() {
@@ -1592,10 +1787,6 @@ async function capturarYEnviar() {
         obtenerZonaLectura();
 
 
-    /*
-    Mantener proporción.
-    */
-
 
     const anchoDestino =
 
@@ -1608,6 +1799,7 @@ async function capturarYEnviar() {
             )
 
         );
+
 
 
     const altoDestino =
@@ -1627,12 +1819,14 @@ async function capturarYEnviar() {
         );
 
 
+
     canvas.width =
         anchoDestino;
 
 
     canvas.height =
         altoDestino;
+
 
 
     const ctx =
@@ -1642,14 +1836,15 @@ async function capturarYEnviar() {
         );
 
 
+
     /*
-    Imagen ligeramente mejorada
-    para matrícula impresa.
+    Pequeño aumento de contraste.
     */
 
     ctx.filter =
 
         "contrast(1.08) brightness(1.03)";
+
 
 
     ctx.drawImage(
@@ -1681,6 +1876,7 @@ async function capturarYEnviar() {
         "none";
 
 
+
     const dataURL =
 
         canvas.toDataURL(
@@ -1692,11 +1888,13 @@ async function capturarYEnviar() {
         );
 
 
+
     const base64 =
 
         dataURL.split(
             ","
         )[1];
+
 
 
     mensaje(
@@ -1708,9 +1906,10 @@ async function capturarYEnviar() {
     );
 
 
+
     debug(
 
-        "JPEG "
+        "Imagen enviada: "
         +
         anchoDestino
         +
@@ -1721,18 +1920,6 @@ async function capturarYEnviar() {
     );
 
 
-    /*
-    IMPORTANTE:
-
-    Usamos no-cors porque Apps Script
-    devuelve la respuesta mediante
-    redirección de ContentService.
-
-    No necesitamos leer este POST.
-
-    El resultado se recuperará con
-    doGet + JSONP.
-    */
 
     await fetch(
 
@@ -1786,16 +1973,12 @@ async function capturarYEnviar() {
     );
 
 
-    servidorEstado(
-        "on"
-    );
-
 
     mensaje(
 
         "🧠 Reconociendo placa...",
 
-        "Esperando resultado."
+        "Esperando respuesta."
 
     );
 
@@ -1803,9 +1986,9 @@ async function capturarYEnviar() {
 
 
 
-/* ==========================================================
-   ESPERAR RESULTADO DEL SERVIDOR
-========================================================== */
+/* =========================================================
+   ESPERAR RESULTADO
+========================================================= */
 
 
 async function esperarResultado() {
@@ -1813,6 +1996,7 @@ async function esperarResultado() {
 
     const inicio =
         Date.now();
+
 
 
     while (
@@ -1856,6 +2040,7 @@ async function esperarResultado() {
             Date.now();
 
 
+
         try {
 
 
@@ -1865,11 +2050,6 @@ async function esperarResultado() {
                     url
                 );
 
-
-            /*
-            El servidor dice que aún
-            no hay resultado.
-            */
 
 
             if (
@@ -1902,13 +2082,9 @@ async function esperarResultado() {
             }
 
 
-            /*
-            Tenemos resultado
-            o error real.
-            */
-
 
             if (datos) {
+
 
                 return datos;
 
@@ -1919,14 +2095,11 @@ async function esperarResultado() {
 
 
             console.warn(
-
-                "Consulta temporal:",
-
                 error
-
             );
 
         }
+
 
 
         await esperar(
@@ -1936,9 +2109,10 @@ async function esperarResultado() {
     }
 
 
+
     throw new Error(
 
-        "El servidor tardó demasiado en responder."
+        "El servidor tardó demasiado."
 
     );
 
@@ -1946,12 +2120,9 @@ async function esperarResultado() {
 
 
 
-/* ==========================================================
+/* =========================================================
    JSONP
-
-   Apps Script puede servir JavaScript
-   desde ContentService.
-========================================================== */
+========================================================= */
 
 
 function obtenerJSONP(
@@ -1985,6 +2156,7 @@ function obtenerJSONP(
                 );
 
 
+
             const script =
 
                 document.createElement(
@@ -1992,30 +2164,32 @@ function obtenerJSONP(
                 );
 
 
+
             let terminado =
                 false;
 
 
-            const limpiar =
-                function() {
+
+            function limpiar() {
 
 
-                    try {
+                try {
 
-                        delete window[
-                            callback
-                        ];
+                    delete window[
+                        callback
+                    ];
 
-                    } catch (_) {}
+                } catch (_) {}
 
 
-                    try {
+                try {
 
-                        script.remove();
+                    script.remove();
 
-                    } catch (_) {}
+                } catch (_) {}
 
-                };
+            }
+
 
 
             window[callback] =
@@ -2042,6 +2216,7 @@ function obtenerJSONP(
                     );
 
                 };
+
 
 
             script.onerror =
@@ -2074,6 +2249,7 @@ function obtenerJSONP(
                 };
 
 
+
             script.src =
 
                 url
@@ -2099,15 +2275,13 @@ function obtenerJSONP(
                 );
 
 
+
             document.body
                 .appendChild(
                     script
                 );
 
 
-            /*
-            Tiempo máximo de cada GET.
-            */
 
             setTimeout(
 
@@ -2150,9 +2324,9 @@ function obtenerJSONP(
 
 
 
-/* ==========================================================
+/* =========================================================
    PROCESAR RESULTADO
-========================================================== */
+========================================================= */
 
 
 function procesarResultado(
@@ -2177,10 +2351,10 @@ function procesarResultado(
     }
 
 
-    /*
-    ERROR REAL
-    */
 
+    /*
+    Error real.
+    */
 
     if (!datos.ok) {
 
@@ -2201,17 +2375,18 @@ function procesarResultado(
         );
 
 
-        debug(
+        if (datos.http) {
 
-            datos.http
-            ?
-            "HTTP: "
-            +
-            datos.http
-            :
-            ""
 
-        );
+            debug(
+
+                "HTTP "
+                +
+                datos.http
+
+            );
+
+        }
 
 
         return;
@@ -2219,15 +2394,16 @@ function procesarResultado(
     }
 
 
+
     servidorEstado(
         "on"
     );
 
 
-    /*
-    Tiempo total del servidor.
-    */
 
+    /*
+    Tiempo respuesta.
+    */
 
     if (
 
@@ -2247,6 +2423,7 @@ function procesarResultado(
             1000;
 
 
+
         document.getElementById(
             "tiempo"
         ).innerText =
@@ -2256,6 +2433,7 @@ function procesarResultado(
             "s";
 
     }
+
 
 
     const resultados =
@@ -2273,6 +2451,7 @@ function procesarResultado(
         [];
 
 
+
     dibujarResultados(
 
         resultados,
@@ -2288,14 +2467,17 @@ function procesarResultado(
     );
 
 
+
     actualizarLista(
         resultados
     );
 
 
+
     procesarVehiculos(
         resultados
     );
+
 
 
     if (
@@ -2309,13 +2491,15 @@ function procesarResultado(
 
             "🔎 No se encontró placa",
 
-            "Mueve el automóvil, acércalo o mejora la iluminación."
+            "Mueve el vehículo o acerca la placa."
 
         );
 
 
         debug(
-            "Plate Recognizer respondió correctamente: 0 resultados."
+
+            "Plate Recognizer respondió: 0 placas."
+
         );
 
 
@@ -2336,14 +2520,14 @@ function procesarResultado(
                 " placas detectadas"
             ),
 
-            "Registro enviado a Google Sheets."
+            "Resultado registrado en Google Sheets."
 
         );
 
 
         debug(
 
-            "Lectura completada correctamente."
+            "Lectura realizada correctamente."
 
         );
 
@@ -2353,9 +2537,9 @@ function procesarResultado(
 
 
 
-/* ==========================================================
+/* =========================================================
    FORMATO DE PLACA
-========================================================== */
+========================================================= */
 
 
 function formatearPlaca(
@@ -2367,6 +2551,7 @@ function formatearPlaca(
 
         return "";
     }
+
 
 
     const limpio =
@@ -2382,11 +2567,10 @@ function formatearPlaca(
             );
 
 
-    /*
-    Nuestra maqueta usa:
-    ABC-123
-    */
 
+    /*
+    ABC123 -> ABC-123
+    */
 
     if (
 
@@ -2419,10 +2603,6 @@ function formatearPlaca(
     }
 
 
-    /*
-    Dejamos otros formatos
-    sin destruirlos.
-    */
 
     return limpio;
 
@@ -2430,9 +2610,9 @@ function formatearPlaca(
 
 
 
-/* ==========================================================
-   DIBUJAR RESULTADOS
-========================================================== */
+/* =========================================================
+   DIBUJAR DETECCIONES
+========================================================= */
 
 
 function dibujarResultados(
@@ -2453,6 +2633,7 @@ function dibujarResultados(
     }
 
 
+
     const video =
 
         document.getElementById(
@@ -2460,11 +2641,13 @@ function dibujarResultados(
         );
 
 
+
     const overlay =
 
         document.getElementById(
             "overlay"
         );
+
 
 
     overlay.width =
@@ -2475,11 +2658,13 @@ function dibujarResultados(
         video.videoHeight;
 
 
+
     const ctx =
 
         overlay.getContext(
             "2d"
         );
+
 
 
     ctx.clearRect(
@@ -2495,14 +2680,15 @@ function dibujarResultados(
     );
 
 
+
     const zona =
         obtenerZonaLectura();
+
 
 
     /*
     Zona amarilla.
     */
-
 
     ctx.strokeStyle =
         "#ffd600";
@@ -2534,11 +2720,10 @@ function dibujarResultados(
     ctx.setLineDash([]);
 
 
-    /*
-    Una caja verde por cada
-    matrícula devuelta.
-    */
 
+    /*
+    Cada placa.
+    */
 
     resultados.forEach(
 
@@ -2552,8 +2737,10 @@ function dibujarResultados(
             }
 
 
+
             const box =
                 resultado.box;
+
 
 
             const x =
@@ -2572,7 +2759,9 @@ function dibujarResultados(
                 )
 
                 *
+
                 zona.width;
+
 
 
             const y =
@@ -2591,7 +2780,9 @@ function dibujarResultados(
                 )
 
                 *
+
                 zona.height;
+
 
 
             const xmax =
@@ -2610,7 +2801,9 @@ function dibujarResultados(
                 )
 
                 *
+
                 zona.width;
+
 
 
             const ymax =
@@ -2629,7 +2822,9 @@ function dibujarResultados(
                 )
 
                 *
+
                 zona.height;
+
 
 
             const w =
@@ -2640,10 +2835,6 @@ function dibujarResultados(
                 ymax - y;
 
 
-            /*
-            Agregamos margen.
-            */
-
 
             const margenX =
                 w * 0.12;
@@ -2651,6 +2842,7 @@ function dibujarResultados(
 
             const margenY =
                 h * 0.30;
+
 
 
             const rx =
@@ -2683,10 +2875,10 @@ function dibujarResultados(
                 margenY * 2;
 
 
-            /*
-            CUADRO VERDE
-            */
 
+            /*
+            Rectángulo verde.
+            */
 
             ctx.strokeStyle =
                 "#00ff55";
@@ -2709,10 +2901,6 @@ function dibujarResultados(
             );
 
 
-            /*
-            ETIQUETA
-            */
-
 
             const placa =
 
@@ -2721,8 +2909,10 @@ function dibujarResultados(
                 );
 
 
+
             ctx.font =
                 "bold 28px Arial";
+
 
 
             const anchoTexto =
@@ -2732,6 +2922,7 @@ function dibujarResultados(
                 ).width;
 
 
+
             const etiquetaW =
 
                 anchoTexto
@@ -2739,8 +2930,10 @@ function dibujarResultados(
                 20;
 
 
+
             const etiquetaH =
                 40;
+
 
 
             const etiquetaY =
@@ -2752,6 +2945,7 @@ function dibujarResultados(
                     ry - etiquetaH
 
                 );
+
 
 
             ctx.fillStyle =
@@ -2769,6 +2963,7 @@ function dibujarResultados(
                 etiquetaH
 
             );
+
 
 
             ctx.fillStyle =
@@ -2793,9 +2988,9 @@ function dibujarResultados(
 
 
 
-/* ==========================================================
-   LISTA DE RESULTADOS
-========================================================== */
+/* =========================================================
+   LISTA
+========================================================= */
 
 
 function actualizarLista(
@@ -2808,6 +3003,7 @@ function actualizarLista(
         document.getElementById(
             "listaPlacas"
         );
+
 
 
     if (
@@ -2826,8 +3022,10 @@ function actualizarLista(
     }
 
 
+
     lista.innerHTML =
         "";
+
 
 
     resultados.forEach(
@@ -2840,6 +3038,7 @@ function actualizarLista(
                 formatearPlaca(
                     resultado.plate
                 );
+
 
 
             const confianza =
@@ -2856,6 +3055,7 @@ function actualizarLista(
                 );
 
 
+
             const item =
 
                 document.createElement(
@@ -2863,14 +3063,18 @@ function actualizarLista(
                 );
 
 
+
             item.className =
                 "placaItem";
+
 
 
             item.innerHTML =
 
                 "🚗 "
+
                 +
+
                 placa
 
                 +
@@ -2890,6 +3094,7 @@ function actualizarLista(
                 "</div>";
 
 
+
             lista.appendChild(
                 item
             );
@@ -2902,9 +3107,9 @@ function actualizarLista(
 
 
 
-/* ==========================================================
-   CONTAR VEHÍCULOS
-========================================================== */
+/* =========================================================
+   CONTAR VEHICULOS
+========================================================= */
 
 
 function procesarVehiculos(
@@ -2914,6 +3119,7 @@ function procesarVehiculos(
 
     const ahora =
         Date.now();
+
 
 
     resultados.forEach(
@@ -2928,6 +3134,7 @@ function procesarVehiculos(
                 );
 
 
+
             if (!placa) {
 
                 return;
@@ -2935,10 +3142,16 @@ function procesarVehiculos(
             }
 
 
+
+            /*
+            Mostrar placa principal.
+            */
+
             document.getElementById(
                 "ultimaPlaca"
             ).innerText =
                 placa;
+
 
 
             const ultimaVez =
@@ -2951,6 +3164,11 @@ function procesarVehiculos(
 
                 0;
 
+
+
+            /*
+            Contador.
+            */
 
             if (
 
@@ -2967,12 +3185,15 @@ function procesarVehiculos(
                 totalVehiculos++;
 
 
+
                 document.getElementById(
                     "contador"
                 ).innerText =
+
                     totalVehiculos;
 
             }
+
 
 
             historial.set(
@@ -2991,9 +3212,9 @@ function procesarVehiculos(
 
 
 
-/* ==========================================================
+/* =========================================================
    ESPERAR
-========================================================== */
+========================================================= */
 
 
 function esperar(
@@ -3003,12 +3224,15 @@ function esperar(
 
     return new Promise(
 
-        resolve =>
+        function(resolve) {
+
 
             setTimeout(
                 resolve,
                 ms
-            )
+            );
+
+        }
 
     );
 
@@ -3016,9 +3240,9 @@ function esperar(
 
 
 
-/* ==========================================================
-   ROTACIÓN / CAMBIO DE TAMAÑO
-========================================================== */
+/* =========================================================
+   CAMBIO DE ORIENTACION
+========================================================= */
 
 
 window.addEventListener(
@@ -3044,9 +3268,9 @@ window.addEventListener(
 
 
 
-/* ==========================================================
-   CERRAR PÁGINA
-========================================================== */
+/* =========================================================
+   CERRAR PAGINA
+========================================================= */
 
 
 window.addEventListener(
@@ -3063,8 +3287,11 @@ window.addEventListener(
                 .getTracks()
                 .forEach(
 
-                    track =>
-                        track.stop()
+                    function(track) {
+
+                        track.stop();
+
+                    }
 
                 );
 
@@ -3076,12 +3303,16 @@ window.addEventListener(
 
 
 
-/* ==========================================================
-   INICIO DE PÁGINA
-========================================================== */
+/* =========================================================
+   INICIO
+========================================================= */
 
 
 comprobarServidor();
+
+
+</script>
+
 
 </body>
 
