@@ -14,16 +14,47 @@
 
 <style>
 
-#btnRegistros {
-    background: #0f9d58;
-    text-decoration: none;
-    display: inline-block;
+.botones {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+button {
+    border: none;
     border-radius: 12px;
     padding: 14px 20px;
-    margin: 5px;
     font-size: 16px;
     font-weight: bold;
     color: white;
+}
+
+#btnIniciar {
+    background: #1976d2;
+}
+
+#btnDetener {
+    background: #d32f2f;
+}
+
+#btnRegistros {
+    background: #0f9d58;
+    color: white;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button:disabled {
+    opacity: 0.45;
 }
 
 * {
@@ -371,6 +402,7 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
 <div class="botones">
 
     <button
+        type="button"
         id="btnIniciar"
         onclick="iniciarCamara()"
     >
@@ -378,6 +410,7 @@ Detector inteligente de placas - Edificio Fisher SURQUILLO
     </button>
 
     <button
+        type="button"
         id="btnDetener"
         onclick="detenerCamara()"
         disabled
