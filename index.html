@@ -13,6 +13,80 @@
 <title>Smart Plate V8.3</title>
 
 <style>
+/* =============================
+   BOTÓN VER REGISTROS
+============================= */
+
+.btnRegistros {
+
+    position: fixed;
+
+    right: 18px;
+    bottom: 18px;
+
+    padding: 14px 18px;
+
+    border-radius: 30px;
+
+    background: #0f9d58;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+
+    z-index: 9999;
+}
+
+.btnRegistros:active {
+
+    transform: scale(0.95);
+
+}
+
+
+/* Texto pequeño al pasar mouse
+   útil cuando se abre desde PC
+*/
+
+.btnRegistros::after {
+
+    content: "Ver registros";
+
+    position: absolute;
+
+    right: 68px;
+
+    background: #333;
+
+    color: white;
+
+    padding: 7px 10px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: 0.2s;
+}
+
+.btnRegistros:hover::after {
+
+    opacity: 1;
+}
+
+
 
 * {
     box-sizing: border-box;
@@ -3037,7 +3111,15 @@ comprobarServidor();
 
 </script>
 
-
+<a
+    class="btnRegistros"
+    href="https://docs.google.com/spreadsheets/d/1Bmh552IRATHVYEwxswPt64Z04mLV-ObGJHiSKKxiBPs/edit"
+    target="_blank"
+    rel="noopener noreferrer"
+    title="Ver registros"
+>
+    📊
+</a>
 </body>
 
 </html>
